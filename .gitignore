@@ -1,0 +1,14 @@
+#* CLIENT
+
+# node_modules
+client/node_modules
+
+# dist
+client/dist
+
+# tmp
+client/tmp
+
+# .vscode
+client/.vscode
+
