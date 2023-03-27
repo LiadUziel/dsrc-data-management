@@ -14,3 +14,36 @@ client/.vscode
 
 # .angular
 client/.angular
+
+#############################################################
+
+#* SERVER
+
+# node_modules
+server/node_modules
+
+# dist
+server/dist
+
+# tmp
+server/tmp
+
+# Optional npm cache directory
+server/.npm
+
+# Optional REPL history
+server/.node_repl_history
+
+server/typings/
+server/lib/*.js
+server/test/*.js
+server/*.map
+
+# Compiled binary addons (http://nodejs.org/api/addons.html)
+server/build/Release
+
+#.env
+server/.env
+
+# TODO
+TODO
