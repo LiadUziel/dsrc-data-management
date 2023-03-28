@@ -6,6 +6,7 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "strictPropertyInitialization": false,
+    "noImplicitAny": false,
     "skipLibCheck": true,
     "outDir": "dist",
     "rootDir": "src",
