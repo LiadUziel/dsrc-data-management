@@ -1,17 +1,42 @@
+import cors from "cors";
+import express from "express";
 import { Config } from "./config/config";
 
 let str: string;
 str = "check ts-node-dev";
 console.log("Hello, TypeScript!", str);
 
-const port = Config.PORT;
-console.log("🚀 ~ file: index.ts:8 ~ port:", port);
+const PORT = Config.PORT;
+const appName = process.env.npm_package_name;
 
 const frontend_url = Config.FRONTEND_URL;
-console.log("🚀 ~ file: index.ts:11 ~ frontend_url:", frontend_url);
 
 const node_env = Config.NODE_ENV;
-console.log("🚀 ~ file: index.ts:14 ~ node_env:", node_env);
 
 const db_url = Config.DB_URL;
-console.log("🚀 ~ file: index.ts:17 ~ db_url:", db_url);
+
+const app = express();
+
+// Cors
+app.use(cors());
+
+// Express body parser
+app.use(express.json());
+
+// 'Hello Express' endpoint - //* http://localhost:3000/api
+app.use("/api", async (req, res, next) => {
+  console.log("🚀 ~ file: index.ts:30 ~ app.use ~ req.body:", req.body);
+  return res.send("Hello Express");
+});
+
+async function main() {
+  try {
+    app.listen(PORT, () =>
+      console.log(`App '${appName}' is running on port ${PORT}`)
+    );
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+main();
