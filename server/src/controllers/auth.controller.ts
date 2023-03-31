@@ -44,3 +44,29 @@ export const createUserDB: RequestHandler = async (req, res, next) => {
     next(e);
   }
 };
+
+// login user include decrypt password and returns if admin
+export const login: RequestHandler = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+
+    // get user from db
+    const user = await UserModel.findOne({ email });
+
+    // bad request if user does not exist
+    if (!user) {
+      return res.status(400).send({ status: 400, message: "Invalid email" });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    // bad request if password is incorrect
+    if (!isMatch) {
+      return res.status(400).send({ status: 400, message: "Invalid password" });
+    }
+
+    return res.send({ isLogged: true, isAdmin: user.isAdmin });
+  } catch (e) {
+    next(e);
+  }
+};
