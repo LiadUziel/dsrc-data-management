@@ -45,5 +45,11 @@ server/build/Release
 #.env
 server/.env
 
+# .vscode
+server/.vscode
+
+# .vscode
+.vscode
+
 # TODO
 TODO
