@@ -2,6 +2,7 @@ import cors from "cors";
 import express from "express";
 import { Config } from "./config/config";
 import { errorHandler } from "./controllers/error.controller";
+import connectDB from "./config/db-config";
 
 let str: string;
 str = "check ts-node-dev";
@@ -14,8 +15,6 @@ const frontend_url = Config.FRONTEND_URL;
 
 const node_env = Config.NODE_ENV;
 
-const db_url = Config.DB_URL;
-
 const app = express();
 
 // Cors
@@ -23,6 +22,9 @@ app.use(cors());
 
 // Express body parser
 app.use(express.json());
+
+// connect to mongoDB
+connectDB();
 
 // 'Hello Express' endpoint - //* http://localhost:3000/api
 app.use("/api", async (req, res, next) => {
