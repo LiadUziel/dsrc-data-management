@@ -11,11 +11,11 @@ export const hashPasswordMiddleware: RequestHandler = async (
   try {
     const { password } = req.body;
 
-    // bad request if password is less than 8 characters
-    if (password.length < 8) {
+    // bad request if password is less than 6 characters
+    if (password.length < 6) {
       return res.status(400).send({
         status: 400,
-        massage: "Password must be at least 8 characters",
+        massage: "Password must be at least 6 characters",
       });
     }
 
