@@ -1,6 +1,8 @@
 import { RequestHandler } from "express";
 import { User, UserModel } from "../models/user.interface";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import { Config } from "../config/config";
 
 // use this middleware to hash password before saving to db
 export const hashPasswordMiddleware: RequestHandler = async (
@@ -58,6 +60,7 @@ export const login: RequestHandler = async (req, res, next) => {
       return res.status(400).send({ status: 400, message: "Invalid email" });
     }
 
+    // authentication
     const isMatch = await bcrypt.compare(password, user.password);
 
     // bad request if password is incorrect
@@ -65,7 +68,14 @@ export const login: RequestHandler = async (req, res, next) => {
       return res.status(400).send({ status: 400, message: "Invalid password" });
     }
 
-    return res.send({ isLogged: true, isAdmin: user.isAdmin });
+    // generate a jwt
+    const token = jwt.sign(
+      { email: user.email, isLogged: true, isAdmin: user.isAdmin },
+      Config.JWT_SECRET_KEY,
+      { expiresIn: "1h" }
+    );
+
+    return res.send({ token });
   } catch (e) {
     next(e);
   }
