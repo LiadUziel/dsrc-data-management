@@ -29,4 +29,6 @@ export class Config {
     process.env.NODE_ENV?.toLowerCase() === "local"
       ? process.env.FRONTEND_URL_LOCAL
       : process.env.FRONTEND_URL_PROD;
+
+  public static JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 }

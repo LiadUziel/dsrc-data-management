@@ -80,3 +80,43 @@ export const login: RequestHandler = async (req, res, next) => {
     next(e);
   }
 };
+
+// middleware the authorize the user and continue if he logged in
+export const authorizeMiddleware: RequestHandler = async (req, res, next) => {
+  try {
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+      return res
+        .status(401)
+        .send({ status: 401, error: "Missing authorization header" });
+    }
+
+    // extract the token from authHeader
+    const token = authHeader.split(" ")[1];
+
+    const jwtData = jwt.verify(token, Config.JWT_SECRET_KEY);
+
+    const { email, isLogged, isAdmin } = jwtData;
+    req.authUser = { email, isLogged, isAdmin };
+
+    next();
+  } catch (e) {
+    next(e);
+  }
+};
+
+export const isAdminMiddleware: RequestHandler = async (req, res, next) => {
+  try {
+    const isAdmin = req.authUser?.isAdmin;
+
+    if (!isAdmin) {
+      return res
+        .status(403)
+        .send({ status: 403, error: "You are not authorized" });
+    }
+
+    next();
+  } catch (e) {
+    next(e);
+  }
+};
