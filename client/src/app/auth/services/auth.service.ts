@@ -22,3 +22,21 @@ export class AuthService {
     });
   }
 
+  // TODO - remove this - just dummy
+  protected() {
+    const token = this.tokenService.getToken();
+    return this.http.get<{ result: string }>(this.apiUrl + '/protected', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+  protectedAdmin() {
+    const token = this.tokenService.getToken();
+    return this.http.get<{ result: string }>(this.apiUrl + '/protected-admin', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+}
