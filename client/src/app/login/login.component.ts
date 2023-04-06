@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../auth/services/auth.service';
+import { TokenStorageService } from '../auth/services/token-storage.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +12,11 @@ import {
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private authService: AuthService,
+    private tokenService: TokenStorageService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -31,6 +33,30 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.loginForm.value);
+    this.authService
+      .login(this.email, this.password, this.rememberMe)
+      .subscribe({
+        next: (result) => {
+          this.tokenService.setToken(result.token);
+
+          this.toastr.success('Login successful!');
+
+          // TODO - navigate to home page
+        },
+        error: (error) => {
+          this.toastr.error(error.error.message);
+        },
+      });
+  }
+
+  get email(): string {
+    return this.loginForm.get('email').value;
+  }
+  get password(): string {
+    return this.loginForm.get('password').value;
+  }
+  get rememberMe(): boolean {
+    return this.loginForm.get('rememberMe').value;
+  }
   }
 }
