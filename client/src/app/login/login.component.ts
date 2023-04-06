@@ -58,5 +58,13 @@ export class LoginComponent implements OnInit {
   get rememberMe(): boolean {
     return this.loginForm.get('rememberMe').value;
   }
+
+  // TODO - transfer logout to navbar
+  logout() {
+    this.tokenService.removeToken();
+    this.toastr.show('Logout successful!');
+
+    // TODO - navigate to home page
+  }
   }
 }

@@ -13,3 +13,8 @@ export class TokenStorageService {
   setToken(token: string) {
     localStorage.setItem('token', token);
   }
+
+  removeToken() {
+    localStorage.removeItem('token');
+  }
+}
