@@ -17,7 +17,7 @@ authRouter.post("/login", login);
 
 //* example of protected route
 authRouter.get("/protected", authorizeMiddleware, (req, res) => {
-  return res.send("GG");
+  return res.send({ result: "GG" });
 });
 
 //* example of protected route with admin role
@@ -26,7 +26,7 @@ authRouter.get(
   authorizeMiddleware,
   isAdminMiddleware,
   (req, res) => {
-    return res.send("GG-ADMIN");
+    return res.send({ result: "GG-ADMIN" });
   }
 );
 
