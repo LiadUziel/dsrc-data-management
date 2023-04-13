@@ -50,7 +50,7 @@ export const createUserDB: RequestHandler = async (req, res, next) => {
 // login user include decrypt password and returns if admin
 export const login: RequestHandler = async (req, res, next) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, rememberMe } = req.body;
 
     // get user from db
     const user = await UserModel.findOne({ email });
@@ -68,11 +68,14 @@ export const login: RequestHandler = async (req, res, next) => {
       return res.status(400).send({ status: 400, message: "Invalid password" });
     }
 
+    // expiration time by remember me
+    const expiresIn = rememberMe ? "14d" : "1h";
+
     // generate a jwt
     const token = jwt.sign(
       { email: user.email, isLogged: true, isAdmin: user.isAdmin },
       Config.JWT_SECRET_KEY,
-      { expiresIn: "1h" }
+      { expiresIn }
     );
 
     return res.send({ token });
