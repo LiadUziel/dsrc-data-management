@@ -1,4 +1,5 @@
 import { Component ,OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 
 @Component({
@@ -18,16 +19,20 @@ export class NavBarComponent {
         {
             label: 'Home',
             icon: 'pi pi-fw pi-home',
+            routerLink: 'login'
         },
         {
-            label: 'Sign Up'
+            label: 'Sign Up',
+            routerLink: 'register'
         },
         {
-            label: 'Sign In'
+            label: 'Sign In',
+            routerLink: 'login'
         },
         {
             label: 'Log Out',
-            icon: 'pi pi-fw pi-sign-out'
+            icon: 'pi pi-fw pi-sign-out',
+            routerLink: 'login'
         }
     ];
 }
