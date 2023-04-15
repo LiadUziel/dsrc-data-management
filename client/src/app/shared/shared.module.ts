@@ -5,11 +5,14 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { CheckboxModule } from 'primeng/checkbox';
+import { ToastrModule } from 'ngx-toastr';
+
+// ngx-toastr
 import { MenubarModule } from 'primeng/menubar';
 
 //materials
-import { MatPasswordStrengthModule } from "@angular-material-extensions/password-strength";
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 //Components
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
@@ -19,6 +22,11 @@ import { PagesComponent } from '../pages/pages.component';
 @NgModule({
   declarations: [NavBarComponent, FooterComponent, PagesComponent],
   imports: [
+    // ngx-toastr
+    ToastrModule.forRoot({
+      positionClass: 'toast-bottom-left',
+    }),
+
     // primeng
     ButtonModule,
     InputTextModule,
@@ -28,7 +36,7 @@ import { PagesComponent } from '../pages/pages.component';
 
     //materials
     MatPasswordStrengthModule.forRoot(),
-    MatSlideToggleModule
+    MatSlideToggleModule,
   ],
   exports: [
     // primeng
@@ -43,7 +51,7 @@ import { PagesComponent } from '../pages/pages.component';
     MatSlideToggleModule,
 
     //cpmponents
-    PagesComponent
+    PagesComponent,
   ],
 })
 export class SharedModule {}

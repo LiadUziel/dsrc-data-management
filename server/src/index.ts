@@ -3,6 +3,7 @@ import express from "express";
 import { Config } from "./config/config";
 import { errorHandler } from "./controllers/error.controller";
 import connectDB from "./config/db-config";
+import authRouter from "./routes/auth.route";
 
 let str: string;
 str = "check ts-node-dev";
@@ -26,16 +27,7 @@ app.use(express.json());
 // connect to mongoDB
 connectDB();
 
-// 'Hello Express' endpoint - //* http://localhost:3000/api
-app.use("/api", async (req, res, next) => {
-  try {
-    console.log("🚀 ~ file: index.ts:30 ~ app.use ~ req.body:", req.body);
-    // throw new Error("EROROROROROR");
-    return res.send("Hello Express");
-  } catch (err) {
-    next(err);
-  }
-});
+app.use("/api/auth", authRouter);
 
 // Error handler
 app.use(errorHandler);
