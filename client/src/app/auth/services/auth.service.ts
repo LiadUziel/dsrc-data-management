@@ -22,6 +22,20 @@ export class AuthService {
     });
   }
 
+  register(
+    email: string,
+    password: string,
+    firstName: string,
+    lastName: string
+  ) {
+    return this.http.post(this.apiUrl + '/signup', {
+      email,
+      password,
+      firstName,
+      lastName,
+    });
+  }
+
   // TODO - remove this - just dummy
   protected() {
     const token = this.tokenService.getToken();

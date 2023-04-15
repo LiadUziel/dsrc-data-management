@@ -74,10 +74,6 @@ export class LoginComponent implements OnInit {
         this.toastr.success(result.result);
       },
       error: (error) => {
-        console.log(
-          '🚀 ~ file: login.component.ts:81 ~ LoginComponent ~ this.authService.protected ~ error:',
-          error
-        );
         if (error.error.message.includes('jwt')) {
           this.toastr.error('You are not authorized');
         } else {
