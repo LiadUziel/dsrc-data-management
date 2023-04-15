@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../auth/services/auth.service';
-import { TokenStorageService } from '../auth/services/token-storage.service';
+import { AuthService } from '../../auth/services/auth.service';
+import { TokenStorageService } from '../../auth/services/token-storage.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
