@@ -14,7 +14,7 @@ import {
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor() {}
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
