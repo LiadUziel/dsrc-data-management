@@ -24,7 +24,10 @@ import { PagesComponent } from '../pages/pages.component';
   imports: [
     // ngx-toastr
     ToastrModule.forRoot({
-      positionClass: 'toast-bottom-left',
+      positionClass: 'toast-bottom-right',
+      progressBar: true,
+      progressAnimation: 'increasing',
+      closeButton: true,
     }),
 
     // primeng
