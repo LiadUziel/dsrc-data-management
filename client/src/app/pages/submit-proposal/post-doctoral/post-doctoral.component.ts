@@ -13,7 +13,7 @@ export class PostDoctoralComponent implements OnInit {
   constructor(private proposalFormService: SubmitProposalService) {}
 
   ngOnInit(): void {
-    this.postDoctoralForm = this.proposalFormService.getDsDoctoralForm();
+    this.postDoctoralForm = this.proposalFormService.getPostDoctoralForm();
   }
 
   onSubmit() {

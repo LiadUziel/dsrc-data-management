@@ -13,7 +13,7 @@ export class SeedResearchComponent implements OnInit {
   constructor(private proposalFormService: SubmitProposalService) {}
 
   ngOnInit(): void {
-    this.seedForm = this.proposalFormService.getDsDoctoralForm();
+    this.seedForm = this.proposalFormService.getSeedResearchForm();
   }
 
   onSubmit() {

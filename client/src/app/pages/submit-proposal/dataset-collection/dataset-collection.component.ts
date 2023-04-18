@@ -13,7 +13,7 @@ export class DatasetCollectionComponent implements OnInit {
   constructor(private proposalFormService: SubmitProposalService) {}
 
   ngOnInit(): void {
-    this.dsCollectionForm = this.proposalFormService.getDsDoctoralForm();
+    this.dsCollectionForm = this.proposalFormService.getDatasetCollectionForm();
   }
 
   onSubmit() {
