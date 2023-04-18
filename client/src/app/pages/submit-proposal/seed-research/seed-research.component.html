@@ -1,0 +1,26 @@
+<div class="page-wrapper">
+  <h1>Seed research funding</h1>
+
+  <form class="form" [formGroup]="seedForm" (ngSubmit)="onSubmit()">
+    <app-parent-form [form]="seedForm"></app-parent-form>
+
+    <span class="p-float-label">
+      <input pInputText formControlName="uniqueFieldSeedResearch1" />
+      <label>uniqueField SeedResearch1</label>
+    </span>
+
+    <span class="p-float-label">
+      <input pInputText formControlName="uniqueFieldSeedResearch2" />
+      <label>uniqueField SeedResearch2</label>
+    </span>
+
+    <button
+      pButton
+      type="submit"
+      class="p-button-primary"
+      [disabled]="!seedForm.valid"
+    >
+      Submit
+    </button>
+  </form>
+</div>
