@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { SubmitProposalService } from '../services/submit-proposal.service';
+import { FormProposalService } from '../services/form-proposal.service';
 
 @Component({
   selector: 'app-seed-research',
@@ -10,10 +10,10 @@ import { SubmitProposalService } from '../services/submit-proposal.service';
 export class SeedResearchComponent implements OnInit {
   seedForm: FormGroup;
 
-  constructor(private proposalFormService: SubmitProposalService) {}
+  constructor(private formProposalService: FormProposalService) {}
 
   ngOnInit(): void {
-    this.seedForm = this.proposalFormService.getSeedResearchForm();
+    this.seedForm = this.formProposalService.getSeedResearchForm();
   }
 
   onSubmit() {

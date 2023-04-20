@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SubmitProposalService } from '../services/submit-proposal.service';
+import { FormProposalService } from '../services/form-proposal.service';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -10,7 +10,11 @@ import { FormGroup } from '@angular/forms';
 export class DsDoctoralComponent implements OnInit {
   doctoralForm: FormGroup;
 
-  constructor(private proposalFormService: SubmitProposalService) {}
+  constructor(
+    private formProposalService: FormProposalService,
+    private grantProposalService: GrantProposalService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.doctoralForm = this.proposalFormService.getDsDoctoralForm();

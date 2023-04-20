@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { SubmitProposalService } from '../services/submit-proposal.service';
+import { FormProposalService } from '../services/form-proposal.service';
 
 @Component({
   selector: 'app-post-doctoral',
@@ -10,10 +10,10 @@ import { SubmitProposalService } from '../services/submit-proposal.service';
 export class PostDoctoralComponent implements OnInit {
   postDoctoralForm: FormGroup;
 
-  constructor(private proposalFormService: SubmitProposalService) {}
+  constructor(private formProposalService: FormProposalService) {}
 
   ngOnInit(): void {
-    this.postDoctoralForm = this.proposalFormService.getPostDoctoralForm();
+    this.postDoctoralForm = this.formProposalService.getPostDoctoralForm();
   }
 
   onSubmit() {

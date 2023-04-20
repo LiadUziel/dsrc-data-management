@@ -6,7 +6,7 @@ import * as _ from 'lodash';
 @Injectable({
   providedIn: 'root',
 })
-export class SubmitProposalService {
+export class FormProposalService {
   parentForm: FormGroup = this.getParentForm();
 
   constructor() {}

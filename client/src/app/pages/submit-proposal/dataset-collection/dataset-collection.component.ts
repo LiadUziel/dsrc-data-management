@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { SubmitProposalService } from '../services/submit-proposal.service';
+import { FormProposalService } from '../services/form-proposal.service';
 
 @Component({
   selector: 'app-dataset-collection',
@@ -10,10 +10,10 @@ import { SubmitProposalService } from '../services/submit-proposal.service';
 export class DatasetCollectionComponent implements OnInit {
   dsCollectionForm: FormGroup;
 
-  constructor(private proposalFormService: SubmitProposalService) {}
+  constructor(private formProposalService: FormProposalService) {}
 
   ngOnInit(): void {
-    this.dsCollectionForm = this.proposalFormService.getDatasetCollectionForm();
+    this.dsCollectionForm = this.formProposalService.getDatasetCollectionForm();
   }
 
   onSubmit() {
