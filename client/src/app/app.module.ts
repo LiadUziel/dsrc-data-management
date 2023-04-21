@@ -10,6 +10,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RegisterComponent } from './pages/register/register.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { GrantsAwardedComponent } from './pages/grants-awarded/grants-awarded.component';
+import { ProposalsComponent } from './pages/proposals/proposals.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +19,8 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
     LoginComponent,
     RegisterComponent,
     PageNotFoundComponent,
+    GrantsAwardedComponent,
+    ProposalsComponent,
   ],
   imports: [
     BrowserModule,

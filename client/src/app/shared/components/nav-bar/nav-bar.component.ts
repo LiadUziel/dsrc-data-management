@@ -30,6 +30,16 @@ export class NavBarComponent {
             routerLink: 'login'
         },
         {
+            label: 'Grants Awarded',
+            icon: 'pi pi-fw pi-table',
+            routerLink: 'grantsAwarded'
+        },
+        {
+            label: 'Proposals',
+            icon: 'pi pi-fw pi-file',
+            routerLink: 'proposals'
+        },
+        {
             label: 'Log Out',
             icon: 'pi pi-fw pi-sign-out',
             routerLink: 'login'
