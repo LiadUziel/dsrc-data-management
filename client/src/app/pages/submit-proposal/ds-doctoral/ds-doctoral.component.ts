@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormProposalService } from '../services/form-proposal.service';
 import { FormGroup } from '@angular/forms';
+import { GrantProposalService } from 'src/app/shared/services/grant-proposal.service';
+import { GrantProposal } from 'src/app/shared/models/grant-proposal.interface';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-ds-doctoral',
@@ -17,10 +20,20 @@ export class DsDoctoralComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.doctoralForm = this.proposalFormService.getDsDoctoralForm();
+    this.doctoralForm = this.formProposalService.getDsDoctoralForm();
   }
 
   onSubmit() {
-    console.log(this.doctoralForm.value);
+    const proposal: GrantProposal = this.doctoralForm.value;
+    proposal.type = 'DS_DOCTORAL';
+    this.grantProposalService.createGrantProposal(proposal).subscribe({
+      next: (result) => {
+        this.doctoralForm.reset();
+        this.toastr.success('Proposal submitted successfully');
+      },
+      error: (err) => {
+        this.toastr.error('Proposal submission failed');
+      },
+    });
   }
 }
