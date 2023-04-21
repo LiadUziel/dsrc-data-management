@@ -32,7 +32,13 @@ export class DsDoctoralComponent implements OnInit {
         this.toastr.success('Proposal submitted successfully');
       },
       error: (err) => {
-        this.toastr.error('Proposal submission failed');
+        if (err.error.message.includes('jwt')) {
+          this.toastr.error(
+            'You are not logged in. Please login to submit a proposal'
+          );
+        } else {
+          this.toastr.error('Proposal submission failed');
+        }
       },
     });
   }
