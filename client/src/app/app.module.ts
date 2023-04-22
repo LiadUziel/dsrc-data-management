@@ -15,6 +15,8 @@ import { DsDoctoralComponent } from './pages/submit-proposal/ds-doctoral/ds-doct
 import { PostDoctoralComponent } from './pages/submit-proposal/post-doctoral/post-doctoral.component';
 import { SeedResearchComponent } from './pages/submit-proposal/seed-research/seed-research.component';
 import { DatasetCollectionComponent } from './pages/submit-proposal/dataset-collection/dataset-collection.component';
+import { GrantsAwardedComponent } from './pages/grants-awarded/grants-awarded.component';
+import { ProposalsComponent } from './pages/proposals/proposals.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,8 @@ import { DatasetCollectionComponent } from './pages/submit-proposal/dataset-coll
     PostDoctoralComponent,
     SeedResearchComponent,
     DatasetCollectionComponent,
+    GrantsAwardedComponent,
+    ProposalsComponent,
   ],
   imports: [
     BrowserModule,

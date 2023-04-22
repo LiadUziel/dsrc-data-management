@@ -98,10 +98,8 @@ export const authorizeMiddleware: RequestHandler = async (req, res, next) => {
     const token = authHeader.split(" ")[1];
 
     const jwtData = jwt.verify(token, Config.JWT_SECRET_KEY);
-
     const { email, isLogged, isAdmin } = jwtData;
     req.authUser = { email, isLogged, isAdmin };
-
     next();
   } catch (e) {
     next(e);
