@@ -10,6 +10,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RegisterComponent } from './pages/register/register.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { ParentFormComponent } from './pages/submit-proposal/parent-form/parent-form.component';
+import { DsDoctoralComponent } from './pages/submit-proposal/ds-doctoral/ds-doctoral.component';
+import { PostDoctoralComponent } from './pages/submit-proposal/post-doctoral/post-doctoral.component';
+import { SeedResearchComponent } from './pages/submit-proposal/seed-research/seed-research.component';
+import { DatasetCollectionComponent } from './pages/submit-proposal/dataset-collection/dataset-collection.component';
 import { GrantsAwardedComponent } from './pages/grants-awarded/grants-awarded.component';
 import { ProposalsComponent } from './pages/proposals/proposals.component';
 
@@ -19,6 +24,11 @@ import { ProposalsComponent } from './pages/proposals/proposals.component';
     LoginComponent,
     RegisterComponent,
     PageNotFoundComponent,
+    ParentFormComponent,
+    DsDoctoralComponent,
+    PostDoctoralComponent,
+    SeedResearchComponent,
+    DatasetCollectionComponent,
     GrantsAwardedComponent,
     ProposalsComponent,
   ],

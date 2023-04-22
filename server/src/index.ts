@@ -4,6 +4,7 @@ import { Config } from "./config/config";
 import { errorHandler } from "./controllers/error.controller";
 import connectDB from "./config/db-config";
 import authRouter from "./routes/auth.route";
+import grantProposalRouter from "./routes/grant-proposal.route";
 
 let str: string;
 str = "check ts-node-dev";
@@ -28,6 +29,8 @@ app.use(express.json());
 connectDB();
 
 app.use("/api/auth", authRouter);
+
+app.use("/api/grant-proposal", grantProposalRouter);
 
 // Error handler
 app.use(errorHandler);

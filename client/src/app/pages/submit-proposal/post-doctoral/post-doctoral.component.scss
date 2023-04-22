@@ -1,0 +1,24 @@
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2.5rem;
+
+        margin: 1rem;
+        padding: 1.5rem;
+
+        width: 40vw;
+        border: 1px solid #707070;
+        border-radius: 1rem;
+
+        .p-float-label,
+        input {
+            width: 100%
+        }
+    }
+}
