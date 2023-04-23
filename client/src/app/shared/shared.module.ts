@@ -5,10 +5,12 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { CheckboxModule } from 'primeng/checkbox';
-import { ToastrModule } from 'ngx-toastr';
+import { MenubarModule } from 'primeng/menubar';
+import { TableModule } from 'primeng/table';
+import { TabMenuModule } from 'primeng/tabmenu';
 
 // ngx-toastr
-import { MenubarModule } from 'primeng/menubar';
+import { ToastrModule } from 'ngx-toastr';
 
 //materials
 import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
@@ -36,6 +38,8 @@ import { PagesComponent } from '../pages/pages.component';
     PasswordModule,
     CheckboxModule,
     MenubarModule,
+    TableModule,
+    TabMenuModule,
 
     //materials
     MatPasswordStrengthModule.forRoot(),
@@ -48,12 +52,14 @@ import { PagesComponent } from '../pages/pages.component';
     PasswordModule,
     CheckboxModule,
     MenubarModule,
+    TableModule,
+    TabMenuModule,
 
-    //materials
+    // materials
     MatPasswordStrengthModule,
     MatSlideToggleModule,
 
-    //cpmponents
+    // components
     PagesComponent,
   ],
 })

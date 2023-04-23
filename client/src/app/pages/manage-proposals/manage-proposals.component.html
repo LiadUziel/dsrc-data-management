@@ -1,1 +1,16 @@
-<p>proposals works!</p>
+<div class="header">
+  <h1>Manage Proposals</h1>
+  <p-tabMenu
+    [model]="items"
+    [activeItem]="activeItem"
+    (activeItemChange)="onActiveItemChange($event)"
+  ></p-tabMenu>
+</div>
+
+<div class="table-wrapper" [ngSwitch]="activeItem.label">
+  <div *ngSwitchCase="'Data Science Doctoral'">ds doc</div>
+  <div *ngSwitchCase="'Post Doctoral'">post doc</div>
+  <div *ngSwitchCase="'Seed Research'">seed research</div>
+  <div *ngSwitchCase="'Dataset Collection'">ds collection</div>
+  <div *ngSwitchDefault class="no-choice">Select a grant type</div>
+</div>

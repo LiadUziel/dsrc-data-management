@@ -55,6 +55,11 @@ export class NavBarComponent {
           },
         ],
       },
+      {
+        label: 'Manage Proposals',
+        icon: 'pi pi-wrench',
+        routerLink: 'manage-proposals',
+      },
     ];
   }
 }
