@@ -17,6 +17,10 @@ import { SeedResearchComponent } from './pages/submit-proposal/seed-research/see
 import { DatasetCollectionComponent } from './pages/submit-proposal/dataset-collection/dataset-collection.component';
 import { GrantsAwardedComponent } from './pages/grants-awarded/grants-awarded.component';
 import { ManageProposalsComponent } from './pages/manage-proposals/manage-proposals.component';
+import { DsDoctoralTableComponent } from './pages/manage-proposals/ds-doctoral-table/ds-doctoral-table.component';
+import { PostDoctoralTableComponent } from './pages/manage-proposals/post-doctoral-table/post-doctoral-table.component';
+import { SeedResearchTableComponent } from './pages/manage-proposals/seed-research-table/seed-research-table.component';
+import { DatasetCollectionTableComponent } from './pages/manage-proposals/dataset-collection-table/dataset-collection-table.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +35,10 @@ import { ManageProposalsComponent } from './pages/manage-proposals/manage-propos
     DatasetCollectionComponent,
     GrantsAwardedComponent,
     ManageProposalsComponent,
+    DsDoctoralTableComponent,
+    PostDoctoralTableComponent,
+    SeedResearchTableComponent,
+    DatasetCollectionTableComponent,
   ],
   imports: [
     BrowserModule,

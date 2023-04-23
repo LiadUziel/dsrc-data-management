@@ -1,0 +1,22 @@
+<p-table [value]="seedResearchProposals$ | async">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>sharedField1</th>
+      <th>sharedField2</th>
+      <th>sharedField3</th>
+      <th>sharedField4</th>
+      <th>uniqueFieldSeedResearch1</th>
+      <th>uniqueFieldSeedResearch2</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-proposal>
+    <tr>
+      <td>{{ proposal.sharedField1 }}</td>
+      <td>{{ proposal.sharedField2 }}</td>
+      <td>{{ proposal.sharedField3 }}</td>
+      <td>{{ proposal.sharedField4 }}</td>
+      <td>{{ proposal.uniqueFieldSeedResearch1 }}</td>
+      <td>{{ proposal.uniqueFieldSeedResearch2 }}</td>
+    </tr>
+  </ng-template>
+</p-table>

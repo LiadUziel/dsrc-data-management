@@ -24,4 +24,21 @@ export class GrantProposalService {
       },
     });
   }
+
+  // get proposal from api by DS_DOCTORAL, POST_DOCTORAL, SEED_RESEARCH, or DATASET_COLLECTION
+  getProposalsByGrantType(
+    grantType:
+      | 'DS_DOCTORAL'
+      | 'POST_DOCTORAL'
+      | 'SEED_RESEARCH'
+      | 'DATASET_COLLECTION'
+  ) {
+    const { href } = new URL(`/api/grant-proposal/${grantType}`, this.apiUrl);
+    const token = this.tokenService.getToken();
+    return this.http.get<GrantProposal[]>(href, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
 }
