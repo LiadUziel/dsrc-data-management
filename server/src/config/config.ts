@@ -31,4 +31,8 @@ export class Config {
       : process.env.FRONTEND_URL_PROD;
 
   public static JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
+
+  public static NODEMAILER_USER = process.env.NODEMAILER_USER;
+
+  public static NODEMAILER_PASS = process.env.NODEMAILER_PASS;
 }

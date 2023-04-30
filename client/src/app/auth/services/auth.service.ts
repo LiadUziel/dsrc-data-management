@@ -53,4 +53,28 @@ export class AuthService {
       },
     });
   }
+
+  verifyJwt(token: string) {
+    return this.http.get<{ result: string, email: any }>(this.apiUrl + '/verify-jwt', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+
+  forgotPassword(email:string) {
+    return this.http.post<{ token: string }>(this.apiUrl + '/forgot-password', {
+      email
+    });
+  }
+
+  renewPassword(
+    email: string,
+    password: string,
+  ) {
+    return this.http.post(this.apiUrl + '/renew-password', {
+      email,
+      password
+    });
+  }
 }

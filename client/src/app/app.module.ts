@@ -12,6 +12,8 @@ import { RegisterComponent } from './pages/register/register.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { GrantsAwardedComponent } from './pages/grants-awarded/grants-awarded.component';
 import { ProposalsComponent } from './pages/proposals/proposals.component';
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
+import { RenewPasswordComponent } from './pages/renew-password/renew-password.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,8 @@ import { ProposalsComponent } from './pages/proposals/proposals.component';
     PageNotFoundComponent,
     GrantsAwardedComponent,
     ProposalsComponent,
+    ForgotPasswordComponent,
+    RenewPasswordComponent,
   ],
   imports: [
     BrowserModule,
