@@ -221,8 +221,6 @@ export const verifyJwtMiddleware: RequestHandler = async (req, res, next) => {
 export const updateUserDB: RequestHandler = async (req, res, next) => {
   try {
     const user: User = req.body;
-    // const filterQuery = {email: user.email};
-    // const newValues = { $set: {password: user.password}};
     const userDB = await UserModel.updateOne({email: user.email}, {password: user.password}).exec();
 
     res.send(user);
