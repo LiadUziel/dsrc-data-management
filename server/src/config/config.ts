@@ -19,7 +19,7 @@ export class Config {
   /**
    * Mongodb url
    * @example mongodb://localhost:27017/sample_db
-   */ // TODO - add db url
+   */
   public static DB_URL = process.env.DB_URL;
 
   /**

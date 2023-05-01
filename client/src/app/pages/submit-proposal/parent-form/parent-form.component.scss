@@ -1,0 +1,14 @@
+.parent-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+
+    padding: 0 1.5rem;
+
+    width: 40vw;
+
+    .p-float-label,
+    input {
+        width: 100%;
+    }
+}
