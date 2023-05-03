@@ -16,7 +16,11 @@ import { PostDoctoralComponent } from './pages/submit-proposal/post-doctoral/pos
 import { SeedResearchComponent } from './pages/submit-proposal/seed-research/seed-research.component';
 import { DatasetCollectionComponent } from './pages/submit-proposal/dataset-collection/dataset-collection.component';
 import { GrantsAwardedComponent } from './pages/grants-awarded/grants-awarded.component';
-import { ProposalsComponent } from './pages/proposals/proposals.component';
+import { ManageProposalsComponent } from './pages/manage-proposals/manage-proposals.component';
+import { DsDoctoralTableComponent } from './pages/manage-proposals/ds-doctoral-table/ds-doctoral-table.component';
+import { PostDoctoralTableComponent } from './pages/manage-proposals/post-doctoral-table/post-doctoral-table.component';
+import { SeedResearchTableComponent } from './pages/manage-proposals/seed-research-table/seed-research-table.component';
+import { DatasetCollectionTableComponent } from './pages/manage-proposals/dataset-collection-table/dataset-collection-table.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { RenewPasswordComponent } from './pages/renew-password/renew-password.component';
 
@@ -32,9 +36,7 @@ import { RenewPasswordComponent } from './pages/renew-password/renew-password.co
     SeedResearchComponent,
     DatasetCollectionComponent,
     GrantsAwardedComponent,
-    ProposalsComponent,
-    ForgotPasswordComponent,
-    RenewPasswordComponent,
+    ManageProposalsComponent,
   ],
   imports: [
     BrowserModule,
