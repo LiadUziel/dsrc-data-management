@@ -21,6 +21,8 @@ import { DsDoctoralTableComponent } from './pages/manage-proposals/ds-doctoral-t
 import { PostDoctoralTableComponent } from './pages/manage-proposals/post-doctoral-table/post-doctoral-table.component';
 import { SeedResearchTableComponent } from './pages/manage-proposals/seed-research-table/seed-research-table.component';
 import { DatasetCollectionTableComponent } from './pages/manage-proposals/dataset-collection-table/dataset-collection-table.component';
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
+import { RenewPasswordComponent } from './pages/renew-password/renew-password.component';
 
 @NgModule({
   declarations: [
@@ -35,10 +37,6 @@ import { DatasetCollectionTableComponent } from './pages/manage-proposals/datase
     DatasetCollectionComponent,
     GrantsAwardedComponent,
     ManageProposalsComponent,
-    DsDoctoralTableComponent,
-    PostDoctoralTableComponent,
-    SeedResearchTableComponent,
-    DatasetCollectionTableComponent,
   ],
   imports: [
     BrowserModule,

@@ -8,9 +8,12 @@ import { PostDoctoralComponent } from './pages/submit-proposal/post-doctoral/pos
 import { SeedResearchComponent } from './pages/submit-proposal/seed-research/seed-research.component';
 import { DatasetCollectionComponent } from './pages/submit-proposal/dataset-collection/dataset-collection.component';
 import { GrantsAwardedComponent } from './pages/grants-awarded/grants-awarded.component';
-import { ManageProposalsComponent } from './pages/manage-proposals/manage-proposals.component';
+import { ManageProposalsComponent } from './pages/manage-proposals/manage-proposals.component'; 
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { AuthGuard } from './auth/services/auth.guard';
 import { AdminAuthGuard } from './auth/services/admin-auth-guard';
+import { RenewPasswordComponent } from './pages/renew-password/renew-password.component';
+import { RenewPasswordLinkGuard } from './auth/services/renew-password-link.guard.service';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -38,6 +41,8 @@ const routes: Routes = [
     component: GrantsAwardedComponent,
     canActivate: [AdminAuthGuard],
   }, // example of AdminAuthGuard,TODO: remove (/ work on) component
+  { path:'forgotPassword', component: ForgotPasswordComponent},
+  { path: 'renewPassword', component: RenewPasswordComponent, canActivate: [RenewPasswordLinkGuard]},
   { path: '**', component: PageNotFoundComponent },
 ];
 
