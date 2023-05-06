@@ -37,6 +37,12 @@ import { RenewPasswordComponent } from './pages/renew-password/renew-password.co
     DatasetCollectionComponent,
     GrantsAwardedComponent,
     ManageProposalsComponent,
+    DsDoctoralTableComponent,
+    PostDoctoralTableComponent,
+    SeedResearchTableComponent,
+    DatasetCollectionTableComponent,
+    ForgotPasswordComponent,
+    RenewPasswordComponent
   ],
   imports: [
     BrowserModule,

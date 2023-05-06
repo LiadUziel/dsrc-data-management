@@ -2,16 +2,21 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environments';
 import { TokenStorageService } from './token-storage.service';
+import { Observable, Subject, filter, map, of } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private apiUrl = environment.apiUrl + '/api/auth';
+  public gonnaLogIn$ = new Subject<boolean>();
+
 
   constructor(
     private http: HttpClient,
-    private tokenService: TokenStorageService
+    private tokenService: TokenStorageService,
+    private toastr: ToastrService
   ) {}
 
   login(email: string, password: string, rememberMe: boolean) {
@@ -76,5 +81,29 @@ export class AuthService {
       email,
       password
     });
+  }
+
+  isLogin(): Observable<any>{
+    const token = this.tokenService.getToken();
+    if(token) {
+      return this.verifyJwt(token).pipe(
+        filter((res) => res !== undefined),
+        map((res) => {
+          if (!res?.email?.email) {
+            return null;
+          }
+          return res.email;
+        })
+      )
+    }
+    
+    return of(null);
+  }
+
+  logout() {
+    this.gonnaLogIn$.next(false);
+    this.tokenService.removeToken();
+    this.toastr.show('Logout successful!');
+    // TODO - navigate to home page
   }
 }

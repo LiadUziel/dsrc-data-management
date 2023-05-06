@@ -160,11 +160,19 @@ export const sendRenewPasswordEmail: RequestHandler = async(req, res, next) => {
       });
 
       const expiresIn = "5m";
-      const token = jwt.sign(
+      let token = jwt.sign(
         { email: email},
         Config.JWT_SECRET_KEY,
         { expiresIn }
       );
+        
+      while(token.indexOf('?') > -1) {
+        token = jwt.sign(
+          { email: email},
+          Config.JWT_SECRET_KEY,
+          { expiresIn }
+        );
+      }
 
       const linkToSend = Config.FRONTEND_URL + '/renewPassword?' + token;
 
@@ -190,7 +198,7 @@ export const sendRenewPasswordEmail: RequestHandler = async(req, res, next) => {
       };
 
       transporter.sendMail(mailOptions).then(() => {
-        res.send({token: token ,email: email});
+        res.send({token: token});
       });
 
   }
@@ -214,8 +222,10 @@ export const verifyJwtMiddleware: RequestHandler = async (req, res, next) => {
       res.send({result: 'verified!', email: jwtData});
   }
   catch(e) {
-    res.send({result: 'The link is expired, so you are redirected to login page, please enter forgot password page again if you would like to renew pasword'})
+    next(e);
+
   }
+
 }
 
 export const updateUserDB: RequestHandler = async (req, res, next) => {

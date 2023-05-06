@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
+import { AuthService } from 'src/app/auth/services/auth.service';
+import { NavBarService } from '../../services/nav-bar.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -8,58 +10,37 @@ import { MenuItem } from 'primeng/api';
 })
 export class NavBarComponent {
   items: MenuItem[];
+  constructor(private authService: AuthService, private navBarService: NavBarService){}
 
   ngOnInit() {
-    this.items = [
-      {
-        label: 'DSRC Data Management',
-        disabled: true,
+    this.authService.isLogin().subscribe({
+      next: (decryptToken) => {
+        if (decryptToken) {
+          this.items = this.navBarService.getItems(true, decryptToken.isAdmin)
+        }
+        else {
+          this.items = this.navBarService.getItems(false, false)
+        }
       },
-      {
-        label: 'Home',
-        icon: 'pi pi-fw pi-home',
-        routerLink: 'login',
-      },
-      {
-        label: 'Sign Up',
-        routerLink: 'register',
-      },
-      {
-        label: 'Sign In',
-        routerLink: 'login',
-      },
-      {
-        label: 'Log Out',
-        icon: 'pi pi-fw pi-sign-out',
-        routerLink: 'login',
-      },
-      {
-        label: 'Submit Proposal',
-        icon: 'pi pi-plus-circle',
-        items: [
-          {
-            label: 'Data Science Doctoral',
-            routerLink: 'submit-proposal/ds-doctoral',
-          },
-          {
-            label: 'Post-Doctoral research',
-            routerLink: 'submit-proposal/post-doctoral',
-          },
-          {
-            label: 'Seed research',
-            routerLink: 'submit-proposal/seed-research',
-          },
-          {
-            label: 'Dataset collection',
-            routerLink: 'submit-proposal/dataset-collection',
-          },
-        ],
-      },
-      {
-        label: 'Manage Proposals',
-        icon: 'pi pi-wrench',
-        routerLink: 'manage-proposals',
-      },
-    ];
+      error: (err) => {
+        console.log(err)
+      }
+    });
+
+    this.authService.gonnaLogIn$.subscribe((res) => {
+      this.authService.isLogin().subscribe({
+        next: (decryptToken) => {
+          if (decryptToken && res) {
+            this.items = this.navBarService.getItems(true, decryptToken.isAdmin)
+          }
+          else {
+            this.items = this.navBarService.getItems(false, false)
+          }
+        },
+        error: (err) => {
+          console.log(err)
+        }
+      });
+    });
   }
 }
