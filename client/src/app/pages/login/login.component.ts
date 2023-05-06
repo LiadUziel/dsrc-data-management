@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../auth/services/auth.service';
 import { TokenStorageService } from '../../auth/services/token-storage.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private tokenService: TokenStorageService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -38,9 +40,8 @@ export class LoginComponent implements OnInit {
       .subscribe({
         next: (result) => {
           this.tokenService.setToken(result.token);
-
           this.toastr.success('Login successful!');
-
+          this.authService.gonnaLogIn$.next(true);
           // TODO - navigate to home page
         },
         error: (error) => {
@@ -57,14 +58,6 @@ export class LoginComponent implements OnInit {
   }
   get rememberMe(): boolean {
     return this.loginForm.get('rememberMe').value;
-  }
-
-  // TODO - transfer logout to navbar
-  logout() {
-    this.tokenService.removeToken();
-    this.toastr.show('Logout successful!');
-
-    // TODO - navigate to home page
   }
 
   // TODO - Remove this

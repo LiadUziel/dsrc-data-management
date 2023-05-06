@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Observable, concatMap } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
 
 
@@ -16,7 +17,7 @@ import { AuthService } from 'src/app/auth/services/auth.service';
   styleUrls: ['./renew-password.component.scss']
 })
 export class RenewPasswordComponent {
-
+  renewPassword$: Observable<any>;
   renewPasswordForm: FormGroup;
   passwordDetails = [
     'contains at least one lower character',
@@ -32,17 +33,19 @@ export class RenewPasswordComponent {
     private router: Router,
     private toastr: ToastrService,
     private authService: AuthService
-  ) {}
+  ) {
+    let token = window.location.href.split('?')[1];
+    token = token.substring(0, token.length - 1);
+    this.renewPassword$ = this.authService.verifyJwt(token).pipe(
+      concatMap((res) => 
+        this.authService.renewPassword(res.user.email, this.password)
+      )
+    );
+  }
 
   ngOnInit(): void {
-    setTimeout(() => {} ,2000);
-
     this.renewPasswordForm = new FormGroup(
       {
-        email: new FormControl<string>('', [
-          Validators.required,
-          Validators.email,
-        ]),
         password: new FormControl<string>('', [
           Validators.required,
           Validators.minLength(6),
@@ -58,6 +61,7 @@ export class RenewPasswordComponent {
       }
     );
   }
+
   mustMatch(password: string, confirmPassword: string) {
     return (formGroup: AbstractControl): { [key: string]: any } | null => {
       const passwordControl = formGroup.get(password);
@@ -85,12 +89,12 @@ export class RenewPasswordComponent {
   }
 
   onSubmit() {
-    this.authService.renewPassword(this.email, this.password).subscribe({
+    this.renewPassword$.subscribe({
       next: (result) => {
-        console.log(result);
         this.router.navigate(['/login']);
         this.toastr.success('Password updated successfully');
       },
+
       error: (error) => {
         console.log(error);
         this.toastr.error('Password update failed');
@@ -129,10 +133,8 @@ export class RenewPasswordComponent {
     }
   }
 
-  get email(): string {
-    return this.renewPasswordForm.get('email').value;
-  }
   get password(): string {
     return this.renewPasswordForm.get('password').value;
   }
+
 }

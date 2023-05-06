@@ -26,10 +26,10 @@ export class ForgotPasswordComponent {
   }
 
   onSubmit() {
+    this.toastr.info('please wait');
     this.authService.forgotPassword(this.email).subscribe({
       next: (result) => {
         this.toastr.success('Email for renew password was sent to the email address you inserted');
-        console.log(result);
       },
 
       error: (error) => {

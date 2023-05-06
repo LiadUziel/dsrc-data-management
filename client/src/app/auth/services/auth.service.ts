@@ -2,16 +2,22 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environments';
 import { TokenStorageService } from './token-storage.service';
+import { Observable, Subject, filter, map, of } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { User } from '../interfaces/user-interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private apiUrl = environment.apiUrl + '/api/auth';
+  public gonnaLogIn$ = new Subject<boolean>();
+
 
   constructor(
     private http: HttpClient,
-    private tokenService: TokenStorageService
+    private tokenService: TokenStorageService,
+    private toastr: ToastrService
   ) {}
 
   login(email: string, password: string, rememberMe: boolean) {
@@ -55,7 +61,7 @@ export class AuthService {
   }
 
   verifyJwt(token: string) {
-    return this.http.get<{ result: string, email: any }>(this.apiUrl + '/verify-jwt', {
+    return this.http.get<{ result: string, user: any }>(this.apiUrl + '/verify-jwt', {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -76,5 +82,29 @@ export class AuthService {
       email,
       password
     });
+  }
+
+  isLogin(): Observable<User> {
+    const token = this.tokenService.getToken();
+    if(token) {
+      return this.verifyJwt(token).pipe(
+        filter((res) => res !== undefined),
+        map((res) => {
+          if (!res?.user?.email) {
+            return null;
+          }
+          return res.user;
+        })
+      )
+    }
+    
+    return of(null);
+  }
+
+  logout() {
+    this.gonnaLogIn$.next(false);
+    this.tokenService.removeToken();
+    this.toastr.show('Logout successful!');
+    // TODO - navigate to home page
   }
 }
