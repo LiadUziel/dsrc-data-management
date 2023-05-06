@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environments';
 import { TokenStorageService } from './token-storage.service';
 import { Observable, Subject, filter, map, of } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { User } from '../interfaces/user-interface';
 
 @Injectable({
   providedIn: 'root',
@@ -60,7 +61,7 @@ export class AuthService {
   }
 
   verifyJwt(token: string) {
-    return this.http.get<{ result: string, email: any }>(this.apiUrl + '/verify-jwt', {
+    return this.http.get<{ result: string, user: any }>(this.apiUrl + '/verify-jwt', {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -83,16 +84,16 @@ export class AuthService {
     });
   }
 
-  isLogin(): Observable<any>{
+  isLogin(): Observable<User> {
     const token = this.tokenService.getToken();
     if(token) {
       return this.verifyJwt(token).pipe(
         filter((res) => res !== undefined),
         map((res) => {
-          if (!res?.email?.email) {
+          if (!res?.user?.email) {
             return null;
           }
-          return res.email;
+          return res.user;
         })
       )
     }

@@ -14,7 +14,7 @@ export class RenewPasswordLinkGuard implements CanActivate{
     const token = window.location.href.split('?')[1];
     return this.authService.verifyJwt(token).pipe(
       map((res) => {
-        if (res?.email?.email) {
+        if (res?.user?.email) {
           return true;
         }
         this.toastr.error('The link is expired, so you will redirect to login page, if you would like to rew your password, please get to forgot password page again');

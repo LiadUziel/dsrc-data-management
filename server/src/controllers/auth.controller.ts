@@ -219,7 +219,7 @@ export const verifyJwtMiddleware: RequestHandler = async (req, res, next) => {
       // extract the token from authHeader
       const token = authHeader.split(" ")[1];
       const jwtData = jwt.verify(token, Config.JWT_SECRET_KEY);
-      res.send({result: 'verified!', email: jwtData});
+      res.send({result: 'verified!', user: jwtData});
   }
   catch(e) {
     next(e);
