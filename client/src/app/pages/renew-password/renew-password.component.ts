@@ -7,14 +7,13 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Observable, concatMap } from 'rxjs';
+import { Observable, concatMap, finalize } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
-
 
 @Component({
   selector: 'app-renew-password',
   templateUrl: './renew-password.component.html',
-  styleUrls: ['./renew-password.component.scss']
+  styleUrls: ['./renew-password.component.scss'],
 })
 export class RenewPasswordComponent {
   renewPassword$: Observable<any>;
@@ -29,6 +28,8 @@ export class RenewPasswordComponent {
   showDetails: boolean = false;
   showDetailsMassage = 'Show password details';
 
+  loading = false;
+
   constructor(
     private router: Router,
     private toastr: ToastrService,
@@ -36,11 +37,13 @@ export class RenewPasswordComponent {
   ) {
     let token = window.location.href.split('?')[1];
     token = token.substring(0, token.length - 1);
-    this.renewPassword$ = this.authService.verifyJwt(token).pipe(
-      concatMap((res) => 
-        this.authService.renewPassword(res.user.email, this.password)
-      )
-    );
+    this.renewPassword$ = this.authService
+      .verifyJwt(token)
+      .pipe(
+        concatMap((res) =>
+          this.authService.renewPassword(res.user.email, this.password)
+        )
+      );
   }
 
   ngOnInit(): void {
@@ -89,17 +92,24 @@ export class RenewPasswordComponent {
   }
 
   onSubmit() {
-    this.renewPassword$.subscribe({
-      next: (result) => {
-        this.router.navigate(['/login']);
-        this.toastr.success('Password updated successfully');
-      },
+    this.loading = true;
+    this.renewPassword$
+      .pipe(
+        finalize(() => {
+          this.loading = false;
+        })
+      )
+      .subscribe({
+        next: (result) => {
+          this.router.navigate(['/login']);
+          this.toastr.success('Password updated successfully');
+        },
 
-      error: (error) => {
-        console.log(error);
-        this.toastr.error('Password update failed');
-      }
-    });
+        error: (error) => {
+          console.log(error);
+          this.toastr.error('Password update failed');
+        },
+      });
   }
 
   isPasswordDetailTrue(index: number): boolean {
@@ -136,5 +146,4 @@ export class RenewPasswordComponent {
   get password(): string {
     return this.renewPasswordForm.get('password').value;
   }
-
 }

@@ -1,91 +1,114 @@
-<form class="form-wrapper" [formGroup]="registerationForm" (ngSubmit)="onSubmit()">
-    <h1>Register</h1>
-    
-    <div class="input-wrapper">
-      <span class="input-title">Email</span>
-      <div class="p-inputgroup input-user">
-        <span class="p-inputgroup-addon">
-          <i class="pi pi-at"></i>
-        </span>
-        <input pInputText placeholder="Enter a email" formControlName="email" />
-      </div>
+<form
+  class="form-wrapper"
+  [formGroup]="registerationForm"
+  (ngSubmit)="onSubmit()"
+>
+  <h1>Register</h1>
+
+  <div class="input-wrapper">
+    <span class="input-title">Email</span>
+    <div class="p-inputgroup input-user">
+      <span class="p-inputgroup-addon">
+        <i class="pi pi-at"></i>
+      </span>
+      <input pInputText placeholder="Enter a email" formControlName="email" />
     </div>
-  
-    <div class="input-wrapper">
-      <span class="input-title">Password</span>
-      <p class="must-include-font-size-and-padding">must include at least 6 characters</p>
-      <div class="input-password">
-        <span class="p-inputgroup-addon">
-          <i class="pi pi-lock lock-logo"></i>
-        </span>
-        <p-password
-          placeholder="Enter a password"
-          styleClass="password"
-          [toggleMask]="true"
-          formControlName="password"
-          [feedback]="false"
-        ></p-password>
-      </div>
-        <span class="password-strength-font-size">Password strength:</span>
-        <mat-password-strength [password]="registerationForm.value['password']"></mat-password-strength>
-        <span class="mat-toggle mat-toggle-float-padding">{{showDetailsMassage}}</span>
-        <mat-slide-toggle
-             class="mat-toggle"
-            formControlName="showPasswordStrengthDetailsToggle"
-            (change) = "setShowDetails()"> 
-        </mat-slide-toggle>
+  </div>
+
+  <div class="input-wrapper">
+    <span class="input-title">Password</span>
+    <p class="must-include-font-size-and-padding">
+      must include at least 6 characters
+    </p>
+    <div class="input-password">
+      <span class="p-inputgroup-addon">
+        <i class="pi pi-lock lock-logo"></i>
+      </span>
+      <p-password
+        placeholder="Enter a password"
+        styleClass="password"
+        [toggleMask]="true"
+        formControlName="password"
+        [feedback]="false"
+      ></p-password>
     </div>
-
-    <div *ngIf="showDetails" class="display-password-details">
-        <span *ngFor="let passwordDetail of passwordDetails;index as i">
-                <i class="pi pi-check icon-marging" *ngIf="isPasswordDetailTrue(i)">{{passwordDetail}}</i>
-                <i class="pi pi-times icon-marging" *ngIf="!isPasswordDetailTrue(i)">{{passwordDetail}}</i>
-        </span>
-    </div>
-
-    <div class="input-wrapper">
-        <span class="input-title">Confirm Password</span>
-        <div class="input-password">
-          <span class="p-inputgroup-addon">
-            <i class="pi pi-lock lock-logo"></i>
-          </span>
-          <p-password
-            placeholder="Confirm password"
-            styleClass="password"
-            [toggleMask]="true"
-            formControlName="confirmPassword"
-            [feedback]="false"
-          ></p-password>
-        </div>
-    </div>
-
-    <div class="input-wrapper">
-        <span class="input-title">First Name</span>
-        <div class="p-inputgroup input-user">
-          <span class="p-inputgroup-addon">
-            <i class="pi pi-user"></i>
-          </span>
-          <input pInputText placeholder="Enter your first name" formControlName="firstName" />
-        </div>
-      </div>
-
-      <div class="input-wrapper">
-        <span class="input-title">Last Name</span>
-        <div class="p-inputgroup input-user">
-          <span class="p-inputgroup-addon">
-            <i class="pi pi-user"></i>
-          </span>
-          <input pInputText placeholder="Enter your last name" formControlName="lastName" />
-        </div>
-      </div>
-
-    <button
-      pButton
-      type="submit"
-      class="p-button-primary"
-      [disabled]="!registerationForm.valid"
+    <span class="password-strength-font-size">Password strength:</span>
+    <mat-password-strength
+      [password]="registerationForm.value['password']"
+    ></mat-password-strength>
+    <span class="mat-toggle mat-toggle-float-padding">{{
+      showDetailsMassage
+    }}</span>
+    <mat-slide-toggle
+      class="mat-toggle"
+      formControlName="showPasswordStrengthDetailsToggle"
+      (change)="setShowDetails()"
     >
-      Register
-    </button>
-  </form>
-  
+    </mat-slide-toggle>
+  </div>
+
+  <div *ngIf="showDetails" class="display-password-details">
+    <span *ngFor="let passwordDetail of passwordDetails; index as i">
+      <i class="pi pi-check icon-marging" *ngIf="isPasswordDetailTrue(i)">{{
+        passwordDetail
+      }}</i>
+      <i class="pi pi-times icon-marging" *ngIf="!isPasswordDetailTrue(i)">{{
+        passwordDetail
+      }}</i>
+    </span>
+  </div>
+
+  <div class="input-wrapper">
+    <span class="input-title">Confirm Password</span>
+    <div class="input-password">
+      <span class="p-inputgroup-addon">
+        <i class="pi pi-lock lock-logo"></i>
+      </span>
+      <p-password
+        placeholder="Confirm password"
+        styleClass="password"
+        [toggleMask]="true"
+        formControlName="confirmPassword"
+        [feedback]="false"
+      ></p-password>
+    </div>
+  </div>
+
+  <div class="input-wrapper">
+    <span class="input-title">First Name</span>
+    <div class="p-inputgroup input-user">
+      <span class="p-inputgroup-addon">
+        <i class="pi pi-user"></i>
+      </span>
+      <input
+        pInputText
+        placeholder="Enter your first name"
+        formControlName="firstName"
+      />
+    </div>
+  </div>
+
+  <div class="input-wrapper">
+    <span class="input-title">Last Name</span>
+    <div class="p-inputgroup input-user">
+      <span class="p-inputgroup-addon">
+        <i class="pi pi-user"></i>
+      </span>
+      <input
+        pInputText
+        placeholder="Enter your last name"
+        formControlName="lastName"
+      />
+    </div>
+  </div>
+
+  <button
+    pButton
+    type="submit"
+    class="p-button-primary"
+    [disabled]="!registerationForm.valid"
+    [loading]="loading"
+  >
+    Register
+  </button>
+</form>

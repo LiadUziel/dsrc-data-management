@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { finalize } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
 
 @Component({
@@ -26,6 +27,8 @@ export class RegisterComponent {
   ];
   showDetails: boolean = false;
   showDetailsMassage = 'Show password details';
+
+  loading = false;
 
   constructor(
     private router: Router,
@@ -90,8 +93,14 @@ export class RegisterComponent {
   }
 
   onSubmit() {
+    this.loading = true;
     this.authService
       .register(this.email, this.password, this.firstName, this.lastName)
+      .pipe(
+        finalize(() => {
+          this.loading = false;
+        })
+      )
       .subscribe({
         next: (result) => {
           this.router.navigate(['/login']);

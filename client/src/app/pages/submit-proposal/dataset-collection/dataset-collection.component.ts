@@ -4,6 +4,7 @@ import { FormProposalService } from '../services/form-proposal.service';
 import { GrantProposalService } from 'src/app/shared/services/grant-proposal.service';
 import { ToastrService } from 'ngx-toastr';
 import { GrantProposal } from 'src/app/shared/models/grant-proposal.interface';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-dataset-collection',
@@ -12,6 +13,8 @@ import { GrantProposal } from 'src/app/shared/models/grant-proposal.interface';
 })
 export class DatasetCollectionComponent implements OnInit {
   dsCollectionForm: FormGroup;
+
+  loading = false;
 
   constructor(
     private formProposalService: FormProposalService,
@@ -24,22 +27,30 @@ export class DatasetCollectionComponent implements OnInit {
   }
 
   onSubmit() {
+    this.loading = true;
     const proposal: GrantProposal = this.dsCollectionForm.value;
     proposal.type = 'DATASET_COLLECTION';
-    this.grantProposalService.createGrantProposal(proposal).subscribe({
-      next: (result) => {
-        this.dsCollectionForm.reset();
-        this.toastr.success('Proposal submitted successfully');
-      },
-      error: (err) => {
-        if (err.error.message.includes('jwt')) {
-          this.toastr.error(
-            'You are not logged in. Please login to submit a proposal'
-          );
-        } else {
-          this.toastr.error('Proposal submission failed');
-        }
-      },
-    });
+    this.grantProposalService
+      .createGrantProposal(proposal)
+      .pipe(
+        finalize(() => {
+          this.loading = false;
+        })
+      )
+      .subscribe({
+        next: (result) => {
+          this.dsCollectionForm.reset();
+          this.toastr.success('Proposal submitted successfully');
+        },
+        error: (err) => {
+          if (err.error.message.includes('jwt')) {
+            this.toastr.error(
+              'You are not logged in. Please login to submit a proposal'
+            );
+          } else {
+            this.toastr.error('Proposal submission failed');
+          }
+        },
+      });
   }
 }

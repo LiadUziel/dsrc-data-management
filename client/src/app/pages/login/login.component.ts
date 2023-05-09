@@ -4,6 +4,7 @@ import { AuthService } from '../../auth/services/auth.service';
 import { TokenStorageService } from '../../auth/services/token-storage.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -12,6 +13,8 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
+
+  loading = false;
 
   constructor(
     private authService: AuthService,
@@ -35,8 +38,14 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
+    this.loading = true;
     this.authService
       .login(this.email, this.password, this.rememberMe)
+      .pipe(
+        finalize(() => {
+          this.loading = false;
+        })
+      )
       .subscribe({
         next: (result) => {
           this.tokenService.setToken(result.token);
