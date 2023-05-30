@@ -4,6 +4,15 @@
   <form class="form" [formGroup]="doctoralForm" (ngSubmit)="onSubmit()">
     <app-parent-form [form]="doctoralForm"></app-parent-form>
 
+    <p-fileUpload
+      mode="basic"
+      chooseLabel="Upload CV"
+      name="file"
+      [url]="apiUrl + '/api/file/upload'"
+      [maxFileSize]="1000000"
+      (onSend)="onUpload($event)"
+    ></p-fileUpload>
+
     <span class="p-float-label">
       <input pInputText formControlName="uniqueFieldDsDoctoral1" />
       <label>uniqueField DsDoctoral1</label>
