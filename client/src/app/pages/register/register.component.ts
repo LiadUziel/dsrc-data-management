@@ -16,6 +16,7 @@ import { AuthService } from 'src/app/auth/services/auth.service';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent {
+  registerButtonClicked: boolean = false;
   registerationForm: FormGroup;
   passwordDetails = [
     'contains at least one lower character',
@@ -90,21 +91,24 @@ export class RegisterComponent {
   }
 
   onSubmit() {
-    this.authService
-      .register(this.email, this.password, this.firstName, this.lastName)
-      .subscribe({
-        next: (result) => {
-          this.router.navigate(['/login']);
-          this.toastr.success('Registration successful!');
+    this.registerButtonClicked = true;
+    setTimeout(() => {
+      this.registerButtonClicked = false;
+    }, 2000);
+    this.authService.sendVerifyRegisterEmail(this.email, this.password, this.firstName, this.lastName)
+    .subscribe({
+          next: (result) => {
+          this.toastr.success('A verification registration mail is sent to you, to be registred to DSRC, please click on the link at the email');
         },
         error: (error) => {
-          if (error.error.message.includes('duplicate key error')) {
+          console.log(error)
+          if (error.error.message.includes('email already exists')) {
             this.toastr.error('Email already exists!');
           } else {
             this.toastr.error('Registration failed!');
           }
         },
-      });
+    });
   }
 
   isPasswordDetailTrue(index: number): boolean {

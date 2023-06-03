@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 import { Config } from "../config/config";
 import * as nodemailer  from 'nodemailer';
 import Mailgen from "mailgen";
+import { Mail } from "../models/mail.interface";
 
 // use this middleware to hash password before saving to db
 export const hashPasswordMiddleware: RequestHandler = async (
@@ -125,7 +126,7 @@ export const isAdminMiddleware: RequestHandler = async (req, res, next) => {
 
 export const validateEmailMiddleware: RequestHandler = async(req, res, next) => {
   try {
-    const { email } = req.body;
+    const { email } = req.body.userData? req.body.userData : req.body;
 
     // get user from db
     const user = await UserModel.findOne({ email });
@@ -136,73 +137,6 @@ export const validateEmailMiddleware: RequestHandler = async(req, res, next) => 
     }
     next();
   } catch(e) {
-    next(e);
-  }
-}
-
-export const sendRenewPasswordEmail: RequestHandler = async(req, res, next) => {
-  try {
-      const { email } = req.body;
-      const config = {
-        service: 'gmail',
-        auth: {
-          user: Config.NODEMAILER_USER,
-          pass: Config.NODEMAILER_PASS
-        }
-      };
-      const transporter = nodemailer.createTransport(config);
-      const mailGenerator = new Mailgen({
-        theme: "default",
-        product: {
-          name: 'DSRC - university of haifa',
-          link: 'https://mailgen.js/'
-        }
-      });
-
-      const expiresIn = "5m";
-      let token = jwt.sign(
-        { email: email},
-        Config.JWT_SECRET_KEY,
-        { expiresIn }
-      );
-        
-      while(token.indexOf('?') > -1) {
-        token = jwt.sign(
-          { email: email},
-          Config.JWT_SECRET_KEY,
-          { expiresIn }
-        );
-      }
-
-      const linkToSend = Config.FRONTEND_URL + '/renewPassword?' + token;
-
-      const mailContent = {
-        body: {
-          name:'',
-          intro: 'DSRC renew password link is attached AND VALID ONLY FOR 5 MINUTES, please click on it to renew your password',
-          table: {
-            data: [{
-              link: `<a href="${linkToSend}">${linkToSend}</a>` 
-            }]
-          },
-          outro: ""
-        }
-      };
-
-      const mail = mailGenerator.generate(mailContent);
-      const mailOptions = {
-        from: Config.NODEMAILER_USER,
-        to: email,
-        subject: 'DSRC renew password link',
-        html: mail
-      };
-
-      transporter.sendMail(mailOptions).then(() => {
-        res.send({token: token});
-      });
-
-  }
-  catch(e) {
     next(e);
   }
 }
@@ -235,6 +169,90 @@ export const updateUserDB: RequestHandler = async (req, res, next) => {
 
     res.send(user);
   } catch (e) {
+    next(e);
+  }
+};
+
+export const sendEmailWithLinkMiddleware: RequestHandler = async(req, res, next) => {
+  try {
+    /*req = {UserData, emailConfig}*/
+    const user: User = req.body.userData;
+    const mailToUser: Mail = req.body.emailConfig;
+    const config = {
+      service: 'gmail',
+      auth: {
+        user: Config.NODEMAILER_USER,
+        pass: Config.NODEMAILER_PASS
+      }
+    };
+    const transporter = nodemailer.createTransport(config);
+    const mailGenerator = new Mailgen({
+      theme: "default",
+      product: {
+        name: 'DSRC - university of haifa',
+        link: 'https://mailgen.js/'
+      }
+    });
+
+    const expiresIn = "5m";
+    let token = jwt.sign(
+      { user: user},
+      Config.JWT_SECRET_KEY,
+      { expiresIn }
+    );
+      
+    while(token.indexOf('?') > -1) {
+      token = jwt.sign(
+        { user: user},
+        Config.JWT_SECRET_KEY,
+        { expiresIn }
+      );
+    }
+                      
+    const linkToSend = Config.FRONTEND_URL + mailToUser.endpoint + token;
+
+    const mailContent = {
+      body: {
+        name:'',
+        intro: mailToUser.content,
+        table: {
+          data: [{
+            link: `<a href="${linkToSend}">${linkToSend}</a>` 
+          }]
+        },
+        outro: ""
+      }
+    };
+
+    const mail = mailGenerator.generate(mailContent);
+    const mailOptions = {
+      from: Config.NODEMAILER_USER,
+      to: user.email,
+      subject: mailToUser.subject,
+      html: mail
+    };
+
+    transporter.sendMail(mailOptions).then(() => {
+      res.send({token: token});
+    });
+} catch (e) {
+  next(e);
+}
+};
+
+export const validateEmailNotExistMiddleware: RequestHandler = async(req, res, next) => {
+  try {
+    const { email } = req.body.userData;
+
+    // get user from db
+    const user = await UserModel.findOne({ email });
+
+    // bad request if user exists
+    if (user) {
+      return res.status(400).send({ status: 400, message: "email already exists at the system" });
+    }
+    next();
+  } catch(e) {
     next(e);
   }
 };
