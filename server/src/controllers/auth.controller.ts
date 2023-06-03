@@ -76,7 +76,7 @@ export const login: RequestHandler = async (req, res, next) => {
 
     // generate a jwt
     const token = jwt.sign(
-      { email: user.email, isLogged: true, isAdmin: user.isAdmin },
+      { email: user.email, isLogged: true, role: user.role },
       Config.JWT_SECRET_KEY,
       { expiresIn }
     );
@@ -100,8 +100,8 @@ export const authorizeMiddleware: RequestHandler = async (req, res, next) => {
     // extract the token from authHeader
     const token = authHeader.split(" ")[1];
     const jwtData = jwt.verify(token, Config.JWT_SECRET_KEY);
-    const { email, isLogged, isAdmin } = jwtData;
-    req.authUser = { email, isLogged, isAdmin };
+    const { email, isLogged, role } = jwtData;
+    req.authUser = { email, isLogged, role };
     next();
   } catch (e) {
     next(e);
@@ -110,9 +110,9 @@ export const authorizeMiddleware: RequestHandler = async (req, res, next) => {
 
 export const isAdminMiddleware: RequestHandler = async (req, res, next) => {
   try {
-    const isAdmin = req.authUser?.isAdmin;
+    const role = req.authUser?.role;
 
-    if (!isAdmin) {
+    if (role !== 'admin') {
       return res
         .status(403)
         .send({ status: 403, error: "You are not authorized" });
