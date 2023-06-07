@@ -14,16 +14,16 @@ export class RenewPasswordLinkGuard implements CanActivate{
     const token = window.location.href.split('?')[1];
     return this.authService.verifyJwt(token).pipe(
       map((res) => {
-        if (res?.user?.email) {
+        if (res?.user?.user?.email) {
           return true;
         }
-        this.toastr.error('The link is expired, so you will redirect to login page, if you would like to rew your password, please get to forgot password page again');
+        this.toastr.error('The link is expired, so you will redirect to login page, if you would like to renew your password, please get to forgot password page again');
         this.router.navigate(['/login']);
         return false;
       }
     ),
     catchError((err) => { 
-      this.toastr.error('The link is expired, so you will redirect to login page, if you would like to rew your password, please get to forgot password page again');
+      this.toastr.error('The link is expired, so you will redirect to login page, if you would like to renew your password, please get to forgot password page again');
       this.router.navigate(['/login']);
       throw err;
     })

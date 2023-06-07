@@ -6,9 +6,10 @@ import {
   authorizeMiddleware,
   isAdminMiddleware,
   validateEmailMiddleware,
-  sendRenewPasswordEmail,
   verifyJwtMiddleware,
   updateUserDB,
+  validateEmailNotExistMiddleware,
+  sendEmailWithLinkMiddleware,
 } from "../controllers/auth.controller";
 
 const authRouter: Router = express.Router();
@@ -34,7 +35,7 @@ authRouter.get(
   }
 );
 
-authRouter.post('/forgot-password', validateEmailMiddleware, sendRenewPasswordEmail);
+authRouter.post('/forgot-password', validateEmailMiddleware, sendEmailWithLinkMiddleware);
 authRouter.get(
   '/verify-jwt',
   verifyJwtMiddleware,
@@ -42,4 +43,5 @@ authRouter.get(
     return res.send({result: 'verified!'});
   });
   authRouter.post("/renew-password", validateEmailMiddleware, hashPasswordMiddleware, updateUserDB);
+  authRouter.post("/sendVerifyRegisterEmail", validateEmailNotExistMiddleware, sendEmailWithLinkMiddleware);
 export default authRouter;

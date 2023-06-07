@@ -7,7 +7,7 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 export class NavBarService {
   constructor(private authService: AuthService) {}
 
-  getItems(isLogged: boolean, isAdmin: boolean) {
+  getItems(isLogged: boolean, role: string) {
     return [
       {
         label: 'DSRC Data Management',
@@ -16,6 +16,7 @@ export class NavBarService {
       {
         label: 'Home',
         icon: 'pi pi-fw pi-home',
+        routerLink: 'login',
       },
       {
         label: 'Sign Up',
@@ -54,7 +55,7 @@ export class NavBarService {
         label: 'Manage Proposals',
         icon: 'pi pi-wrench',
         routerLink: 'manage-proposals',
-        visible: isLogged && isAdmin,
+        visible: isLogged && role === 'admin',
       },
       {
         label: 'Log Out',

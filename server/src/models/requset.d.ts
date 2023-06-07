@@ -6,7 +6,7 @@ declare global {
       authUser?: {
         email: string;
         isLogged: boolean;
-        isAdmin: boolean;
+        role: string;
       };
       data?: object;
     }

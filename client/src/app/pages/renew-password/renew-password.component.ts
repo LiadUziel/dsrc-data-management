@@ -41,7 +41,7 @@ export class RenewPasswordComponent {
       .verifyJwt(token)
       .pipe(
         concatMap((res) =>
-          this.authService.renewPassword(res.user.email, this.password)
+          this.authService.renewPassword(res.user.user.email, this.password)
         )
       );
   }
@@ -106,7 +106,6 @@ export class RenewPasswordComponent {
         },
 
         error: (error) => {
-          console.log(error);
           this.toastr.error('Password update failed');
         },
       });

@@ -23,6 +23,7 @@ import { SeedResearchTableComponent } from './pages/manage-proposals/seed-resear
 import { DatasetCollectionTableComponent } from './pages/manage-proposals/dataset-collection-table/dataset-collection-table.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { RenewPasswordComponent } from './pages/renew-password/renew-password.component';
+import { VerificationRegistrationComponent } from './pages/verification-registration/verification-registration.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { RenewPasswordComponent } from './pages/renew-password/renew-password.co
     SeedResearchTableComponent,
     DatasetCollectionTableComponent,
     ForgotPasswordComponent,
-    RenewPasswordComponent
+    RenewPasswordComponent,
+    VerificationRegistrationComponent
   ],
   imports: [
     BrowserModule,
