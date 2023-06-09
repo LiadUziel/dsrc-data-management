@@ -1,5 +1,5 @@
 export interface Mail {
-    endpoint: string;
+    url: string;
     subject: string;
     content: string;
 }

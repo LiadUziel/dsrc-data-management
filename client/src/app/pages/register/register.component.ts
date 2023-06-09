@@ -17,7 +17,6 @@ import { AuthService } from 'src/app/auth/services/auth.service';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent {
-  registerButtonClicked: boolean = false;
   registerationForm: FormGroup;
   passwordDetails = [
     'contains at least one lower character',

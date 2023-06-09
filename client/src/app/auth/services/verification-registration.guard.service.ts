@@ -22,7 +22,6 @@ export class VerificationRegistrationGuard implements CanActivate{
               this.authService.register(email, password, firstName, lastName)
             .subscribe({
                 next: (result) => {
-                this.router.navigate(['/login']);
                 this.toastr.success('Registration successful!');
                 },
                 error: (error) => {

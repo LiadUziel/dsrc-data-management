@@ -209,7 +209,7 @@ export const sendEmailWithLinkMiddleware: RequestHandler = async(req, res, next)
       );
     }
                       
-    const linkToSend = Config.FRONTEND_URL + mailToUser.endpoint + token;
+    const linkToSend = Config.FRONTEND_URL + mailToUser.url + token;
 
     const mailContent = {
       body: {

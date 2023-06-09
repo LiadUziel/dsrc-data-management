@@ -14,7 +14,6 @@ import { AuthGuard } from './auth/services/auth.guard';
 import { AdminAuthGuard } from './auth/services/admin-auth-guard';
 import { RenewPasswordComponent } from './pages/renew-password/renew-password.component';
 import { RenewPasswordLinkGuard } from './auth/services/renew-password-link.guard.service';
-import { VerificationRegistrationComponent } from './pages/verification-registration/verification-registration.component';
 import { VerificationRegistrationGuard } from './auth/services/verification-registration.guard.service';
 
 const routes: Routes = [
@@ -51,7 +50,7 @@ const routes: Routes = [
   },
   {
     path: 'verifyRegister',
-    component: VerificationRegistrationComponent,
+    component: LoginComponent,
     canActivate: [VerificationRegistrationGuard],
   },
   { path: '**', component: PageNotFoundComponent },
