@@ -16,10 +16,10 @@ export class NavBarComponent {
     this.authService.isLogin().subscribe({
       next: (decryptToken) => {
         if (decryptToken) {
-          this.items = this.navBarService.getItems(true, decryptToken.isAdmin)
+          this.items = this.navBarService.getItems(true, decryptToken.role)
         }
         else {
-          this.items = this.navBarService.getItems(false, false)
+          this.items = this.navBarService.getItems(false, 'member')
         }
       },
       error: (err) => {
@@ -31,10 +31,10 @@ export class NavBarComponent {
       this.authService.isLogin().subscribe({
         next: (decryptToken) => {
           if (decryptToken && res) {
-            this.items = this.navBarService.getItems(true, decryptToken.isAdmin)
+            this.items = this.navBarService.getItems(true, decryptToken.role)
           }
           else {
-            this.items = this.navBarService.getItems(false, false)
+            this.items = this.navBarService.getItems(false, 'member')
           }
         },
         error: (err) => {

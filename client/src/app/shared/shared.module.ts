@@ -8,6 +8,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { MenubarModule } from 'primeng/menubar';
 import { TableModule } from 'primeng/table';
 import { TabMenuModule } from 'primeng/tabmenu';
+import { FileUploadModule } from 'primeng/fileupload';
 
 // ngx-toastr
 import { ToastrModule } from 'ngx-toastr';
@@ -40,6 +41,7 @@ import { PagesComponent } from '../pages/pages.component';
     MenubarModule,
     TableModule,
     TabMenuModule,
+    FileUploadModule,
 
     //materials
     MatPasswordStrengthModule.forRoot(),
@@ -54,6 +56,7 @@ import { PagesComponent } from '../pages/pages.component';
     MenubarModule,
     TableModule,
     TabMenuModule,
+    FileUploadModule,
 
     // materials
     MatPasswordStrengthModule,

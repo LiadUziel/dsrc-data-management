@@ -13,10 +13,12 @@ export class FormProposalService {
 
   getParentForm() {
     const sharedForm: FormGroup = new FormGroup({
-      sharedField1: new FormControl<string>('', Validators.required),
-      sharedField2: new FormControl<string>('', Validators.required),
-      sharedField3: new FormControl<number>(-1, Validators.required),
-      sharedField4: new FormControl<boolean>(false, Validators.required),
+      department: new FormControl<string>('', Validators.required),
+      studyTitle: new FormControl<string>('', Validators.required),
+      amountRequested: new FormControl<number>(null, [
+        Validators.required,
+        Validators.pattern('^[0-9]*$'),
+      ]),
     });
 
     return sharedForm;

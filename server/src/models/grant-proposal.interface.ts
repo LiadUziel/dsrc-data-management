@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import { User } from "./user.interface";
 
 export interface GrantProposal {
   _id?: string;
@@ -7,10 +8,13 @@ export interface GrantProposal {
     | "POST_DOCTORAL"
     | "SEED_RESEARCH"
     | "DATASET_COLLECTION";
-  sharedField1: string;
-  sharedField2: string;
-  sharedField3: number;
-  sharedField4: boolean;
+  user?: User;
+  applicationDate: Date;
+
+  // shared fields
+  department: string;
+  studyTitle: string;
+  amountRequested: number;
 
   // DS_DOCTORAL
   uniqueFieldDsDoctoral1?: string; // required if type === "DS_DOCTORAL"
@@ -41,10 +45,13 @@ const grantProposalSchema = new Schema<GrantProposal>(
       ],
       required: true,
     },
-    sharedField1: { type: String, required: true },
-    sharedField2: { type: String, required: true },
-    sharedField3: { type: Number, required: true },
-    sharedField4: { type: Boolean, required: true },
+
+    user: { type: Object, ref: "User" },
+
+    department: { type: String, required: true },
+    studyTitle: { type: String, required: true },
+    amountRequested: { type: Number, required: true },
+    applicationDate: { type: Date, required: true },
 
     // DS_DOCTORAL
     uniqueFieldDsDoctoral1: { type: String },

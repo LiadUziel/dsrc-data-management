@@ -42,7 +42,7 @@ import { RenewPasswordComponent } from './pages/renew-password/renew-password.co
     SeedResearchTableComponent,
     DatasetCollectionTableComponent,
     ForgotPasswordComponent,
-    RenewPasswordComponent
+    RenewPasswordComponent,
   ],
   imports: [
     BrowserModule,

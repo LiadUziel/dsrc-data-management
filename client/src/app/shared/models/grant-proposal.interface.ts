@@ -1,3 +1,5 @@
+import { User } from 'src/app/auth/interfaces/user-interface';
+
 export interface GrantProposal {
   _id?: string;
   type:
@@ -5,10 +7,15 @@ export interface GrantProposal {
     | 'POST_DOCTORAL'
     | 'SEED_RESEARCH'
     | 'DATASET_COLLECTION';
-  sharedField1: string;
-  sharedField2: string;
-  sharedField3: number;
-  sharedField4: boolean;
+
+  // fields just from DB - user is not fill them
+  user?: User;
+  applicationDate?: Date;
+
+  // shared fields
+  department: string;
+  studyTitle: string;
+  amountRequested: number;
 
   // DS_DOCTORAL
   uniqueFieldDsDoctoral1?: string; // required if type === "DS_DOCTORAL"

@@ -6,6 +6,8 @@ import connectDB from "./config/db-config";
 import authRouter from "./routes/auth.route";
 import grantProposalRouter from "./routes/grant-proposal.route";
 
+import fileRouter from "./routes/file.router";
+
 let str: string;
 str = "check ts-node-dev";
 console.log("Hello, TypeScript!", str);
@@ -31,6 +33,8 @@ connectDB();
 app.use("/api/auth", authRouter);
 
 app.use("/api/grant-proposal", grantProposalRouter);
+
+app.use("/api/file", fileRouter);
 
 // Error handler
 app.use(errorHandler);

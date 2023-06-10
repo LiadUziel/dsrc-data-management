@@ -68,10 +68,15 @@ export class AuthService {
     });
   }
 
-  forgotPassword(email:string) {
-    return this.http.post<{ token: string }>(this.apiUrl + '/forgot-password', {
-      email
-    });
+  forgotPassword(email: string) {
+    const userData = {email};
+    const emailConfig = {
+      url: '/renewPassword?', 
+      subject: 'DSRC renew password link',
+      content: 'DSRC renew password link is attached AND VALID ONLY FOR 5 MINUTES, please click on it to renew your password'    
+    };
+    const req = {userData, emailConfig};
+    return this.http.post<{ token: string }>(this.apiUrl + '/forgot-password', req);
   }
 
   renewPassword(
@@ -106,5 +111,21 @@ export class AuthService {
     this.tokenService.removeToken();
     this.toastr.show('Logout successful!');
     // TODO - navigate to home page
+  }
+
+  sendVerifyRegisterEmail(
+    email: string,
+    password: string,
+    firstName: string,
+    lastName: string
+  ) {
+    const userData = {email, password, firstName, lastName};
+    const emailConfig = {
+      url: '/verifyRegister?', 
+      subject: 'DSRC register verification link',
+      content: 'DSRC register verification link is attached AND VALID ONLY FOR 5 MINUTES, to be registred at DSRC, you MUST click on the link'
+    };
+    const req = {userData, emailConfig};
+    return this.http.post(this.apiUrl + '/sendVerifyRegisterEmail', req);
   }
 }

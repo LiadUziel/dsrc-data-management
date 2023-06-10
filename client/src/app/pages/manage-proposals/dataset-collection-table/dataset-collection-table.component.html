@@ -1,22 +1,31 @@
 <p-table [value]="dsCollectionProposals$ | async">
   <ng-template pTemplate="header">
     <tr>
-      <th>sharedField1</th>
-      <th>sharedField2</th>
-      <th>sharedField3</th>
-      <th>sharedField4</th>
+      <th>firstName</th>
+      <th>lastName</th>
+      <th>email</th>
+      <th>department</th>
+      <th>studyTitle</th>
+      <th>amountRequested</th>
+      <th>applicationDate</th>
       <th>uniqueFieldDatasetCollection1</th>
       <th>uniqueFieldDatasetCollection2</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-proposal>
     <tr>
-      <td>{{ proposal.sharedField1 }}</td>
-      <td>{{ proposal.sharedField2 }}</td>
-      <td>{{ proposal.sharedField3 }}</td>
-      <td>{{ proposal.sharedField4 }}</td>
+      <td>{{ proposal.user.firstName }}</td>
+      <td>{{ proposal.user.lastName }}</td>
+      <td>{{ proposal.user.email }}</td>
+      <td>{{ proposal.department }}</td>
+      <td>{{ proposal.studyTitle }}</td>
+      <td>{{ proposal.amountRequested }}</td>
+      <td>{{ proposal.applicationDate | date }}</td>
       <td>{{ proposal.uniqueFieldDatasetCollection1 }}</td>
       <td>{{ proposal.uniqueFieldDatasetCollection2 }}</td>
     </tr>
   </ng-template>
 </p-table>
+
+<!-- TODO: remove this in the end -->
+<pre>{{ dsCollectionProposals$ | async | json }}</pre>

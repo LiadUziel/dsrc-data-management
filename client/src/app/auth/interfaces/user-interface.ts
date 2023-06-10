@@ -1,7 +1,7 @@
 export interface User {
     email: string,
     isLogged: boolean,
-    isAdmin: boolean,
+    role: string,
     iat: number,
     exp: number
 }

@@ -8,15 +8,16 @@ import { PostDoctoralComponent } from './pages/submit-proposal/post-doctoral/pos
 import { SeedResearchComponent } from './pages/submit-proposal/seed-research/seed-research.component';
 import { DatasetCollectionComponent } from './pages/submit-proposal/dataset-collection/dataset-collection.component';
 import { GrantsAwardedComponent } from './pages/grants-awarded/grants-awarded.component';
-import { ManageProposalsComponent } from './pages/manage-proposals/manage-proposals.component'; 
+import { ManageProposalsComponent } from './pages/manage-proposals/manage-proposals.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { AuthGuard } from './auth/services/auth.guard';
 import { AdminAuthGuard } from './auth/services/admin-auth-guard';
 import { RenewPasswordComponent } from './pages/renew-password/renew-password.component';
 import { RenewPasswordLinkGuard } from './auth/services/renew-password-link.guard.service';
+import { VerificationRegistrationGuard } from './auth/services/verification-registration.guard.service';
 
 const routes: Routes = [
-  { path: '', component: LoginComponent },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
 
   // auth
   { path: 'login', component: LoginComponent },
@@ -35,14 +36,23 @@ const routes: Routes = [
     path: 'manage-proposals',
     component: ManageProposalsComponent,
     canActivate: [AuthGuard],
-  }, // example of AuthGuard,TODO: remove component
+  },
   {
     path: 'grantsAwarded',
     component: GrantsAwardedComponent,
     canActivate: [AdminAuthGuard],
   }, // example of AdminAuthGuard,TODO: remove (/ work on) component
-  { path:'forgotPassword', component: ForgotPasswordComponent},
-  { path: 'renewPassword', component: RenewPasswordComponent, canActivate: [RenewPasswordLinkGuard]},
+  { path: 'forgotPassword', component: ForgotPasswordComponent },
+  {
+    path: 'renewPassword',
+    component: RenewPasswordComponent,
+    canActivate: [RenewPasswordLinkGuard],
+  },
+  {
+    path: 'verifyRegister',
+    component: LoginComponent,
+    canActivate: [VerificationRegistrationGuard],
+  },
   { path: '**', component: PageNotFoundComponent },
 ];
 

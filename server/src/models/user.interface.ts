@@ -5,7 +5,7 @@ export interface User {
   lastName: string;
   email: string;
   password: string;
-  isAdmin: boolean;
+  role: string;
 }
 
 const userSchema = new mongoose.Schema<User>(
@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema<User>(
     lastName: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true, minlength: 6 },
-    isAdmin: { type: Boolean, required: true, default: false },
+    role: { type: String, required: true, default: 'member' },
   },
   {
     timestamps: true,

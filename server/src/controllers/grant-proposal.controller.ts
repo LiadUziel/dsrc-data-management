@@ -3,10 +3,22 @@ import {
   GrantProposal,
   GrantProposalModel,
 } from "../models/grant-proposal.interface";
+import { User, UserModel } from "../models/user.interface";
 
 export const createGrantProposal: RequestHandler = async (req, res, next) => {
   try {
     const proposal: GrantProposal = req.body;
+
+    // get user from db
+    const user: User = (await UserModel.findOne({
+      email: req.authUser?.email,
+    }))!;
+
+    // add user to proposal
+    proposal.user = user;
+
+    // add application date
+    proposal.applicationDate = new Date();
 
     const proposalDb = await GrantProposalModel.create(proposal);
 
@@ -33,7 +45,7 @@ export const getGrantProposals: RequestHandler = async (req, res, next) => {
     // get proposals from db
     const proposals = await GrantProposalModel.find(
       isLegalType ? { type } : {}
-    );
+    ).populate("user", "firstName lastName email -_id");
 
     return res.send(proposals);
   } catch (e) {
