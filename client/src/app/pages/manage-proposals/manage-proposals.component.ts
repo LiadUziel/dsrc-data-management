@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
+import { Observable } from 'rxjs';
+import { GrantProposal } from 'src/app/shared/models/grant-proposal.interface';
 import { GrantProposalService } from 'src/app/shared/services/grant-proposal.service';
+import { GrantType } from './models/grant-type.enum';
 
 @Component({
   selector: 'app-manage-proposals',
@@ -8,26 +10,25 @@ import { GrantProposalService } from 'src/app/shared/services/grant-proposal.ser
   styleUrls: ['./manage-proposals.component.scss'],
 })
 export class ManageProposalsComponent implements OnInit {
-  // items for menu tab
-  items: MenuItem[];
-  activeItem: MenuItem = { label: '' };
+  proposals$: Observable<GrantProposal[]>;
+
+  // These are the columns and values that will also appear in the Excel export
+  cols = [
+    { field: 'type', header: 'Grant Type' },
+    { field: 'user.firstName', header: 'First Name' },
+    { field: 'user.lastName', header: 'Last Name' },
+    { field: 'user.email', header: 'Email' },
+    { field: 'department', header: 'Department' },
+    { field: 'studyTitle', header: 'Study Title' },
+    { field: 'amountRequested', header: 'Amount Requested' },
+    { field: 'amountGiven', header: 'Amount Given' },
+    { field: 'applicationDate', header: 'Application Date' },
+  ];
+
+  GrantTypeEnum = GrantType;
 
   constructor(private grantProposalsService: GrantProposalService) {}
   ngOnInit(): void {
-    this.initTabMenuItems();
-  }
-
-  initTabMenuItems() {
-    this.items = [
-      { label: 'Data Science Doctoral' },
-      { label: 'Post Doctoral' },
-      { label: 'Seed Research' },
-      { label: 'Dataset Collection' },
-    ];
-  }
-
-  // update the active tab
-  onActiveItemChange(event: MenuItem) {
-    this.activeItem = event;
+    this.proposals$ = this.grantProposalsService.getAllProposals();
   }
 }

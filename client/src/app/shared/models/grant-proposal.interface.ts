@@ -11,6 +11,7 @@ export interface GrantProposal {
   // fields just from DB - user is not fill them
   user?: User;
   applicationDate?: Date;
+  amountGiven?: number;
 
   // shared fields
   department: string;

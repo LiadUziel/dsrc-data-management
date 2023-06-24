@@ -25,6 +25,16 @@ export class GrantProposalService {
     });
   }
 
+  getAllProposals() {
+    const { href } = new URL(`/api/grant-proposal`, this.apiUrl);
+    const token = this.tokenService.getToken();
+    return this.http.get<GrantProposal[]>(href, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+
   // get proposal from api by DS_DOCTORAL, POST_DOCTORAL, SEED_RESEARCH, or DATASET_COLLECTION
   getProposalsByGrantType(
     grantType:

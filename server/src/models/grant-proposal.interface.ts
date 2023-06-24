@@ -10,6 +10,7 @@ export interface GrantProposal {
     | "DATASET_COLLECTION";
   user?: User;
   applicationDate: Date;
+  amountGiven: number;
 
   // shared fields
   department: string;
@@ -51,6 +52,7 @@ const grantProposalSchema = new Schema<GrantProposal>(
     department: { type: String, required: true },
     studyTitle: { type: String, required: true },
     amountRequested: { type: Number, required: true },
+    amountGiven: { type: Number, required: true },
     applicationDate: { type: Date, required: true },
 
     // DS_DOCTORAL
@@ -58,12 +60,12 @@ const grantProposalSchema = new Schema<GrantProposal>(
     uniqueFieldDsDoctoral2: { type: Number },
 
     // POST_DOCTORAL
-    uniqueFieldPostDoctoral1: {
-      type: String,
-      required: function (this: GrantProposal) {
-        return this.type === "POST_DOCTORAL";
-      },
-    },
+    // uniqueFieldPostDoctoral1: {
+    //   type: String,
+    //   required: function (this: GrantProposal) {
+    //     return this.type === "POST_DOCTORAL";
+    //   },
+    // },
     uniqueFieldPostDoctoral2: { type: Number },
 
     // SEED_RESEARCH
@@ -76,12 +78,12 @@ const grantProposalSchema = new Schema<GrantProposal>(
     uniqueFieldSeedResearch2: { type: Number },
 
     // DATASET_COLLECTION
-    uniqueFieldDatasetCollection1: {
-      type: String,
-      required: function (this: GrantProposal) {
-        return this.type === "DATASET_COLLECTION";
-      },
-    },
+    // uniqueFieldDatasetCollection1: {
+    //   type: String,
+    //   required: function (this: GrantProposal) {
+    //     return this.type === "DATASET_COLLECTION";
+    //   },
+    // },
     uniqueFieldDatasetCollection2: { type: Number },
   },
   { timestamps: true }
