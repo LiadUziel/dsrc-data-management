@@ -26,60 +26,26 @@ export class FormProposalService {
 
   getDsDoctoralForm(): FormGroup {
     const form = _.cloneDeep(this.parentForm);
-
-    form.addControl(
-      'uniqueFieldDsDoctoral1',
-      new FormControl<string>('', Validators.required)
-    );
-    form.addControl(
-      'uniqueFieldDsDoctoral2',
-      new FormControl<number>(-1, Validators.required)
-    );
-
+    // TODO - add unique fields for DS Doctoral
     return form;
   }
 
   getPostDoctoralForm(): FormGroup {
     const form = _.cloneDeep(this.parentForm);
-
-    form.addControl(
-      'uniqueFieldPostDoctoral1',
-      new FormControl<string>('', Validators.required)
-    );
-    form.addControl(
-      'uniqueFieldPostDoctoral2',
-      new FormControl<number>(-1, Validators.required)
-    );
-
+    // TODO - add unique fields for Post Doctoral
     return form;
   }
 
   getSeedResearchForm(): FormGroup {
     const form = _.cloneDeep(this.parentForm);
-
-    form.addControl(
-      'uniqueFieldSeedResearch1',
-      new FormControl<string>('', Validators.required)
-    );
-    form.addControl(
-      'uniqueFieldSeedResearch2',
-      new FormControl<number>(-1, Validators.required)
-    );
+    // TODO - add unique fields for Seed Research
 
     return form;
   }
 
   getDatasetCollectionForm(): FormGroup {
     const form = _.cloneDeep(this.parentForm);
-
-    form.addControl(
-      'uniqueFieldDatasetCollection1',
-      new FormControl<string>('', Validators.required)
-    );
-    form.addControl(
-      'uniqueFieldDatasetCollection2',
-      new FormControl<number>(-1, Validators.required)
-    );
+    // TODO - add unique fields for Dataset Collection
 
     return form;
   }

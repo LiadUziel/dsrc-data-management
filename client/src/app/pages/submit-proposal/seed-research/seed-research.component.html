@@ -4,15 +4,85 @@
   <form class="form" [formGroup]="seedForm" (ngSubmit)="onSubmit()">
     <app-parent-form [form]="seedForm"></app-parent-form>
 
-    <span class="p-float-label">
-      <input pInputText formControlName="uniqueFieldSeedResearch1" />
-      <label>uniqueField SeedResearch1</label>
-    </span>
+    <div class="field">
+      <p-fileUpload
+        mode="basic"
+        chooseLabel="Upload Research Introduction"
+        name="file"
+        [url]="apiUrl + '/api/file/upload'"
+        [maxFileSize]="1000000"
+        (onSend)="onUpload($event)"
+      ></p-fileUpload>
+      <i
+        class="pi pi-question-circle"
+        pTooltip="introduction including the importance of the proposed topic"
+      ></i>
+    </div>
 
-    <span class="p-float-label">
-      <input pInputText formControlName="uniqueFieldSeedResearch2" />
-      <label>uniqueField SeedResearch2</label>
-    </span>
+    <div class="field">
+      <p-fileUpload
+        mode="basic"
+        chooseLabel="Upload Innovation Project"
+        name="file"
+        [url]="apiUrl + '/api/file/upload'"
+        [maxFileSize]="1000000"
+        (onSend)="onUpload($event)"
+      ></p-fileUpload>
+      <i
+        class="pi pi-question-circle"
+        pTooltip="The innovation of the proposed project"
+      ></i>
+    </div>
+
+    <div class="field">
+      <p-fileUpload
+        mode="basic"
+        chooseLabel="Upload Team"
+        name="file"
+        [url]="apiUrl + '/api/file/upload'"
+        [maxFileSize]="1000000"
+        (onSend)="onUpload($event)"
+      ></p-fileUpload>
+      <i
+        class="pi pi-question-circle"
+        pTooltip="Information on the collaborating team and the role of each of the team members"
+      ></i>
+      changeee
+    </div>
+
+    <div class="field">
+      <p-fileUpload
+        mode="basic"
+        chooseLabel="Upload Budget"
+        name="file"
+        [url]="apiUrl + '/api/file/upload'"
+        [maxFileSize]="1000000"
+        (onSend)="onUpload($event)"
+      ></p-fileUpload>
+      <i
+        class="pi pi-question-circle"
+        pTooltip="Detailed budget request including the different expenses (e.g., purchase of a data
+        set, purchase of equipment)"
+      ></i>
+    </div>
+
+    <div class="field">
+      <p-fileUpload
+        mode="basic"
+        chooseLabel="Upload External Funding"
+        name="file"
+        [url]="apiUrl + '/api/file/upload'"
+        [maxFileSize]="1000000"
+        (onSend)="onUpload($event)"
+      ></p-fileUpload>
+      <i
+        class="pi pi-question-circle"
+        pTooltip="Seed money should not fund existing research but new research. Following the seed
+        research, the researchers are expected to submit a proposal for external funding.
+        Please specify your plans for external funding."
+      ></i>
+      change
+    </div>
 
     <button
       pButton

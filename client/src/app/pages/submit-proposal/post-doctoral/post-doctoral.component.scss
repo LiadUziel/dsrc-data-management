@@ -20,5 +20,23 @@
         input {
             width: 100%
         }
+
+        .field {
+            align-self: flex-start;
+
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+
+            i.pi.pi-question-circle {
+                color: #707070;
+                font-size: 1.5rem;
+
+                &:hover {
+                    color: #000;
+                }
+            }
+        }
+
     }
 }
