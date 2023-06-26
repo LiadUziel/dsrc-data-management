@@ -69,12 +69,12 @@ const grantProposalSchema = new Schema<GrantProposal>(
     uniqueFieldPostDoctoral2: { type: Number },
 
     // SEED_RESEARCH
-    uniqueFieldSeedResearch1: {
-      type: String,
-      required: function (this: GrantProposal) {
-        return this.type === "SEED_RESEARCH";
-      },
-    },
+    // uniqueFieldSeedResearch1: {
+    //   type: String,
+    //   required: function (this: GrantProposal) {
+    //     return this.type === "SEED_RESEARCH";
+    //   },
+    // },
     uniqueFieldSeedResearch2: { type: Number },
 
     // DATASET_COLLECTION
