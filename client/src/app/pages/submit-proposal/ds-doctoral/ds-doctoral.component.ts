@@ -60,4 +60,5 @@ export class DsDoctoralComponent implements OnInit {
   onUpload(event) {
     this.toastr.info('File uploaded successfully');
   }
+
 }

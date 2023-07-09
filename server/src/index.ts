@@ -27,6 +27,9 @@ app.use(cors());
 // Express body parser
 app.use(express.json());
 
+//parsing the URL-encoded data with the querystring library
+// app.use(express.urlencoded({ extended: false }));
+
 // connect to mongoDB
 connectDB();
 

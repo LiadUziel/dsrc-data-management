@@ -1,7 +1,7 @@
 <div class="page-wrapper">
   <h1>Data Science Doctoral candidates</h1>
 
-  <form class="form" [formGroup]="doctoralForm" (ngSubmit)="onSubmit()">
+  <form class="form" action="/upload" mehod="POST" enctype="multipart/form-data" [formGroup]="doctoralForm" (ngSubmit)="onSubmit()">
     <app-parent-form [form]="doctoralForm"></app-parent-form>
 
     <div class="field">
@@ -111,4 +111,4 @@
       Submit
     </button>
   </form>
-</div>
+</div> 

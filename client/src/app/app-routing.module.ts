@@ -15,6 +15,7 @@ import { AdminAuthGuard } from './auth/services/admin-auth-guard';
 import { RenewPasswordComponent } from './pages/renew-password/renew-password.component';
 import { RenewPasswordLinkGuard } from './auth/services/renew-password-link.guard.service';
 import { VerificationRegistrationGuard } from './auth/services/verification-registration.guard.service';
+import { UploadFileExpirementComponent } from './pages/upload-file-expirement/upload-file-expirement.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -52,6 +53,10 @@ const routes: Routes = [
     path: 'verifyRegister',
     component: LoginComponent,
     canActivate: [VerificationRegistrationGuard],
+  },
+  {
+    path: 'uploadd',
+    component: UploadFileExpirementComponent 
   },
   { path: '**', component: PageNotFoundComponent },
 ];
