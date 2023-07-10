@@ -19,7 +19,6 @@ import { GrantsAwardedComponent } from './pages/grants-awarded/grants-awarded.co
 import { ManageProposalsComponent } from './pages/manage-proposals/manage-proposals.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { RenewPasswordComponent } from './pages/renew-password/renew-password.component';
-import { UploadFileExpirementComponent } from './pages/upload-file-expirement/upload-file-expirement.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +35,6 @@ import { UploadFileExpirementComponent } from './pages/upload-file-expirement/up
     ManageProposalsComponent,
     ForgotPasswordComponent,
     RenewPasswordComponent,
-    UploadFileExpirementComponent,
   ],
   imports: [
     BrowserModule,
