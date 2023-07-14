@@ -37,7 +37,7 @@
     <div class="field">
       <p-fileUpload
         mode="basic"
-        chooseLabel="Upload Team"
+        chooseLabel="Upload External Funding"
         name="file"
         [url]="apiUrl + '/api/file/upload'"
         [maxFileSize]="1000000"
@@ -45,9 +45,10 @@
       ></p-fileUpload>
       <i
         class="pi pi-question-circle"
-        pTooltip="Information on the collaborating team and the role of each of the team members"
+        pTooltip="Seed money should not fund existing research but new research. Following the seed
+        research, the researchers are expected to submit a proposal for external funding.
+        Please specify your plans for external funding."
       ></i>
-      changeee
     </div>
 
     <div class="field">
@@ -64,25 +65,14 @@
         pTooltip="Detailed budget request including the different expenses (e.g., purchase of a data
         set, purchase of equipment)"
       ></i>
-    </div>
-
-    <div class="field">
-      <p-fileUpload
-        mode="basic"
-        chooseLabel="Upload External Funding"
-        name="file"
-        [url]="apiUrl + '/api/file/upload'"
-        [maxFileSize]="1000000"
-        (onSend)="onUpload($event)"
-      ></p-fileUpload>
-      <i
-        class="pi pi-question-circle"
-        pTooltip="Seed money should not fund existing research but new research. Following the seed
-        research, the researchers are expected to submit a proposal for external funding.
-        Please specify your plans for external funding."
-      ></i>
       change
     </div>
+
+    <app-multi-field
+      [form]="seedForm"
+      [formArrayName]="'budgetParts'"
+      [displayAction]="'Budget Part'"
+    ></app-multi-field>
 
     <button
       pButton

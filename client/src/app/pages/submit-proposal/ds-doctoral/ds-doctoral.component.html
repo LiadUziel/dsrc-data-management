@@ -101,6 +101,12 @@
       ></i>
     </div>
 
+    <app-multi-field
+      [form]="doctoralForm"
+      [formArrayName]="'teamMembers'"
+      [displayAction]="'Team Member'"
+    ></app-multi-field>
+
     <button
       pButton
       type="submit"

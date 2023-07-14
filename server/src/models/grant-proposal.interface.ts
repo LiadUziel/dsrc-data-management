@@ -1,5 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 import { User } from "./user.interface";
+import { TeamMember } from "./team-member.interface";
+import { BudgetPart } from "./budget-part.interface";
 
 export interface GrantProposal {
   _id?: string;
@@ -28,10 +30,13 @@ export interface GrantProposal {
   // SEED_RESEARCH
   uniqueFieldSeedResearch1?: string; // required if type === "SEED_RESEARCH"
   uniqueFieldSeedResearch2?: number; // optional
+  budgetParts?: BudgetPart[];
 
   // DATASET_COLLECTION
   uniqueFieldDatasetCollection1?: string; // required if type === "DATASET_COLLECTION"
   uniqueFieldDatasetCollection2?: number; // optional
+
+  teamMembers?: TeamMember[];
 }
 
 const grantProposalSchema = new Schema<GrantProposal>(
@@ -76,6 +81,7 @@ const grantProposalSchema = new Schema<GrantProposal>(
     //   },
     // },
     uniqueFieldSeedResearch2: { type: Number },
+    budgetParts: { type: [Object], default: undefined, required: false },
 
     // DATASET_COLLECTION
     // uniqueFieldDatasetCollection1: {
@@ -85,6 +91,8 @@ const grantProposalSchema = new Schema<GrantProposal>(
     //   },
     // },
     uniqueFieldDatasetCollection2: { type: Number },
+
+    teamMembers: { type: [Object], default: undefined, required: false },
   },
   { timestamps: true }
 );
