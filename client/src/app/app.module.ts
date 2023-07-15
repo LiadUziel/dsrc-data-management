@@ -19,7 +19,7 @@ import { GrantsAwardedComponent } from './pages/grants-awarded/grants-awarded.co
 import { ManageProposalsComponent } from './pages/manage-proposals/manage-proposals.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { RenewPasswordComponent } from './pages/renew-password/renew-password.component';
-import { MultiFieldComponent } from './pages/submit-proposal/team-members-form/multi-field.component';
+import { MultiFieldComponent } from './pages/submit-proposal/multi-field/multi-field.component';
 
 @NgModule({
   declarations: [
