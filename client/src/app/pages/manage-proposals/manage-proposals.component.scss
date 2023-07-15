@@ -10,4 +10,21 @@ h1 {
         display: flex;
         gap: 1rem;
     }
+
+    tr.expanded-row {
+        td.expanded-cell {
+            padding: 1rem 6rem;
+        }
+
+        table.team-members-table {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        table.budget-parts-table {
+            width: 35%;
+            margin: 0 4rem;
+
+        }
+    }
 }

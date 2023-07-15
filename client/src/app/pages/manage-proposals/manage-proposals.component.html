@@ -113,8 +113,44 @@
 
     <!--* line extension -->
     <ng-template pTemplate="rowexpansion" let-proposal>
-      <tr>
-        <td colspan="10">More Data for {{ proposal.studyTitle }}</td>
+      <tr class="expanded-row">
+        <td colspan="10" class="expanded-cell">
+          <div *ngIf="proposal.teamMembers && proposal.teamMembers.length > 0">
+            <h3>Team Members:</h3>
+            <table class="team-members-table">
+              <tr>
+                <th>Member Name</th>
+                <th>Member Email</th>
+                <th>Member Department</th>
+                <th>Member Role</th>
+              </tr>
+              <tr *ngFor="let member of proposal.teamMembers">
+                <td>{{ member.memberName }}</td>
+                <td>{{ member.memberEmail }}</td>
+                <td>{{ member.memberDepartment }}</td>
+                <td>{{ member.memberRole }}</td>
+              </tr>
+            </table>
+          </div>
+
+          <div *ngIf="proposal.budgetParts && proposal.budgetParts.length > 0">
+            <h3>Budget Parts:</h3>
+            <table class="budget-parts-table">
+              <tr>
+                <th>Reason</th>
+                <th>Amount</th>
+              </tr>
+              <tr *ngFor="let budgetPart of proposal.budgetParts">
+                <td>{{ budgetPart.reason }}</td>
+                <td>{{ budgetPart.amount | number }}</td>
+              </tr>
+            </table>
+            <b
+              >Total Budget:
+              {{ getTotalBudget(proposal.budgetParts) | number }}</b
+            >
+          </div>
+        </td>
       </tr>
     </ng-template>
   </p-table>
