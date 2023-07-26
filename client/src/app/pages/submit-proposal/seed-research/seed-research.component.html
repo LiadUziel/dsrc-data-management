@@ -5,13 +5,14 @@
     <app-parent-form [form]="seedForm"></app-parent-form>
 
     <div class="field">
-      <p-fileUpload
+      <p-fileUpload formControlName="uploadResearchIntro" #fileUpload
        name="file"
-       [url]="apiUrl + '/api/file/upload'"
        [maxFileSize]="1000000"
-        (onSend)="onUpload($event)"
         chooseLabel="Upload Research Introduction"
-        [showCancelButton]="false">
+        [showCancelButton]="false"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event, 'uploadResearchIntro')"
+        >
       </p-fileUpload>
       <i
         class="pi pi-question-circle"
@@ -20,13 +21,14 @@
     </div>
 
     <div class="field">
-      <p-fileUpload
+      <p-fileUpload formControlName="uploadInnovationProject" #fileUpload
        name="file"
-       [url]="apiUrl + '/api/file/upload'"
        [maxFileSize]="1000000"
-        (onSend)="onUpload($event)"
         chooseLabel="Upload Innovation Project"
-        [showCancelButton]="false">
+        [showCancelButton]="false"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event, 'uploadInnovationProject')"
+        >
       </p-fileUpload>
       <i
         class="pi pi-question-circle"
@@ -35,13 +37,14 @@
     </div>
 
     <div class="field">
-      <p-fileUpload
+      <p-fileUpload formControlName="uploadTeam" #fileUpload
        name="file"
-       [url]="apiUrl + '/api/file/upload'"
        [maxFileSize]="1000000"
-        (onSend)="onUpload($event)"
         chooseLabel="Upload Team"
-        [showCancelButton]="false">
+        [showCancelButton]="false"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event, 'uploadTeam')"
+        >
       </p-fileUpload>
       <i
         class="pi pi-question-circle"
@@ -51,13 +54,14 @@
     </div>
 
     <div class="field">
-      <p-fileUpload
+      <p-fileUpload formControlName="uploadBudget" #fileUpload
        name="file"
-       [url]="apiUrl + '/api/file/upload'"
        [maxFileSize]="1000000"
-        (onSend)="onUpload($event)"
         chooseLabel="Upload Budget"
-        [showCancelButton]="false">
+        [showCancelButton]="false"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event, 'uploadBudget')"
+        >
       </p-fileUpload>
       <i
         class="pi pi-question-circle"
@@ -67,13 +71,14 @@
     </div>
 
     <div class="field">
-      <p-fileUpload
+      <p-fileUpload formControlName="uploadExternalFunding" #fileUpload
        name="file"
-       [url]="apiUrl + '/api/file/upload'"
        [maxFileSize]="1000000"
-        (onSend)="onUpload($event)"
         chooseLabel="Upload External Funding"
-        [showCancelButton]="false">
+        [showCancelButton]="false"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event, 'uploadExternalFunding')"
+        >
       </p-fileUpload>
       <i
         class="pi pi-question-circle"

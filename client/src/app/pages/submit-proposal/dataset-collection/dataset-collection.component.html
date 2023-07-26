@@ -5,13 +5,14 @@
     <app-parent-form [form]="dsCollectionForm"></app-parent-form>
 
     <div class="field">
-      <p-fileUpload
+      <p-fileUpload formControlName="uploadResearchIntro" #fileUpload
        name="file"
-       [url]="apiUrl + '/api/file/upload'"
        [maxFileSize]="1000000"
-        (onSend)="onUpload($event)"
         chooseLabel="Upload Research Introduction"
-        [showCancelButton]="false">
+        [showCancelButton]="false"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event, 'uploadResearchIntro')"
+        >
       </p-fileUpload>
       <i
         class="pi pi-question-circle"
@@ -20,13 +21,14 @@
     </div>
 
     <div class="field">
-      <p-fileUpload
+      <p-fileUpload formControlName="uploadInnovationProject" #fileUpload
        name="file"
-       [url]="apiUrl + '/api/file/upload'"
        [maxFileSize]="1000000"
-        (onSend)="onUpload($event)"
         chooseLabel="Upload Innovation Project"
-        [showCancelButton]="false">
+        [showCancelButton]="false"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event, 'uploadInnovationProject')"
+        >
       </p-fileUpload>
       <i
         class="pi pi-question-circle"
@@ -35,13 +37,14 @@
     </div>
 
     <div class="field">
-      <p-fileUpload
+      <p-fileUpload formControlName="uploadDatasetInfo" #fileUpload
        name="file"
-       [url]="apiUrl + '/api/file/upload'"
        [maxFileSize]="1000000"
-        (onSend)="onUpload($event)"
         chooseLabel="Upload Dataset Information"
-        [showCancelButton]="false">
+        [showCancelButton]="false"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event, 'uploadDatasetInfo')"
+        >
       </p-fileUpload>
       <i
         class="pi pi-question-circle"
@@ -50,13 +53,14 @@
     </div>
 
     <div class="field">
-      <p-fileUpload
+      <p-fileUpload formControlName="uploadTeam" #fileUpload
        name="file"
-       [url]="apiUrl + '/api/file/upload'"
        [maxFileSize]="1000000"
-        (onSend)="onUpload($event)"
         chooseLabel="Upload Team"
-        [showCancelButton]="false">
+        [showCancelButton]="false"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event, 'uploadTeam')"
+        >
       </p-fileUpload>
       <i
         class="pi pi-question-circle"
@@ -66,13 +70,14 @@
     </div>
 
     <div class="field">
-      <p-fileUpload
+      <p-fileUpload formControlName="uploadBudget" #fileUpload
        name="file"
-       [url]="apiUrl + '/api/file/upload'"
        [maxFileSize]="1000000"
-        (onSend)="onUpload($event)"
         chooseLabel="Upload Budget"
-        [showCancelButton]="false">
+        [showCancelButton]="false"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event, 'uploadBudget')"
+        >
       </p-fileUpload>
       <i
         class="pi pi-question-circle"
@@ -83,13 +88,14 @@
     </div>
 
     <div class="field">
-      <p-fileUpload
+      <p-fileUpload formControlName="uploadEthics" #fileUpload
        name="file"
-       [url]="apiUrl + '/api/file/upload'"
        [maxFileSize]="1000000"
-        (onSend)="onUpload($event)"
         chooseLabel="Upload Ethics"
-        [showCancelButton]="false">
+        [showCancelButton]="false"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event, 'uploadEthics')"
+        >
       </p-fileUpload>
       <i
         class="pi pi-question-circle"
@@ -98,13 +104,14 @@
     </div>
 
     <div class="field">
-      <p-fileUpload
+      <p-fileUpload formControlName="uploadCopyrights" #fileUpload
        name="file"
-       [url]="apiUrl + '/api/file/upload'"
        [maxFileSize]="1000000"
-        (onSend)="onUpload($event)"
         chooseLabel="Upload Copyrights"
-        [showCancelButton]="false">
+        [showCancelButton]="false"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event, 'uploadCopyrights')"
+        >
       </p-fileUpload>
       <i
         class="pi pi-question-circle"

@@ -17,7 +17,15 @@ export interface GrantProposal {
   studyTitle: string;
   amountRequested: number;
 
-  // DS_DOCTORAL
+  // DS_DOCTORAL / POST_DOCTORAL
+  uploadCV?: string;
+  uploadDescription?: string;
+  uploadGradeTAndC?: string;
+  uploadWorkCommitment?: string;
+  uploadRecommendationLetter?: string;
+  uploadContactRecommenders?: string;
+
+  //DS_DOCTORAL
   uniqueFieldDsDoctoral1?: string; // required if type === "DS_DOCTORAL"
   uniqueFieldDsDoctoral2?: number; // optional
 
@@ -26,10 +34,18 @@ export interface GrantProposal {
   uniqueFieldPostDoctoral2?: number; // optional
 
   // SEED_RESEARCH
+  uploadResearchIntro?: string;
+  uploadInnovationProject?: string;
+  uploadTeam?: string;
+  uploadBudget?: string;
+  uploadExternalFunding?: string; 
   uniqueFieldSeedResearch1?: string; // required if type === "SEED_RESEARCH"
   uniqueFieldSeedResearch2?: number; // optional
 
   // DATASET_COLLECTION
+  uploadDatasetInfo?: string;
+  uploadEthics?: string;
+  uploadCopyrights?: string;
   uniqueFieldDatasetCollection1?: string; // required if type === "DATASET_COLLECTION"
   uniqueFieldDatasetCollection2?: number; // optional
 }
@@ -55,7 +71,13 @@ const grantProposalSchema = new Schema<GrantProposal>(
     amountGiven: { type: Number, required: true },
     applicationDate: { type: Date, required: true },
 
-    // DS_DOCTORAL
+    // DS_DOCTORAL / POST_DOCTORAL
+    uploadCV: { type: String},
+    uploadDescription:{ type: String},
+    uploadGradeTAndC: { type: String},
+    uploadWorkCommitment: { type: String},
+    uploadRecommendationLetter: { type: String},
+    uploadContactRecommenders: { type: String},
     uniqueFieldDsDoctoral1: { type: String },
     uniqueFieldDsDoctoral2: { type: Number },
 
@@ -75,6 +97,12 @@ const grantProposalSchema = new Schema<GrantProposal>(
     //     return this.type === "SEED_RESEARCH";
     //   },
     // },
+
+    uploadResearchIntro: { type: String },
+    uploadInnovationProject: { type: String },
+    uploadTeam: { type: String },
+    uploadBudget: { type: String },
+    uploadExternalFunding: { type: String }, 
     uniqueFieldSeedResearch2: { type: Number },
 
     // DATASET_COLLECTION
@@ -84,6 +112,9 @@ const grantProposalSchema = new Schema<GrantProposal>(
     //     return this.type === "DATASET_COLLECTION";
     //   },
     // },
+    uploadDatasetInfo: { type: String },
+    uploadEthics: { type: String },
+    uploadCopyrights: { type: String },
     uniqueFieldDatasetCollection2: { type: Number },
   },
   { timestamps: true }

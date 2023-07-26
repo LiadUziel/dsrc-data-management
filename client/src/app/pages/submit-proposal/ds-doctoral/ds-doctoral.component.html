@@ -5,13 +5,14 @@
     <app-parent-form [form]="doctoralForm"></app-parent-form>
 
     <div class="field">
-      <p-fileUpload
+      <p-fileUpload formControlName="uploadCV" #fileUpload
        name="file"
-       [url]="apiUrl + '/api/file/upload'"
-       [maxFileSize]="1000000"
-        (onSend)="onUpload($event)"
+       [maxFileSize]="1000000"  
         chooseLabel="Upload CV"
-        [showCancelButton]="false">
+        [showCancelButton]="false"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event, 'uploadCV')"
+        >
       </p-fileUpload>
       <i
         class="pi pi-question-circle"
@@ -21,13 +22,14 @@
     </div>
 
     <div class="field">
-      <p-fileUpload
+      <p-fileUpload formControlName="uploadDescription" #fileUpload
        name="file"
-       [url]="apiUrl + '/api/file/upload'"
        [maxFileSize]="1000000"
-        (onSend)="onUpload($event)"
         chooseLabel="Upload Description"
-        [showCancelButton]="false">
+        [showCancelButton]="false"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event, 'uploadDescription')"
+        >
       </p-fileUpload>
       <i
         class="pi pi-question-circle"
@@ -41,13 +43,14 @@
     </div>
 
     <div class="field">
-      <p-fileUpload
+      <p-fileUpload formControlName="uploadGradeTAndC" #fileUpload
        name="file"
-       [url]="apiUrl + '/api/file/upload'"
        [maxFileSize]="1000000"
-        (onSend)="onUpload($event)"
         chooseLabel="Upload grade transcripts & certificates"
-        [showCancelButton]="false">
+        [showCancelButton]="false"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event, 'uploadGradeTAndC')"
+        >
       </p-fileUpload>
       <i
         class="pi pi-question-circle"
@@ -56,13 +59,14 @@
     </div>
 
     <div class="field">
-      <p-fileUpload
+      <p-fileUpload formControlName="uploadWorkCommitment" #fileUpload
        name="file"
-       [url]="apiUrl + '/api/file/upload'"
        [maxFileSize]="1000000"
-        (onSend)="onUpload($event)"
         chooseLabel="Upload work commitment"
-        [showCancelButton]="false">
+        [showCancelButton]="false"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event, 'uploadWorkCommitment')"
+        >
       </p-fileUpload>
       <i
         class="pi pi-question-circle"
@@ -72,13 +76,14 @@
     </div>
 
     <div class="field">
-      <p-fileUpload
+      <p-fileUpload formControlName="uploadRecommendationLetter" #fileUpload
        name="file"
-       [url]="apiUrl + '/api/file/upload'"
        [maxFileSize]="1000000"
-        (onSend)="onUpload($event)"
         chooseLabel="Upload recommendation letter"
-        [showCancelButton]="false">
+        [showCancelButton]="false"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event, 'uploadRecommendationLetter')"
+        >
       </p-fileUpload>
       <i
         class="pi pi-question-circle"
@@ -87,20 +92,21 @@
     </div>
 
     <div class="field">
-      <p-fileUpload
+      <p-fileUpload formControlName="uploadContactRecommenders" #fileUpload
        name="file"
-       [url]="apiUrl + '/api/file/upload'"
        [maxFileSize]="1000000"
-       (onSend)="onUpload($event)"
        chooseLabel="Upload contact recommenders"
-       [showCancelButton]="false">
+       [showCancelButton]="false"
+       [customUpload]="true"
+       (uploadHandler)="onUpload($event, 'uploadContactRecommenders')"
+       >
        </p-fileUpload>
        <i
          class="pi pi-question-circle"
          pTooltip="Names of three other recommenders and contact details."
        ></i>
     </div>
-    
+
     <button
       pButton
       type="submit"

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { FormProposalService } from '../services/form-proposal.service';
 import { FormGroup } from '@angular/forms';
 import { GrantProposalService } from 'src/app/shared/services/grant-proposal.service';
@@ -6,6 +6,7 @@ import { GrantProposal } from 'src/app/shared/models/grant-proposal.interface';
 import { ToastrService } from 'ngx-toastr';
 import { finalize } from 'rxjs';
 import { environment } from 'src/environments/environments';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-ds-doctoral',
@@ -17,16 +18,19 @@ export class DsDoctoralComponent implements OnInit {
 
   loading = false;
 
-  apiUrl = environment.apiUrl;
+  private apiUrl = environment.apiUrl;
+
+  @ViewChildren('fileUpload') pFormUpload: QueryList<any>;
 
   constructor(
     private formProposalService: FormProposalService,
     private grantProposalService: GrantProposalService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private http: HttpClient
   ) {}
 
   ngOnInit(): void {
-    this.doctoralForm = this.formProposalService.getDsDoctoralForm();
+    this.doctoralForm = this.formProposalService.getDsDoctoralForm();  
   }
 
   onSubmit() {
@@ -43,6 +47,9 @@ export class DsDoctoralComponent implements OnInit {
       .subscribe({
         next: (result) => {
           this.doctoralForm.reset();
+          for(let i = 0; i < this.pFormUpload['_results'].length; i++) {
+            this.pFormUpload['_results'][i].clear();
+          }
           this.toastr.success('Proposal submitted successfully');
         },
         error: (err) => {
@@ -57,8 +64,28 @@ export class DsDoctoralComponent implements OnInit {
       });
   }
 
-  onUpload(event) {
-    this.toastr.info('File uploaded successfully');
+  onUpload(event, formControlName: string) {
+      if (event.files.length > 0) {
+        const file = event.files[0];
+        const formData = new FormData();
+        formData.append('file', file);
+        this.http.post<any>(this.apiUrl + '/api/file/upload', formData).subscribe(
+          (response) => {
+            this.doctoralForm.get(formControlName).patchValue(`${response.filepath}`);
+            this.toastr.info(response.message);
+          },
+          (error) => {
+            console.error('Error uploading file:', error);
+          }
+        );
+      }
   }
-
 }
+
+
+
+
+  
+   
+ 
+
