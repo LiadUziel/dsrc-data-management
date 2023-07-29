@@ -4,24 +4,108 @@
   <form class="form" [formGroup]="doctoralForm" (ngSubmit)="onSubmit()">
     <app-parent-form [form]="doctoralForm"></app-parent-form>
 
-    <p-fileUpload
-      mode="basic"
-      chooseLabel="Upload CV"
-      name="file"
-      [url]="apiUrl + '/api/file/upload'"
-      [maxFileSize]="1000000"
-      (onSend)="onUpload($event)"
-    ></p-fileUpload>
+    <div class="field">
+      <p-fileUpload
+        mode="basic"
+        chooseLabel="Upload CV"
+        name="file"
+        [url]="apiUrl + '/api/file/upload'"
+        [maxFileSize]="1000000"
+        (onSend)="onUpload($event)"
+      ></p-fileUpload>
+      <i
+        class="pi pi-question-circle"
+        pTooltip="A 2-pg CV of the applicant including publications list according to the attached
+        template."
+      ></i>
+    </div>
 
-    <span class="p-float-label">
-      <input pInputText formControlName="uniqueFieldDsDoctoral1" />
-      <label>uniqueField DsDoctoral1</label>
-    </span>
+    <div class="field">
+      <p-fileUpload
+        mode="basic"
+        chooseLabel="Upload Description"
+        name="file"
+        [url]="apiUrl + '/api/file/upload'"
+        [maxFileSize]="1000000"
+        (onSend)="onUpload($event)"
+      ></p-fileUpload>
+      <i
+        class="pi pi-question-circle"
+        pTooltip="A 2-pg description including:
+        a. Title and background on the topic of research and its importance
+        b. Novelty of the research, its interdisciplinary aspect and potential for
+        development of new core DS methods
+        c. The supervisors, their expertise, and collaboration between them.
+        Collaboration between distant fields will be an advantage."
+      ></i>
+    </div>
 
-    <span class="p-float-label">
-      <input pInputText formControlName="uniqueFieldDsDoctoral2" />
-      <label>uniqueField DsDoctoral2</label>
-    </span>
+    <div class="field">
+      <p-fileUpload
+        mode="basic"
+        chooseLabel="Upload grade transcripts & certificates"
+        name="file"
+        [url]="apiUrl + '/api/file/upload'"
+        [maxFileSize]="1000000"
+        (onSend)="onUpload($event)"
+      ></p-fileUpload>
+      <i
+        class="pi pi-question-circle"
+        pTooltip="BA and MA grade transcripts and graduation certificates."
+      ></i>
+    </div>
+
+    <div class="field">
+      <p-fileUpload
+        mode="basic"
+        chooseLabel="Upload work commitment"
+        name="file"
+        [url]="apiUrl + '/api/file/upload'"
+        [maxFileSize]="1000000"
+        (onSend)="onUpload($event)"
+      ></p-fileUpload>
+      <i
+        class="pi pi-question-circle"
+        pTooltip="Commitment of the applicant not to be hired for more than 5 hours per week on
+        average + student declaration"
+      ></i>
+    </div>
+
+    <div class="field">
+      <p-fileUpload
+        mode="basic"
+        chooseLabel="Upload recommendation letter"
+        name="file"
+        [url]="apiUrl + '/api/file/upload'"
+        [maxFileSize]="1000000"
+        (onSend)="onUpload($event)"
+      ></p-fileUpload>
+      <i
+        class="pi pi-question-circle"
+        pTooltip="A recommendation letter from the supervisors, according to the attached template."
+      ></i>
+    </div>
+
+    <div class="field">
+      <p-fileUpload
+        mode="basic"
+        chooseLabel="Upload contact recommenders"
+        name="file"
+        [url]="apiUrl + '/api/file/upload'"
+        [maxFileSize]="1000000"
+        (onSend)="onUpload($event)"
+      ></p-fileUpload>
+      <i
+        class="pi pi-question-circle"
+        pTooltip="Names of three other recommenders and contact details."
+      ></i>
+    </div>
+
+    <app-multi-field
+      [form]="doctoralForm"
+      [formArrayName]="'teamMembers'"
+      [displayAction]="'Team Member'"
+    ></app-multi-field>
 
     <button
       pButton

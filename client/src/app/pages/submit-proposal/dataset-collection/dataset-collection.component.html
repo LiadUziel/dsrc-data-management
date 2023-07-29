@@ -4,15 +4,117 @@
   <form class="form" [formGroup]="dsCollectionForm" (ngSubmit)="onSubmit()">
     <app-parent-form [form]="dsCollectionForm"></app-parent-form>
 
-    <span class="p-float-label">
-      <input pInputText formControlName="uniqueFieldDatasetCollection1" />
-      <label>uniqueField DatasetCollection1</label>
-    </span>
+    <div class="field">
+      <p-fileUpload
+        mode="basic"
+        chooseLabel="Upload Research Introduction"
+        name="file"
+        [url]="apiUrl + '/api/file/upload'"
+        [maxFileSize]="1000000"
+        (onSend)="onUpload($event)"
+      ></p-fileUpload>
+      <i
+        class="pi pi-question-circle"
+        pTooltip="introduction providing clear background and the importance of the proposed topic"
+      ></i>
+    </div>
 
-    <span class="p-float-label">
-      <input pInputText formControlName="uniqueFieldDatasetCollection2" />
-      <label>uniqueField DatasetCollection2</label>
-    </span>
+    <div class="field">
+      <p-fileUpload
+        mode="basic"
+        chooseLabel="Upload Innovation Project"
+        name="file"
+        [url]="apiUrl + '/api/file/upload'"
+        [maxFileSize]="1000000"
+        (onSend)="onUpload($event)"
+      ></p-fileUpload>
+      <i
+        class="pi pi-question-circle"
+        pTooltip="The innovation and novelty of the proposed project or dataset (compared to related studies in
+        the same field), and the necessity of the dataset."
+      ></i>
+    </div>
+
+    <div class="field">
+      <p-fileUpload
+        mode="basic"
+        chooseLabel="Upload Dataset Information"
+        name="file"
+        [url]="apiUrl + '/api/file/upload'"
+        [maxFileSize]="1000000"
+        (onSend)="onUpload($event)"
+      ></p-fileUpload>
+      <i
+        class="pi pi-question-circle"
+        pTooltip="The dataset collection process and timeline"
+      ></i>
+    </div>
+
+    <div class="field">
+      <p-fileUpload
+        mode="basic"
+        chooseLabel="Upload Team"
+        name="file"
+        [url]="apiUrl + '/api/file/upload'"
+        [maxFileSize]="1000000"
+        (onSend)="onUpload($event)"
+      ></p-fileUpload>
+      <i
+        class="pi pi-question-circle"
+        pTooltip="Information on the collaborating team and the role of each of the team members"
+      ></i>
+      changeee
+    </div>
+
+    <div class="field">
+      <p-fileUpload
+        mode="basic"
+        chooseLabel="Upload Budget"
+        name="file"
+        [url]="apiUrl + '/api/file/upload'"
+        [maxFileSize]="1000000"
+        (onSend)="onUpload($event)"
+      ></p-fileUpload>
+      <i
+        class="pi pi-question-circle"
+        pTooltip="Detailed budget request including the different expenses (e.g., purchase of a data set,
+        purchase of equipment necessary to collect or annotate the dataset, fellowship or salary for
+        personnel working on dataset collection), and the source of the matching funds (total budget
+        amount should reflect matching)"
+      ></i>
+      change
+    </div>
+
+    <div class="field">
+      <p-fileUpload
+        mode="basic"
+        chooseLabel="Upload Ethics"
+        name="file"
+        [url]="apiUrl + '/api/file/upload'"
+        [maxFileSize]="1000000"
+        (onSend)="onUpload($event)"
+      ></p-fileUpload>
+      <i
+        class="pi pi-question-circle"
+        pTooltip="The proposal should address and commit to ethics and privacy policies, when relevant."
+      ></i>
+    </div>
+
+    <div class="field">
+      <p-fileUpload
+        mode="basic"
+        chooseLabel="Upload Copyrights"
+        name="file"
+        [url]="apiUrl + '/api/file/upload'"
+        [maxFileSize]="1000000"
+        (onSend)="onUpload($event)"
+      ></p-fileUpload>
+      <i
+        class="pi pi-question-circle"
+        pTooltip="If relevant, the proposal must address copyright, privacy, intellectual property or other
+        concerns that might prevent the publication of the data in an open access format."
+      ></i>
+    </div>
 
     <button
       pButton

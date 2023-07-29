@@ -20,6 +20,9 @@ export const createGrantProposal: RequestHandler = async (req, res, next) => {
     // add application date
     proposal.applicationDate = new Date();
 
+    // init Amount Given
+    proposal.amountGiven = 0;
+
     const proposalDb = await GrantProposalModel.create(proposal);
 
     return res.status(201).send(proposalDb);

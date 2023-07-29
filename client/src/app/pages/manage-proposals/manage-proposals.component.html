@@ -1,24 +1,157 @@
-<div class="header">
-  <h1>Manage Proposals</h1>
-  <p-tabMenu
-    [model]="items"
-    [activeItem]="activeItem"
-    (activeItemChange)="onActiveItemChange($event)"
-  ></p-tabMenu>
-</div>
+<h1>Manage Proposals</h1>
 
-<div class="table-wrapper" [ngSwitch]="activeItem.label">
-  <div *ngSwitchCase="'Data Science Doctoral'">
-    <app-ds-doctoral-table></app-ds-doctoral-table>
-  </div>
-  <div *ngSwitchCase="'Post Doctoral'">
-    <app-post-doctoral-table></app-post-doctoral-table>
-  </div>
-  <div *ngSwitchCase="'Seed Research'">
-    <app-seed-research-table></app-seed-research-table>
-  </div>
-  <div *ngSwitchCase="'Dataset Collection'">
-    <app-dataset-collection-table></app-dataset-collection-table>
-  </div>
-  <div *ngSwitchDefault class="no-choice">Select a grant type</div>
+<div class="table-wrapper">
+  <p-table
+    [value]="proposals$ | async"
+    #proposalTable
+    [globalFilterFields]="[
+      'type',
+      'user.firstName',
+      'user.lastName',
+      'user.email',
+      'department',
+      'studyTitle'
+    ]"
+    dataKey="_id"
+    [paginator]="true"
+    [rows]="10"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    styleClass="p-datatable-striped"
+    [columns]="cols"
+  >
+    <ng-template pTemplate="caption">
+      <div class="caption">
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            type="text"
+            (input)="
+              proposalTable.filterGlobal($any($event.target).value, 'contains')
+            "
+            placeholder="Search keyword"
+          />
+        </span>
+        <button
+          type="button"
+          pButton
+          pRipple
+          icon="pi pi-file-excel"
+          (click)="proposalTable.exportCSV()"
+          class="p-button-success"
+          pTooltip="Export CSV"
+          tooltipPosition="bottom"
+        ></button>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th></th>
+        <th pSortableColumn="type">
+          <div>Grant Type</div>
+          <p-sortIcon field="type"></p-sortIcon>
+        </th>
+        <th pSortableColumn="user.firstName">
+          <div>First Name</div>
+          <p-sortIcon field="user.firstName"></p-sortIcon>
+        </th>
+        <th pSortableColumn="user.lastName">
+          <div>Last Name</div>
+          <p-sortIcon field="user.lastName"></p-sortIcon>
+        </th>
+        <th pSortableColumn="user.email">
+          <div>Email</div>
+          <p-sortIcon field="user.email"></p-sortIcon>
+        </th>
+        <th pSortableColumn="department">
+          <div>Department</div>
+          <p-sortIcon field="department"></p-sortIcon>
+        </th>
+        <th pSortableColumn="studyTitle">
+          <div>Study Title</div>
+          <p-sortIcon field="studyTitle"></p-sortIcon>
+        </th>
+        <th pSortableColumn="amountRequested">
+          <div>Amount Requested</div>
+          <p-sortIcon field="amountRequested"></p-sortIcon>
+        </th>
+        <th pSortableColumn="amountGiven">
+          <div>Amount Given</div>
+          <p-sortIcon field="amountGiven"></p-sortIcon>
+        </th>
+        <th pSortableColumn="applicationDate">
+          <div>Application Date</div>
+          <p-sortIcon field="applicationDate"></p-sortIcon>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-proposal let-expanded="expanded">
+      <tr>
+        <td>
+          <button
+            type="button"
+            pButton
+            pRipple
+            [pRowToggler]="proposal"
+            class="p-button-text p-button-rounded p-button-plain"
+            [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+          ></button>
+        </td>
+
+        <td>{{ GrantTypeEnum[proposal.type] }}</td>
+        <td>{{ proposal.user.firstName }}</td>
+        <td>{{ proposal.user.lastName }}</td>
+        <td>{{ proposal.user.email }}</td>
+        <td>{{ proposal.department }}</td>
+        <td>{{ proposal.studyTitle }}</td>
+        <td>{{ proposal.amountRequested | number }}</td>
+        <td>{{ proposal.amountGiven | number }}</td>
+        <td>{{ proposal.applicationDate | date }}</td>
+      </tr>
+    </ng-template>
+
+    <!--* line extension -->
+    <ng-template pTemplate="rowexpansion" let-proposal>
+      <tr class="expanded-row">
+        <td colspan="10" class="expanded-cell">
+          <div *ngIf="proposal.teamMembers && proposal.teamMembers.length > 0">
+            <h3>Team Members:</h3>
+            <table class="team-members-table">
+              <tr>
+                <th>Member Name</th>
+                <th>Member Email</th>
+                <th>Member Department</th>
+                <th>Member Role</th>
+              </tr>
+              <tr *ngFor="let member of proposal.teamMembers">
+                <td>{{ member.memberName }}</td>
+                <td>{{ member.memberEmail }}</td>
+                <td>{{ member.memberDepartment }}</td>
+                <td>{{ member.memberRole }}</td>
+              </tr>
+            </table>
+          </div>
+
+          <div *ngIf="proposal.budgetParts && proposal.budgetParts.length > 0">
+            <h3>Budget Parts:</h3>
+            <table class="budget-parts-table">
+              <tr>
+                <th>Reason</th>
+                <th>Amount</th>
+              </tr>
+              <tr *ngFor="let budgetPart of proposal.budgetParts">
+                <td>{{ budgetPart.reason }}</td>
+                <td>{{ budgetPart.amount | number }}</td>
+              </tr>
+            </table>
+            <b
+              >Total Budget:
+              {{ getTotalBudget(proposal.budgetParts) | number }}</b
+            >
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
 </div>

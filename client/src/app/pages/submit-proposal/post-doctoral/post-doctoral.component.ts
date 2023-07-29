@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { GrantProposal } from 'src/app/shared/models/grant-proposal.interface';
 import { GrantProposalService } from 'src/app/shared/services/grant-proposal.service';
 import { finalize } from 'rxjs';
+import { environment } from 'src/environments/environments';
 
 @Component({
   selector: 'app-post-doctoral',
@@ -15,6 +16,8 @@ export class PostDoctoralComponent implements OnInit {
   postDoctoralForm: FormGroup;
 
   loading = false;
+
+  apiUrl = environment.apiUrl;
 
   constructor(
     private formProposalService: FormProposalService,
@@ -52,5 +55,9 @@ export class PostDoctoralComponent implements OnInit {
           }
         },
       });
+  }
+
+  onUpload(event) {
+    this.toastr.info('File uploaded successfully');
   }
 }

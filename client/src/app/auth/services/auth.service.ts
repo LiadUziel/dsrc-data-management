@@ -13,7 +13,6 @@ export class AuthService {
   private apiUrl = environment.apiUrl + '/api/auth';
   public gonnaLogIn$ = new Subject<boolean>();
 
-
   constructor(
     private http: HttpClient,
     private tokenService: TokenStorageService,
@@ -42,7 +41,6 @@ export class AuthService {
     });
   }
 
-  // TODO - remove this - just dummy
   protected() {
     const token = this.tokenService.getToken();
     return this.http.get<{ result: string }>(this.apiUrl + '/protected', {
@@ -61,37 +59,41 @@ export class AuthService {
   }
 
   verifyJwt(token: string) {
-    return this.http.get<{ result: string, user: any }>(this.apiUrl + '/verify-jwt', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    return this.http.get<{ result: string; user: any }>(
+      this.apiUrl + '/verify-jwt',
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
   }
 
   forgotPassword(email: string) {
-    const userData = {email};
+    const userData = { email };
     const emailConfig = {
-      url: '/renewPassword?', 
+      url: '/renewPassword?',
       subject: 'DSRC renew password link',
-      content: 'DSRC renew password link is attached AND VALID ONLY FOR 5 MINUTES, please click on it to renew your password'    
+      content:
+        'DSRC renew password link is attached AND VALID ONLY FOR 5 MINUTES, please click on it to renew your password',
     };
-    const req = {userData, emailConfig};
-    return this.http.post<{ token: string }>(this.apiUrl + '/forgot-password', req);
+    const req = { userData, emailConfig };
+    return this.http.post<{ token: string }>(
+      this.apiUrl + '/forgot-password',
+      req
+    );
   }
 
-  renewPassword(
-    email: string,
-    password: string,
-  ) {
+  renewPassword(email: string, password: string) {
     return this.http.post(this.apiUrl + '/renew-password', {
       email,
-      password
+      password,
     });
   }
 
   isLogin(): Observable<User> {
     const token = this.tokenService.getToken();
-    if(token) {
+    if (token) {
       return this.verifyJwt(token).pipe(
         filter((res) => res !== undefined),
         map((res) => {
@@ -100,9 +102,9 @@ export class AuthService {
           }
           return res.user;
         })
-      )
+      );
     }
-    
+
     return of(null);
   }
 
@@ -119,13 +121,14 @@ export class AuthService {
     firstName: string,
     lastName: string
   ) {
-    const userData = {email, password, firstName, lastName};
+    const userData = { email, password, firstName, lastName };
     const emailConfig = {
-      url: '/verifyRegister?', 
+      url: '/verifyRegister?',
       subject: 'DSRC register verification link',
-      content: 'DSRC register verification link is attached AND VALID ONLY FOR 5 MINUTES, to be registred at DSRC, you MUST click on the link'
+      content:
+        'DSRC register verification link is attached AND VALID ONLY FOR 5 MINUTES, to be registred at DSRC, you MUST click on the link',
     };
-    const req = {userData, emailConfig};
+    const req = { userData, emailConfig };
     return this.http.post(this.apiUrl + '/sendVerifyRegisterEmail', req);
   }
 }

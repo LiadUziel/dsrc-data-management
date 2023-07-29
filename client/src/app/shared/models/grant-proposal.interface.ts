@@ -1,4 +1,6 @@
 import { User } from 'src/app/auth/interfaces/user-interface';
+import { TeamMember } from './team-member.interface';
+import { BudgetPart } from './budget-part.interface';
 
 export interface GrantProposal {
   _id?: string;
@@ -11,6 +13,7 @@ export interface GrantProposal {
   // fields just from DB - user is not fill them
   user?: User;
   applicationDate?: Date;
+  amountGiven?: number;
 
   // shared fields
   department: string;
@@ -28,8 +31,11 @@ export interface GrantProposal {
   // SEED_RESEARCH
   uniqueFieldSeedResearch1?: string; // required if type === "SEED_RESEARCH"
   uniqueFieldSeedResearch2?: number; // optional
+  budgetParts?: BudgetPart[];
 
   // DATASET_COLLECTION
   uniqueFieldDatasetCollection1?: string; // required if type === "DATASET_COLLECTION"
   uniqueFieldDatasetCollection2?: number; // optional
+
+  teamMembers: TeamMember[];
 }
