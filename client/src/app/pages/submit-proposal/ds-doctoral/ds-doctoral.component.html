@@ -1,18 +1,19 @@
 <div class="page-wrapper">
   <h1>Data Science Doctoral candidates</h1>
 
-  <form class="form" [formGroup]="doctoralForm" (ngSubmit)="onSubmit()">
+  <form class="form" action="/upload" mehod="POST" enctype="multipart/form-data" [formGroup]="doctoralForm" (ngSubmit)="onSubmit()">
     <app-parent-form [form]="doctoralForm"></app-parent-form>
 
     <div class="field">
-      <p-fileUpload
-        mode="basic"
+      <p-fileUpload formControlName="uploadCV" #fileUpload
+       name="file"
+       [maxFileSize]="1000000"  
         chooseLabel="Upload CV"
-        name="file"
-        [url]="apiUrl + '/api/file/upload'"
-        [maxFileSize]="1000000"
-        (onSend)="onUpload($event)"
-      ></p-fileUpload>
+        [showCancelButton]="false"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event, 'uploadCV')"
+        >
+      </p-fileUpload>
       <i
         class="pi pi-question-circle"
         pTooltip="A 2-pg CV of the applicant including publications list according to the attached
@@ -21,14 +22,15 @@
     </div>
 
     <div class="field">
-      <p-fileUpload
-        mode="basic"
+      <p-fileUpload formControlName="uploadDescription" #fileUpload
+       name="file"
+       [maxFileSize]="1000000"
         chooseLabel="Upload Description"
-        name="file"
-        [url]="apiUrl + '/api/file/upload'"
-        [maxFileSize]="1000000"
-        (onSend)="onUpload($event)"
-      ></p-fileUpload>
+        [showCancelButton]="false"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event, 'uploadDescription')"
+        >
+      </p-fileUpload>
       <i
         class="pi pi-question-circle"
         pTooltip="A 2-pg description including:
@@ -41,14 +43,15 @@
     </div>
 
     <div class="field">
-      <p-fileUpload
-        mode="basic"
+      <p-fileUpload formControlName="uploadGradeTAndC" #fileUpload
+       name="file"
+       [maxFileSize]="1000000"
         chooseLabel="Upload grade transcripts & certificates"
-        name="file"
-        [url]="apiUrl + '/api/file/upload'"
-        [maxFileSize]="1000000"
-        (onSend)="onUpload($event)"
-      ></p-fileUpload>
+        [showCancelButton]="false"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event, 'uploadGradeTAndC')"
+        >
+      </p-fileUpload>
       <i
         class="pi pi-question-circle"
         pTooltip="BA and MA grade transcripts and graduation certificates."
@@ -56,14 +59,15 @@
     </div>
 
     <div class="field">
-      <p-fileUpload
-        mode="basic"
+      <p-fileUpload formControlName="uploadWorkCommitment" #fileUpload
+       name="file"
+       [maxFileSize]="1000000"
         chooseLabel="Upload work commitment"
-        name="file"
-        [url]="apiUrl + '/api/file/upload'"
-        [maxFileSize]="1000000"
-        (onSend)="onUpload($event)"
-      ></p-fileUpload>
+        [showCancelButton]="false"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event, 'uploadWorkCommitment')"
+        >
+      </p-fileUpload>
       <i
         class="pi pi-question-circle"
         pTooltip="Commitment of the applicant not to be hired for more than 5 hours per week on
@@ -72,14 +76,15 @@
     </div>
 
     <div class="field">
-      <p-fileUpload
-        mode="basic"
+      <p-fileUpload formControlName="uploadRecommendationLetter" #fileUpload
+       name="file"
+       [maxFileSize]="1000000"
         chooseLabel="Upload recommendation letter"
-        name="file"
-        [url]="apiUrl + '/api/file/upload'"
-        [maxFileSize]="1000000"
-        (onSend)="onUpload($event)"
-      ></p-fileUpload>
+        [showCancelButton]="false"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event, 'uploadRecommendationLetter')"
+        >
+      </p-fileUpload>
       <i
         class="pi pi-question-circle"
         pTooltip="A recommendation letter from the supervisors, according to the attached template."
@@ -87,18 +92,19 @@
     </div>
 
     <div class="field">
-      <p-fileUpload
-        mode="basic"
-        chooseLabel="Upload contact recommenders"
-        name="file"
-        [url]="apiUrl + '/api/file/upload'"
-        [maxFileSize]="1000000"
-        (onSend)="onUpload($event)"
-      ></p-fileUpload>
-      <i
-        class="pi pi-question-circle"
-        pTooltip="Names of three other recommenders and contact details."
-      ></i>
+      <p-fileUpload formControlName="uploadContactRecommenders" #fileUpload
+       name="file"
+       [maxFileSize]="1000000"
+       chooseLabel="Upload contact recommenders"
+       [showCancelButton]="false"
+       [customUpload]="true"
+       (uploadHandler)="onUpload($event, 'uploadContactRecommenders')"
+       >
+       </p-fileUpload>
+       <i
+         class="pi pi-question-circle"
+         pTooltip="Names of three other recommenders and contact details."
+       ></i>
     </div>
 
     <app-multi-field
@@ -117,4 +123,4 @@
       Submit
     </button>
   </form>
-</div>
+</div> 

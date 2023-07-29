@@ -6,13 +6,16 @@
 
     <div class="field">
       <p-fileUpload
-        mode="basic"
-        chooseLabel="Upload CV"
+        formControlName="uploadCV"
+        #fileUpload
         name="file"
-        [url]="apiUrl + '/api/file/upload'"
         [maxFileSize]="1000000"
-        (onSend)="onUpload($event)"
-      ></p-fileUpload>
+        chooseLabel="Upload CV"
+        [showCancelButton]="false"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event, 'uploadCV')"
+      >
+      </p-fileUpload>
       <i
         class="pi pi-question-circle"
         pTooltip="A 2-pg CV of the applicant including publications list according to the attached
@@ -22,13 +25,16 @@
 
     <div class="field">
       <p-fileUpload
-        mode="basic"
-        chooseLabel="Upload Description"
+        formControlName="uploadDescription"
+        #fileUpload
         name="file"
-        [url]="apiUrl + '/api/file/upload'"
         [maxFileSize]="1000000"
-        (onSend)="onUpload($event)"
-      ></p-fileUpload>
+        chooseLabel="Upload Description"
+        [showCancelButton]="false"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event, 'uploadDescription')"
+      >
+      </p-fileUpload>
       <i
         class="pi pi-question-circle"
         pTooltip="A 2-pg description including:
@@ -42,13 +48,16 @@
 
     <div class="field">
       <p-fileUpload
-        mode="basic"
-        chooseLabel="Upload grade transcripts & certificates"
+        formControlName="uploadGradeTAndC"
+        #fileUpload
         name="file"
-        [url]="apiUrl + '/api/file/upload'"
         [maxFileSize]="1000000"
-        (onSend)="onUpload($event)"
-      ></p-fileUpload>
+        chooseLabel="Upload grade transcripts & certificates"
+        [showCancelButton]="false"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event, 'uploadGradeTAndC')"
+      >
+      </p-fileUpload>
       <i
         class="pi pi-question-circle"
         pTooltip="BA and MA grade transcripts and graduation certificates."
@@ -57,13 +66,16 @@
 
     <div class="field">
       <p-fileUpload
-        mode="basic"
-        chooseLabel="Upload work commitment"
+        formControlName="uploadWorkCommitment"
+        #fileUpload
         name="file"
-        [url]="apiUrl + '/api/file/upload'"
         [maxFileSize]="1000000"
-        (onSend)="onUpload($event)"
-      ></p-fileUpload>
+        chooseLabel="Upload work commitment"
+        [showCancelButton]="false"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event, 'uploadWorkCommitment')"
+      >
+      </p-fileUpload>
       <i
         class="pi pi-question-circle"
         pTooltip="Commitment of the applicant not to be hired for more than 5 hours per week on
@@ -73,13 +85,16 @@
 
     <div class="field">
       <p-fileUpload
-        mode="basic"
-        chooseLabel="Upload recommendation letter"
+        formControlName="uploadRecommendationLetter"
+        #fileUpload
         name="file"
-        [url]="apiUrl + '/api/file/upload'"
         [maxFileSize]="1000000"
-        (onSend)="onUpload($event)"
-      ></p-fileUpload>
+        chooseLabel="Upload recommendation letter"
+        [showCancelButton]="false"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event, 'uploadRecommendationLetter')"
+      >
+      </p-fileUpload>
       <i
         class="pi pi-question-circle"
         pTooltip="A recommendation letter from the supervisors, according to the attached template."
@@ -88,13 +103,16 @@
 
     <div class="field">
       <p-fileUpload
-        mode="basic"
-        chooseLabel="Upload contact recommenders"
+        formControlName="uploadContactRecommenders"
+        #fileUpload
         name="file"
-        [url]="apiUrl + '/api/file/upload'"
         [maxFileSize]="1000000"
-        (onSend)="onUpload($event)"
-      ></p-fileUpload>
+        chooseLabel="Upload contact recommenders"
+        [showCancelButton]="false"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event, 'uploadContactRecommenders')"
+      >
+      </p-fileUpload>
       <i
         class="pi pi-question-circle"
         pTooltip="Names of three other recommenders and contact details."

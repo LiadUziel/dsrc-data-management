@@ -20,7 +20,15 @@ export interface GrantProposal {
   studyTitle: string;
   amountRequested: number;
 
-  // DS_DOCTORAL
+  // DS_DOCTORAL / POST_DOCTORAL
+  uploadCV?: string;
+  uploadDescription?: string;
+  uploadGradeTAndC?: string;
+  uploadWorkCommitment?: string;
+  uploadRecommendationLetter?: string;
+  uploadContactRecommenders?: string;
+
+  //DS_DOCTORAL
   uniqueFieldDsDoctoral1?: string; // required if type === "DS_DOCTORAL"
   uniqueFieldDsDoctoral2?: number; // optional
 
@@ -28,12 +36,20 @@ export interface GrantProposal {
   uniqueFieldPostDoctoral1?: string; // required if type === "POST_DOCTORAL"
   uniqueFieldPostDoctoral2?: number; // optional
 
-  // SEED_RESEARCH
+  // SEED_RESEARCH(part of the fields are also at dataset collection)
+  uploadResearchIntro?: string;
+  uploadInnovationProject?: string;
+  uploadTeam?: string;
+  uploadBudget?: string;
+  uploadExternalFunding?: string; 
   uniqueFieldSeedResearch1?: string; // required if type === "SEED_RESEARCH"
   uniqueFieldSeedResearch2?: number; // optional
   budgetParts?: BudgetPart[];
 
-  // DATASET_COLLECTION
+  // DATASET_COLLECTION (which are not at seed)
+  uploadDatasetInfo?: string;
+  uploadEthics?: string;
+  uploadCopyrights?: string;
   uniqueFieldDatasetCollection1?: string; // required if type === "DATASET_COLLECTION"
   uniqueFieldDatasetCollection2?: number; // optional
 

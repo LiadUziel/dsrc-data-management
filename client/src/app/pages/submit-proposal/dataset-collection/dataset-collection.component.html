@@ -5,45 +5,47 @@
     <app-parent-form [form]="dsCollectionForm"></app-parent-form>
 
     <div class="field">
-      <p-fileUpload
-        mode="basic"
+      <p-fileUpload formControlName="uploadResearchIntro" #fileUpload
+       name="file"
+       [maxFileSize]="1000000"
         chooseLabel="Upload Research Introduction"
-        name="file"
-        [url]="apiUrl + '/api/file/upload'"
-        [maxFileSize]="1000000"
-        (onSend)="onUpload($event)"
-      ></p-fileUpload>
+        [showCancelButton]="false"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event, 'uploadResearchIntro')"
+        >
+      </p-fileUpload>
       <i
         class="pi pi-question-circle"
-        pTooltip="introduction providing clear background and the importance of the proposed topic"
+        pTooltip="introduction including the importance of the proposed topic"
       ></i>
     </div>
 
     <div class="field">
-      <p-fileUpload
-        mode="basic"
+      <p-fileUpload formControlName="uploadInnovationProject" #fileUpload
+       name="file"
+       [maxFileSize]="1000000"
         chooseLabel="Upload Innovation Project"
-        name="file"
-        [url]="apiUrl + '/api/file/upload'"
-        [maxFileSize]="1000000"
-        (onSend)="onUpload($event)"
-      ></p-fileUpload>
+        [showCancelButton]="false"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event, 'uploadInnovationProject')"
+        >
+      </p-fileUpload>
       <i
         class="pi pi-question-circle"
-        pTooltip="The innovation and novelty of the proposed project or dataset (compared to related studies in
-        the same field), and the necessity of the dataset."
+        pTooltip="The innovation of the proposed project"
       ></i>
     </div>
 
     <div class="field">
-      <p-fileUpload
-        mode="basic"
+      <p-fileUpload formControlName="uploadDatasetInfo" #fileUpload
+       name="file"
+       [maxFileSize]="1000000"
         chooseLabel="Upload Dataset Information"
-        name="file"
-        [url]="apiUrl + '/api/file/upload'"
-        [maxFileSize]="1000000"
-        (onSend)="onUpload($event)"
-      ></p-fileUpload>
+        [showCancelButton]="false"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event, 'uploadDatasetInfo')"
+        >
+      </p-fileUpload>
       <i
         class="pi pi-question-circle"
         pTooltip="The dataset collection process and timeline"
@@ -51,14 +53,15 @@
     </div>
 
     <div class="field">
-      <p-fileUpload
-        mode="basic"
+      <p-fileUpload formControlName="uploadTeam" #fileUpload
+       name="file"
+       [maxFileSize]="1000000"
         chooseLabel="Upload Team"
-        name="file"
-        [url]="apiUrl + '/api/file/upload'"
-        [maxFileSize]="1000000"
-        (onSend)="onUpload($event)"
-      ></p-fileUpload>
+        [showCancelButton]="false"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event, 'uploadTeam')"
+        >
+      </p-fileUpload>
       <i
         class="pi pi-question-circle"
         pTooltip="Information on the collaborating team and the role of each of the team members"
@@ -67,33 +70,33 @@
     </div>
 
     <div class="field">
-      <p-fileUpload
-        mode="basic"
+      <p-fileUpload formControlName="uploadBudget" #fileUpload
+       name="file"
+       [maxFileSize]="1000000"
         chooseLabel="Upload Budget"
-        name="file"
-        [url]="apiUrl + '/api/file/upload'"
-        [maxFileSize]="1000000"
-        (onSend)="onUpload($event)"
-      ></p-fileUpload>
+        [showCancelButton]="false"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event, 'uploadBudget')"
+        >
+      </p-fileUpload>
       <i
         class="pi pi-question-circle"
-        pTooltip="Detailed budget request including the different expenses (e.g., purchase of a data set,
-        purchase of equipment necessary to collect or annotate the dataset, fellowship or salary for
-        personnel working on dataset collection), and the source of the matching funds (total budget
-        amount should reflect matching)"
+        pTooltip="Detailed budget request including the different expenses (e.g., purchase of a data
+        set, purchase of equipment)"
       ></i>
       change
     </div>
 
     <div class="field">
-      <p-fileUpload
-        mode="basic"
+      <p-fileUpload formControlName="uploadEthics" #fileUpload
+       name="file"
+       [maxFileSize]="1000000"
         chooseLabel="Upload Ethics"
-        name="file"
-        [url]="apiUrl + '/api/file/upload'"
-        [maxFileSize]="1000000"
-        (onSend)="onUpload($event)"
-      ></p-fileUpload>
+        [showCancelButton]="false"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event, 'uploadEthics')"
+        >
+      </p-fileUpload>
       <i
         class="pi pi-question-circle"
         pTooltip="The proposal should address and commit to ethics and privacy policies, when relevant."
@@ -101,14 +104,15 @@
     </div>
 
     <div class="field">
-      <p-fileUpload
-        mode="basic"
+      <p-fileUpload formControlName="uploadCopyrights" #fileUpload
+       name="file"
+       [maxFileSize]="1000000"
         chooseLabel="Upload Copyrights"
-        name="file"
-        [url]="apiUrl + '/api/file/upload'"
-        [maxFileSize]="1000000"
-        (onSend)="onUpload($event)"
-      ></p-fileUpload>
+        [showCancelButton]="false"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event, 'uploadCopyrights')"
+        >
+      </p-fileUpload>
       <i
         class="pi pi-question-circle"
         pTooltip="If relevant, the proposal must address copyright, privacy, intellectual property or other

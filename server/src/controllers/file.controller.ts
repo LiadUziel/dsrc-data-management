@@ -1,30 +1,19 @@
-import { RequestHandler } from "express";
 import multer from "multer";
 
-let storage;
+const destination: string = "../files";
+let currentDateString;
+let fileName;
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, destination); // Specify the destination folder where the file will be saved
+  },
+  filename: function (req, file, cb) {
+    const nowDate = new Date();
+    currentDateString = `${new Date().toLocaleDateString()} ${nowDate.getHours()}_${nowDate.getMinutes()}_${nowDate.getSeconds()}`;
+    fileName = `${currentDateString} ${file.originalname}`;
+    cb(null, fileName); // Use the original file name as part of the saved file name
+  },
+});
 export let upload = multer({ storage });
 
-export const configMulter: RequestHandler = async (req, res, next) => {
-  try {
-    // Set up the Multer storage configuration
-    storage = multer.diskStorage({
-      destination: function (req, file, cb) {
-        cb(null, "uploads/"); // Specify the destination folder where the file will be saved
-      },
-      filename: function (req, file, cb) {
-        cb(null, file.originalname); // Use the original file name as the saved file name
-      },
-    });
-    upload = multer({ storage });
-    next();
-  } catch (e) {
-    next(e);
-  }
-};
 
-export const uploadFile: RequestHandler = async (req, res, next) => {
-  try {
-  } catch (e) {
-    next(e);
-  }
-};
