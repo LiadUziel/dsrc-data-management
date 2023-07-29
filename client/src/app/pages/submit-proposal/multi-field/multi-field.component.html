@@ -41,7 +41,13 @@
 
       <div *ngIf="formArrayName === 'budgetParts'" class="inputs-wrapper">
         <span class="p-float-label">
-          <input pInputText formControlName="reason" />
+          <textarea
+            pInputTextarea
+            formControlName="reason"
+            cols="40"
+            rows="1"
+            [autoResize]="true"
+          ></textarea>
           <label>Reason</label>
         </span>
 

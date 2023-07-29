@@ -68,34 +68,4 @@ export class LoginComponent implements OnInit {
   get rememberMe(): boolean {
     return this.loginForm.get('rememberMe').value;
   }
-
-  // TODO - Remove this
-  protected() {
-    this.authService.protected().subscribe({
-      next: (result) => {
-        this.toastr.success(result.result);
-      },
-      error: (error) => {
-        if (error.error.message.includes('jwt')) {
-          this.toastr.error('You are not authorized');
-        } else {
-          this.toastr.error('Something went wrong');
-        }
-      },
-    });
-  }
-  protectedAdmin() {
-    this.authService.protectedAdmin().subscribe({
-      next: (result) => {
-        this.toastr.success(result.result);
-      },
-      error: (error) => {
-        if (error.status === 403) {
-          this.toastr.error('You are not authorized');
-        } else {
-          this.toastr.error('Something went wrong');
-        }
-      },
-    });
-  }
 }

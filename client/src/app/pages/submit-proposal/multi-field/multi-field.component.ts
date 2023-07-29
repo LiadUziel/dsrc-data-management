@@ -1,6 +1,7 @@
 import { Component, Input, inject } from '@angular/core';
 import { FormArray, FormGroup } from '@angular/forms';
 import { FormProposalService } from '../services/form-proposal.service';
+import { BudgetPart } from 'src/app/shared/models/budget-part.interface';
 
 @Component({
   selector: 'app-multi-field',
@@ -64,10 +65,13 @@ export class MultiFieldComponent {
     return this.form.get('budgetParts') as FormArray;
   }
 
-  get totalBudget() {
+  get totalBudget(): number {
     const budgetParts = this.budgetParts.value;
     if (budgetParts.length > 0) {
-      return budgetParts.reduce((acc, curr) => acc + curr.amount, 0);
+      return budgetParts.reduce(
+        (acc: number, curr: BudgetPart) => acc + curr.amount,
+        0
+      );
     }
     return 0;
   }

@@ -26,7 +26,6 @@ export class FormProposalService {
 
   getDsDoctoralForm(): FormGroup {
     const form = _.cloneDeep(this.parentForm);
-    // TODO - add unique fields for DS Doctoral
 
     const teamMembers = new FormArray([]);
     form.setControl('teamMembers', teamMembers);
@@ -36,7 +35,6 @@ export class FormProposalService {
 
   getPostDoctoralForm(): FormGroup {
     const form = _.cloneDeep(this.parentForm);
-    // TODO - add unique fields for Post Doctoral
 
     const teamMembers = new FormArray([]);
     form.setControl('teamMembers', teamMembers);
@@ -46,7 +44,6 @@ export class FormProposalService {
 
   getSeedResearchForm(): FormGroup {
     const form = _.cloneDeep(this.parentForm);
-    // TODO - add unique fields for Seed Research
 
     const budgetParts = new FormArray([]);
     form.setControl('budgetParts', budgetParts);
@@ -56,7 +53,6 @@ export class FormProposalService {
 
   getDatasetCollectionForm(): FormGroup {
     const form = _.cloneDeep(this.parentForm);
-    // TODO - add unique fields for Dataset Collection
 
     return form;
   }
