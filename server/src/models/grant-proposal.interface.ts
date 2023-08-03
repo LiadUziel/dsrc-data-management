@@ -53,6 +53,8 @@ export interface GrantProposal {
   uniqueFieldDatasetCollection2?: number; // optional
 
   teamMembers?: TeamMember[];
+
+  customFields?: { [key: string]: string };
 }
 
 const grantProposalSchema = new Schema<GrantProposal>(
@@ -124,6 +126,8 @@ const grantProposalSchema = new Schema<GrantProposal>(
     uniqueFieldDatasetCollection2: { type: Number },
 
     teamMembers: { type: [Object], default: undefined, required: false },
+
+    customFields: { type: Object, default: undefined, required: false },
   },
   { timestamps: true }
 );

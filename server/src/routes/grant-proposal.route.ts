@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  addFieldsToProposal,
   createGrantProposal,
   getGrantProposals,
 } from "../controllers/grant-proposal.controller";
@@ -20,6 +21,14 @@ grantProposalRouter.get(
   authorizeMiddleware,
   isAdminMiddleware,
   getGrantProposals
+);
+
+// add fields to proposal //* PATCH /api/grant-proposal/add-fields
+grantProposalRouter.patch(
+  "/add-fields/:id",
+  authorizeMiddleware,
+  isAdminMiddleware,
+  addFieldsToProposal
 );
 
 export default grantProposalRouter;

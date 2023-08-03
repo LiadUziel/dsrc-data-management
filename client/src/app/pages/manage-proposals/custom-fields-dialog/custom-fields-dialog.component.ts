@@ -31,15 +31,7 @@ export class CustomFieldsDialogComponent implements OnInit {
 
     this.dynamicForm = this.formProposalService.getAddFieldsForm();
 
-    this.rawExistsCustomFields = Object.entries(this.proposal.customFields).map(
-      ([fieldName, value]) => ({ fieldName, value })
-    );
-    let i = 0;
-    for (const customField of this.rawExistsCustomFields) {
-      this.formProposalService.addNewField(this.dynamicForm);
-      this.fields.at(i).patchValue(customField);
-      i++;
-    }
+    this.initExistsCustomFields();
   }
 
   get fields() {
@@ -52,6 +44,18 @@ export class CustomFieldsDialogComponent implements OnInit {
 
   removeField(index: number) {
     this.formProposalService.removeNewField(this.dynamicForm, index);
+  }
+
+  private initExistsCustomFields() {
+    this.rawExistsCustomFields = Object.entries(this.proposal.customFields).map(
+      ([fieldName, value]) => ({ fieldName, value })
+    );
+    let i = 0;
+    for (const customField of this.rawExistsCustomFields) {
+      this.formProposalService.addNewField(this.dynamicForm);
+      this.fields.at(i).patchValue(customField);
+      i++;
+    }
   }
 
   private hasDuplicateFieldNames() {
