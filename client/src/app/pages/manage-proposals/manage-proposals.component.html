@@ -84,6 +84,7 @@
           <div>Application Date</div>
           <p-sortIcon field="applicationDate"></p-sortIcon>
         </th>
+        <th>Actions</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-proposal let-expanded="expanded">
@@ -108,13 +109,26 @@
         <td>{{ proposal.amountRequested | number }}</td>
         <td>{{ proposal.amountGiven | number }}</td>
         <td>{{ proposal.applicationDate | date }}</td>
+        <td class="actions">
+
+          <button
+            pButton
+            pRipple
+            type="button"
+            class="p-button-rounded p-button-text manage-fields-btn"
+            (click)="openCustomFieldsDialog(proposal)"
+          >
+            <img src="\assets\puzzle-piece.svg" alt="" height="25px" />
+            <label>Manage Custom Fields</label>
+          </button>
+        </td>
       </tr>
     </ng-template>
 
     <!--* line extension -->
     <ng-template pTemplate="rowexpansion" let-proposal>
       <tr class="expanded-row">
-        <td colspan="10" class="expanded-cell">
+        <td colspan="11" class="expanded-cell">
           <div *ngIf="proposal.teamMembers && proposal.teamMembers.length > 0">
             <h3>Team Members:</h3>
             <table class="team-members-table">
@@ -149,6 +163,18 @@
               >Total Budget:
               {{ getTotalBudget(proposal.budgetParts) | number }}</b
             >
+          </div>
+
+          <div *ngIf="proposal.customFields" class="custom-fields">
+            <h3>Custom Fields:</h3>
+
+            <div
+              *ngFor="let keyValuePair of proposal.customFields | keyvalue"
+              class="custom-field"
+            >
+              <b>{{ keyValuePair.key }}:</b>
+              <p>{{ keyValuePair.value }}</p>
+            </div>
           </div>
         </td>
       </tr>

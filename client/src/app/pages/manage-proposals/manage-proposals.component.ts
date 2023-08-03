@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GrantProposal } from 'src/app/shared/models/grant-proposal.interface';
 import { GrantProposalService } from 'src/app/shared/services/grant-proposal.service';
@@ -6,11 +6,14 @@ import { GrantType } from './models/grant-type.enum';
 import { BudgetPart } from 'src/app/shared/models/budget-part.interface';
 import { FilesService } from 'src/app/files/services/files.service';
 import { saveAs } from 'file-saver';
+import { DialogService } from 'primeng/dynamicdialog';
+import { CustomFieldsDialogComponent } from './custom-fields-dialog/custom-fields-dialog.component';
 
 @Component({
   selector: 'app-manage-proposals',
   templateUrl: './manage-proposals.component.html',
   styleUrls: ['./manage-proposals.component.scss'],
+  providers: [DialogService],
 })
 export class ManageProposalsComponent implements OnInit {
   proposals$: Observable<GrantProposal[]>;
@@ -29,12 +32,17 @@ export class ManageProposalsComponent implements OnInit {
   ];
 
   GrantTypeEnum = GrantType;
+  private readonly dialogService = inject(DialogService);
 
   constructor(
     private grantProposalsService: GrantProposalService,
     private filesService: FilesService
   ) {}
   ngOnInit(): void {
+    this.initProposals();
+  }
+
+  initProposals() {
     this.proposals$ = this.grantProposalsService.getAllProposals();
   }
 
@@ -66,5 +74,17 @@ export class ManageProposalsComponent implements OnInit {
       this.GrantTypeEnum[proposalType] === 'Seed Research' ||
       this.GrantTypeEnum[proposalType] === 'Dataset Collection'
     );
+  }
+  openCustomFieldsDialog(proposal: GrantProposal) {
+    const ref = this.dialogService.open(CustomFieldsDialogComponent, {
+      header: `Manage Custom Fields For ${proposal.studyTitle}`,
+      width: '60%',
+      data: { proposal },
+    });
+
+    // render table after dialog is closed
+    ref.onClose.subscribe(() => {
+      this.initProposals();
+    });
   }
 }

@@ -102,6 +102,13 @@ export class FormProposalService {
     return form;
   }
 
+  getAddFieldsForm(): FormGroup {
+    const form = new FormGroup({
+      fields: new FormArray([]),
+    });
+    return form;
+  }
+
   /**
    *
    * @param form
@@ -149,5 +156,23 @@ export class FormProposalService {
 
   getBudgetParts(form: FormGroup) {
     return form.get('budgetParts') as FormArray;
+  }
+
+  // Dynamic form - add fields form
+  addNewField(form: FormGroup) {
+    const fieldControl = new FormGroup({
+      fieldName: new FormControl<string>('', Validators.required),
+      value: new FormControl<string>('', Validators.required),
+    });
+
+    this.getNewFields(form).push(fieldControl);
+  }
+
+  removeNewField(form: FormGroup, index: number) {
+    this.getNewFields(form).removeAt(index);
+  }
+
+  getNewFields(form: FormGroup) {
+    return form.get('fields') as FormArray;
   }
 }

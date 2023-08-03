@@ -11,9 +11,24 @@ h1 {
         gap: 1rem;
     }
 
+    button.manage-fields-btn {
+        label {
+            cursor: pointer;
+            margin-left: 0.25rem;
+        }
+    }
+
     tr.expanded-row {
         td.expanded-cell {
             padding: 1rem 6rem;
+
+            .custom-fields {
+                margin: 1rem 0;
+
+                .custom-field {
+                    margin-bottom: 0.5rem;
+                }
+            }
         }
 
         table.team-members-table {

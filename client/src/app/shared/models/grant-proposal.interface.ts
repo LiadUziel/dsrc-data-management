@@ -54,4 +54,6 @@ export interface GrantProposal {
   uniqueFieldDatasetCollection2?: number; // optional
 
   teamMembers: TeamMember[];
+
+  customFields?: { [key: string]: string };
 }

@@ -20,6 +20,7 @@ import { ManageProposalsComponent } from './pages/manage-proposals/manage-propos
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { RenewPasswordComponent } from './pages/renew-password/renew-password.component';
 import { MultiFieldComponent } from './pages/submit-proposal/multi-field/multi-field.component';
+import { CustomFieldsDialogComponent } from './pages/manage-proposals/custom-fields-dialog/custom-fields-dialog.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { MultiFieldComponent } from './pages/submit-proposal/multi-field/multi-f
     ForgotPasswordComponent,
     RenewPasswordComponent,
     MultiFieldComponent,
+    CustomFieldsDialogComponent,
   ],
   imports: [
     BrowserModule,

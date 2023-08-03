@@ -3,6 +3,7 @@ import { environment } from 'src/environments/environments';
 import { GrantProposal } from '../models/grant-proposal.interface';
 import { HttpClient } from '@angular/common/http';
 import { TokenStorageService } from 'src/app/auth/services/token-storage.service';
+import { CustomFieldRaw } from '../models/new-field-raw.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -50,5 +51,28 @@ export class GrantProposalService {
         Authorization: `Bearer ${token}`,
       },
     });
+  }
+
+  /**
+   *
+   * @param proposal proposal to update
+   * @param fields new fields to add to proposal
+   * @returns updated proposal with new fields
+   */
+  updateCustomFields(proposal: GrantProposal, fields: CustomFieldRaw[]) {
+    const { href } = new URL(
+      `/api/grant-proposal/add-fields/${proposal._id}`,
+      this.apiUrl
+    );
+    const token = this.tokenService.getToken();
+    return this.http.patch<GrantProposal>(
+      href,
+      { fields },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
   }
 }
