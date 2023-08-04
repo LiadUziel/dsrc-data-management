@@ -11,6 +11,12 @@ h1 {
         gap: 1rem;
     }
 
+    td {
+        .amount-given {
+            margin-top: 0.25rem;
+        }
+    }
+
     button.manage-fields-btn {
         label {
             cursor: pointer;

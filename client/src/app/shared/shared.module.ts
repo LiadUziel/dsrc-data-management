@@ -12,6 +12,8 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { TagModule } from 'primeng/tag';
 
 // ngx-toastr
 import { ToastrModule } from 'ngx-toastr';
@@ -48,6 +50,8 @@ import { PagesComponent } from '../pages/pages.component';
     InputNumberModule,
     InputTextareaModule,
     DynamicDialogModule,
+    RadioButtonModule,
+    TagModule,
 
     //materials
     MatPasswordStrengthModule.forRoot(),
@@ -66,6 +70,8 @@ import { PagesComponent } from '../pages/pages.component';
     InputNumberModule,
     InputTextareaModule,
     DynamicDialogModule,
+    RadioButtonModule,
+    TagModule,
 
     // materials
     MatPasswordStrengthModule,

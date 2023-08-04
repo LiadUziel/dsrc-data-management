@@ -1,0 +1,71 @@
+<div class="dialog-wrapper">
+  <p class="intro">
+    <b> Here you can update the status of the proposal </b>
+  </p>
+
+  <h3>Choose Status:</h3>
+  <div class="radios-wrapper">
+    <div class="choice">
+      <p-radioButton
+        value="PENDING"
+        [(ngModel)]="status"
+        inputId="PENDING"
+      ></p-radioButton>
+      <label for="PENDING">{{ ProposalStatus["PENDING"] }}</label>
+    </div>
+
+    <div class="choice">
+      <p-radioButton
+        value="PARTIALLY_APPROVED"
+        [(ngModel)]="status"
+        inputId="PARTIALLY_APPROVED"
+      ></p-radioButton>
+      <label for="PARTIALLY_APPROVED">{{
+        ProposalStatus["PARTIALLY_APPROVED"]
+      }}</label>
+    </div>
+
+    <div class="choice">
+      <p-radioButton
+        value="APPROVED"
+        [(ngModel)]="status"
+        inputId="APPROVED"
+      ></p-radioButton>
+      <label for="APPROVED">{{ ProposalStatus["APPROVED"] }}</label>
+    </div>
+
+    <div class="choice">
+      <p-radioButton
+        value="REJECTED"
+        [(ngModel)]="status"
+        inputId="REJECTED"
+      ></p-radioButton>
+      <label for="REJECTED">{{ ProposalStatus["REJECTED"] }}</label>
+    </div>
+  </div>
+
+  <p>{{ optionMessages[status] }}</p>
+
+  <div class="amount-given-wrapper">
+    <span class="p-float-label" *ngIf="status === 'PARTIALLY_APPROVED'">
+      <p-inputNumber
+        inputId="minmax"
+        [(ngModel)]="amountGiven"
+        [min]="0"
+        [max]="proposal.amountRequested"
+      ></p-inputNumber>
+      <label>Amount Approved</label>
+    </span>
+  </div>
+
+  <button
+    pButton
+    pRipple
+    class="p-button-primary submit-btn"
+    [disabled]="status === 'PARTIALLY_APPROVED' && !amountGiven"
+    [loading]="loading"
+    (click)="updateProposalStatus()"
+  >
+    Update Proposal Status
+  </button>
+</div>

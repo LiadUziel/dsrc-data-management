@@ -75,4 +75,25 @@ export class GrantProposalService {
       }
     );
   }
+
+  updateProposalStatus(
+    id: string,
+    status: 'PENDING' | 'PARTIALLY_APPROVED' | 'APPROVED' | 'REJECTED',
+    amountGiven: number
+  ) {
+    const { href } = new URL(
+      `/api/grant-proposal/update-status/${id}`,
+      this.apiUrl
+    );
+    const token = this.tokenService.getToken();
+    return this.http.patch<GrantProposal>(
+      href,
+      { status, amountGiven },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+  }
 }

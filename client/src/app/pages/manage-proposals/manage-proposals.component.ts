@@ -8,6 +8,8 @@ import { FilesService } from 'src/app/files/services/files.service';
 import { saveAs } from 'file-saver';
 import { DialogService } from 'primeng/dynamicdialog';
 import { CustomFieldsDialogComponent } from './custom-fields-dialog/custom-fields-dialog.component';
+import { UpdateStatusDialogComponent } from './update-status-dialog/update-status-dialog.component';
+import { ProposalStatus } from './models/proposal-status.enum';
 
 @Component({
   selector: 'app-manage-proposals',
@@ -33,6 +35,21 @@ export class ManageProposalsComponent implements OnInit {
 
   GrantTypeEnum = GrantType;
   private readonly dialogService = inject(DialogService);
+
+  ProposalStatus = ProposalStatus;
+
+  statusSeverity = {
+    PENDING: 'info',
+    PARTIALLY_APPROVED: 'warning',
+    APPROVED: 'success',
+    REJECTED: 'danger',
+  };
+  statusIcon = {
+    PENDING: 'pi pi-clock',
+    PARTIALLY_APPROVED: 'pi pi-code',
+    APPROVED: 'pi pi-check',
+    REJECTED: 'pi pi-times',
+  };
 
   constructor(
     private grantProposalsService: GrantProposalService,
@@ -78,6 +95,19 @@ export class ManageProposalsComponent implements OnInit {
   openCustomFieldsDialog(proposal: GrantProposal) {
     const ref = this.dialogService.open(CustomFieldsDialogComponent, {
       header: `Manage Custom Fields For ${proposal.studyTitle}`,
+      width: '60%',
+      data: { proposal },
+    });
+
+    // render table after dialog is closed
+    ref.onClose.subscribe(() => {
+      this.initProposals();
+    });
+  }
+
+  openUpdateStatusDialog(proposal: GrantProposal) {
+    const ref = this.dialogService.open(UpdateStatusDialogComponent, {
+      header: `Update Status For ${proposal.studyTitle}`,
       width: '60%',
       data: { proposal },
     });

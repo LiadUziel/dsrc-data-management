@@ -13,6 +13,7 @@ export interface GrantProposal {
   // fields just from DB - user is not fill them
   user?: User;
   applicationDate?: Date;
+  status?: 'PENDING' | 'PARTIALLY_APPROVED' | 'APPROVED' | 'REJECTED';
   amountGiven?: number;
 
   // shared fields

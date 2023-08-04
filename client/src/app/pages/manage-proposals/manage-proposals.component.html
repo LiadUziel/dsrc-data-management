@@ -76,9 +76,9 @@
           <div>Amount Requested</div>
           <p-sortIcon field="amountRequested"></p-sortIcon>
         </th>
-        <th pSortableColumn="amountGiven">
-          <div>Amount Given</div>
-          <p-sortIcon field="amountGiven"></p-sortIcon>
+        <th pSortableColumn="status">
+          <div>Status</div>
+          <p-sortIcon field="status"></p-sortIcon>
         </th>
         <th pSortableColumn="applicationDate">
           <div>Application Date</div>
@@ -106,8 +106,19 @@
         <td>{{ proposal.user.email }}</td>
         <td>{{ proposal.department }}</td>
         <td>{{ proposal.studyTitle }}</td>
-        <td>{{ proposal.amountRequested | number }}</td>
-        <td>{{ proposal.amountGiven | number }}</td>
+        <td>{{ proposal.amountRequested | number }}₪</td>
+        <td>
+          <div class="status">
+            <p-tag
+              [severity]="statusSeverity[proposal.status]"
+              [value]="ProposalStatus[proposal.status]"
+              [icon]="statusIcon[proposal.status]"
+            ></p-tag>
+          </div>
+          <div class="amount-given">
+            Amount Given: {{ proposal.amountGiven | number }}₪
+          </div>
+        </td>
         <td>{{ proposal.applicationDate | date }}</td>
         <td class="actions">
 
@@ -121,6 +132,15 @@
             <img src="\assets\puzzle-piece.svg" alt="" height="25px" />
             <label>Manage Custom Fields</label>
           </button>
+
+          <button
+            pButton
+            pRipple
+            type="button"
+            class="p-button-rounded p-button-text"
+            label="Update Status"
+            (click)="openUpdateStatusDialog(proposal)"
+          ></button>
         </td>
       </tr>
     </ng-template>
