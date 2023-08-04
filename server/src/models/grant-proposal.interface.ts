@@ -12,6 +12,7 @@ export interface GrantProposal {
     | "DATASET_COLLECTION";
   user?: User;
   applicationDate: Date;
+  status: "PENDING" | "PARTIALLY_APPROVED" | "APPROVED" | "REJECTED";
   amountGiven: number;
 
   // shared fields
@@ -76,6 +77,11 @@ const grantProposalSchema = new Schema<GrantProposal>(
     studyTitle: { type: String, required: true },
     amountRequested: { type: Number, required: true },
     amountGiven: { type: Number, required: true },
+    status: {
+      type: String,
+      enum: ["PENDING", "PARTIALLY_APPROVED", "APPROVED", "REJECTED"],
+      required: true,
+    },
     applicationDate: { type: Date, required: true },
 
     // DS_DOCTORAL / POST_DOCTORAL

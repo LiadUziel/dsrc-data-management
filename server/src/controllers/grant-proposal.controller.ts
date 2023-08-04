@@ -21,7 +21,8 @@ export const createGrantProposal: RequestHandler = async (req, res, next) => {
     // add application date
     proposal.applicationDate = new Date();
 
-    // init Amount Given
+    // init Amount Given and Status
+    proposal.status = "PENDING";
     proposal.amountGiven = 0;
 
     const proposalDb = await GrantProposalModel.create(proposal);
@@ -76,6 +77,27 @@ export const addFieldsToProposal: RequestHandler = async (req, res, next) => {
     const updatedProposal = await GrantProposalModel.findByIdAndUpdate(
       id,
       { $set: { customFields } },
+      {
+        new: true,
+      }
+    );
+
+    return res.send(updatedProposal);
+  } catch (e) {
+    next(e);
+  }
+};
+
+// update proposal status
+export const updateProposalStatus: RequestHandler = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const { status, amountGiven } = req.body;
+
+    const updatedProposal = await GrantProposalModel.findByIdAndUpdate(
+      id,
+      { $set: { status, amountGiven } },
       {
         new: true,
       }

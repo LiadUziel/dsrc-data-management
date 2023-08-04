@@ -3,6 +3,7 @@ import {
   addFieldsToProposal,
   createGrantProposal,
   getGrantProposals,
+  updateProposalStatus,
 } from "../controllers/grant-proposal.controller";
 import {
   authorizeMiddleware,
@@ -29,6 +30,14 @@ grantProposalRouter.patch(
   authorizeMiddleware,
   isAdminMiddleware,
   addFieldsToProposal
+);
+
+// update proposal status //* PATCH /api/grant-proposal/update-status
+grantProposalRouter.patch(
+  "/update-status/:id",
+  authorizeMiddleware,
+  isAdminMiddleware,
+  updateProposalStatus
 );
 
 export default grantProposalRouter;
