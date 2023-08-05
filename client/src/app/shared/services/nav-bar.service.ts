@@ -52,6 +52,12 @@ export class NavBarService {
         ],
       },
       {
+        label: 'My Proposals',
+        icon: 'pi pi-fw pi-list',
+        routerLink: 'my-proposals',
+        visible: isLogged && role !== 'admin',
+      },
+      {
         label: 'Manage Proposals',
         icon: 'pi pi-wrench',
         routerLink: 'manage-proposals',

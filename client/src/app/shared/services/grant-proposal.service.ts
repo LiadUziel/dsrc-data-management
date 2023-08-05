@@ -53,6 +53,17 @@ export class GrantProposalService {
     });
   }
 
+  // get proposals of logged in user from api by email
+  getUserProposal() {
+    const { href } = new URL(`/api/grant-proposal/logged-user`, this.apiUrl);
+    const token = this.tokenService.getToken();
+    return this.http.get<GrantProposal[]>(href, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+
   /**
    *
    * @param proposal proposal to update
