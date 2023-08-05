@@ -1,7 +1,10 @@
 import { Router } from "express";
 import {
+  addFieldsToProposal,
   createGrantProposal,
   getGrantProposals,
+  getUserProposals,
+  updateProposalStatus,
 } from "../controllers/grant-proposal.controller";
 import {
   authorizeMiddleware,
@@ -10,8 +13,10 @@ import {
 
 const grantProposalRouter = Router();
 
+// get grant proposals of logged user //* GET /api/grant-proposal/logged-user
+grantProposalRouter.get("/logged-user", authorizeMiddleware, getUserProposals);
+
 // Create a new grant proposal in db //* POST /api/grant-proposal
-// TODO - add validators for grant proposal
 grantProposalRouter.post("/", authorizeMiddleware, createGrantProposal);
 
 // get grant proposals by type or all of them //* GET /api/grant-proposal or /api/grant-proposal/:type
@@ -20,6 +25,22 @@ grantProposalRouter.get(
   authorizeMiddleware,
   isAdminMiddleware,
   getGrantProposals
+);
+
+// add fields to proposal //* PATCH /api/grant-proposal/add-fields
+grantProposalRouter.patch(
+  "/add-fields/:id",
+  authorizeMiddleware,
+  isAdminMiddleware,
+  addFieldsToProposal
+);
+
+// update proposal status //* PATCH /api/grant-proposal/update-status
+grantProposalRouter.patch(
+  "/update-status/:id",
+  authorizeMiddleware,
+  isAdminMiddleware,
+  updateProposalStatus
 );
 
 export default grantProposalRouter;

@@ -15,8 +15,10 @@ import { AdminAuthGuard } from './auth/services/admin-auth-guard';
 import { RenewPasswordComponent } from './pages/renew-password/renew-password.component';
 import { RenewPasswordLinkGuard } from './auth/services/renew-password-link.guard.service';
 import { VerificationRegistrationGuard } from './auth/services/verification-registration.guard.service';
+import { MyProposalsComponent } from './pages/my-proposals/my-proposals.component';
 
 const routes: Routes = [
+  // TODO - fix routing and guard
   { path: '', redirectTo: 'login', pathMatch: 'full' },
 
   // auth
@@ -30,6 +32,10 @@ const routes: Routes = [
   {
     path: 'submit-proposal/dataset-collection',
     component: DatasetCollectionComponent,
+  },
+  {
+    path: 'my-proposals',
+    component: MyProposalsComponent,
   },
 
   {

@@ -4,6 +4,7 @@ import {
   GrantProposalModel,
 } from "../models/grant-proposal.interface";
 import { User, UserModel } from "../models/user.interface";
+import { NewFieldRaw } from "../models/new-field-raw.interface";
 
 export const createGrantProposal: RequestHandler = async (req, res, next) => {
   try {
@@ -20,7 +21,8 @@ export const createGrantProposal: RequestHandler = async (req, res, next) => {
     // add application date
     proposal.applicationDate = new Date();
 
-    // init Amount Given
+    // init Amount Given and Status
+    proposal.status = "PENDING";
     proposal.amountGiven = 0;
 
     const proposalDb = await GrantProposalModel.create(proposal);
@@ -51,6 +53,76 @@ export const getGrantProposals: RequestHandler = async (req, res, next) => {
     ).populate("user", "firstName lastName email -_id");
 
     return res.send(proposals);
+  } catch (e) {
+    next(e);
+  }
+};
+
+// get proposals of logged in user
+export const getUserProposals: RequestHandler = async (req, res, next) => {
+  try {
+    const { email } = req.authUser!;
+
+    // get user from db
+    const user: User = (await UserModel.findOne({ email: email }))!;
+
+    // get proposals from db
+    const proposals = await GrantProposalModel.find({
+      user: user._id,
+    }).populate("user", "firstName lastName email -_id");
+
+    return res.send(proposals);
+  } catch (e) {
+    next(e);
+  }
+};
+
+// add fields to proposal
+export const addFieldsToProposal: RequestHandler = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const newFieldsArr: NewFieldRaw[] = req.body.fields;
+
+    // build new fields object
+    const customFields: { [key: string]: string } = newFieldsArr.reduce(
+      (acc, curr) => {
+        acc[curr.fieldName] = curr.value;
+        return acc;
+      },
+      {}
+    );
+
+    const updatedProposal = await GrantProposalModel.findByIdAndUpdate(
+      id,
+      { $set: { customFields } },
+      {
+        new: true,
+      }
+    );
+
+    return res.send(updatedProposal);
+  } catch (e) {
+    next(e);
+  }
+};
+
+// update proposal status
+export const updateProposalStatus: RequestHandler = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const { status, amountGiven } = req.body;
+
+    const updatedProposal = await GrantProposalModel.findByIdAndUpdate(
+      id,
+      { $set: { status, amountGiven } },
+      {
+        new: true,
+      }
+    );
+
+    return res.send(updatedProposal);
   } catch (e) {
     next(e);
   }
