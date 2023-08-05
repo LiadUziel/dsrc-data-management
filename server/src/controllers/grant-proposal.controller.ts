@@ -58,6 +58,25 @@ export const getGrantProposals: RequestHandler = async (req, res, next) => {
   }
 };
 
+// get proposals of logged in user
+export const getUserProposals: RequestHandler = async (req, res, next) => {
+  try {
+    const { email } = req.authUser!;
+
+    // get user from db
+    const user: User = (await UserModel.findOne({ email: email }))!;
+
+    // get proposals from db
+    const proposals = await GrantProposalModel.find({
+      user: user._id,
+    }).populate("user", "firstName lastName email -_id");
+
+    return res.send(proposals);
+  } catch (e) {
+    next(e);
+  }
+};
+
 // add fields to proposal
 export const addFieldsToProposal: RequestHandler = async (req, res, next) => {
   try {

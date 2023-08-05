@@ -3,6 +3,7 @@ import {
   addFieldsToProposal,
   createGrantProposal,
   getGrantProposals,
+  getUserProposals,
   updateProposalStatus,
 } from "../controllers/grant-proposal.controller";
 import {
@@ -12,8 +13,10 @@ import {
 
 const grantProposalRouter = Router();
 
+// get grant proposals of logged user //* GET /api/grant-proposal/logged-user
+grantProposalRouter.get("/logged-user", authorizeMiddleware, getUserProposals);
+
 // Create a new grant proposal in db //* POST /api/grant-proposal
-// TODO - add validators for grant proposal
 grantProposalRouter.post("/", authorizeMiddleware, createGrantProposal);
 
 // get grant proposals by type or all of them //* GET /api/grant-proposal or /api/grant-proposal/:type
