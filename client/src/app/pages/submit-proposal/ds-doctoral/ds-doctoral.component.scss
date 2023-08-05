@@ -36,6 +36,9 @@
                     color: #000;
                 }
             }
+            .file-upload-element-width {
+                width: 22.1875rem;
+            }
         }
     }
 }
@@ -45,4 +48,10 @@
     gap: 0.5rem;
     display: flex;
     align-items: center;
+    .p-fileupload-choose {
+        justify-content: center;
+        .p-button-label {
+            margin-left: 0.312rem;
+        }
+    }
 }

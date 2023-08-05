@@ -6,7 +6,6 @@
 
     <div class="field">
       <p-fileUpload
-        formControlName="uploadResearchIntro"
         #fileUpload
         name="file"
         [maxFileSize]="1000000"
@@ -14,6 +13,8 @@
         [showCancelButton]="false"
         [customUpload]="true"
         (uploadHandler)="onUpload($event, 'uploadResearchIntro')"
+        accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,image/*"
+        class="file-upload-element-width"
       >
       </p-fileUpload>
       <i
@@ -24,7 +25,6 @@
 
     <div class="field">
       <p-fileUpload
-        formControlName="uploadInnovationProject"
         #fileUpload
         name="file"
         [maxFileSize]="1000000"
@@ -32,6 +32,8 @@
         [showCancelButton]="false"
         [customUpload]="true"
         (uploadHandler)="onUpload($event, 'uploadInnovationProject')"
+        accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,image/*"
+        class="file-upload-element-width"
       >
       </p-fileUpload>
       <i
@@ -42,7 +44,6 @@
 
     <div class="field">
       <p-fileUpload
-        formControlName="uploadTeam"
         #fileUpload
         name="file"
         [maxFileSize]="1000000"
@@ -50,6 +51,8 @@
         [showCancelButton]="false"
         [customUpload]="true"
         (uploadHandler)="onUpload($event, 'uploadTeam')"
+        accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,image/*"
+        class="file-upload-element-width"
       >
       </p-fileUpload>
       <i
@@ -62,7 +65,6 @@
 
     <div class="field">
       <p-fileUpload
-        formControlName="uploadBudget"
         #fileUpload
         name="file"
         [maxFileSize]="1000000"
@@ -70,6 +72,8 @@
         [showCancelButton]="false"
         [customUpload]="true"
         (uploadHandler)="onUpload($event, 'uploadBudget')"
+        accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,image/*"
+        class="file-upload-element-width"
       >
       </p-fileUpload>
       <i
@@ -81,7 +85,6 @@
 
     <div class="field">
       <p-fileUpload
-        formControlName="uploadExternalFunding"
         #fileUpload
         name="file"
         [maxFileSize]="1000000"
@@ -89,6 +92,8 @@
         [showCancelButton]="false"
         [customUpload]="true"
         (uploadHandler)="onUpload($event, 'uploadExternalFunding')"
+        accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,image/*"
+        class="file-upload-element-width"
       >
       </p-fileUpload>
       <i

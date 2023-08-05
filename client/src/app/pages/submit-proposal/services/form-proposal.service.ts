@@ -31,17 +31,17 @@ export class FormProposalService {
     const teamMembers = new FormArray([]);
     form.setControl('teamMembers', teamMembers);
 
-    form.addControl('uploadCV', new FormControl<FileUpload>(null));
-    form.addControl('uploadDescription', new FormControl<FileUpload>(null));
-    form.addControl('uploadGradeTAndC', new FormControl<FileUpload>(null));
-    form.addControl('uploadWorkCommitment', new FormControl<FileUpload>(null));
+    form.addControl('uploadCV', new FormControl<FileUpload>(null, [Validators.required]));
+    form.addControl('uploadDescription', new FormControl<FileUpload>(null, [Validators.required]));
+    form.addControl('uploadGradeTAndC', new FormControl<FileUpload>(null, [Validators.required]));
+    form.addControl('uploadWorkCommitment', new FormControl<FileUpload>(null, [Validators.required]));
     form.addControl(
       'uploadRecommendationLetter',
-      new FormControl<FileUpload>(null)
+      new FormControl<FileUpload>(null, [Validators.required])
     );
     form.addControl(
       'uploadContactRecommenders',
-      new FormControl<FileUpload>(null)
+      new FormControl<FileUpload>(null, [Validators.required])
     );
 
     return form;
@@ -53,17 +53,17 @@ export class FormProposalService {
     const teamMembers = new FormArray([]);
     form.setControl('teamMembers', teamMembers);
 
-    form.addControl('uploadCV', new FormControl<FileUpload>(null));
-    form.addControl('uploadDescription', new FormControl<FileUpload>(null));
-    form.addControl('uploadGradeTAndC', new FormControl<FileUpload>(null));
-    form.addControl('uploadWorkCommitment', new FormControl<FileUpload>(null));
+    form.addControl('uploadCV', new FormControl<FileUpload>(null, [Validators.required]));
+    form.addControl('uploadDescription', new FormControl<FileUpload>(null, [Validators.required]));
+    form.addControl('uploadGradeTAndC', new FormControl<FileUpload>(null, [Validators.required]));
+    form.addControl('uploadWorkCommitment', new FormControl<FileUpload>(null, [Validators.required]));
     form.addControl(
       'uploadRecommendationLetter',
-      new FormControl<FileUpload>(null)
+      new FormControl<FileUpload>(null, [Validators.required])
     );
     form.addControl(
       'uploadContactRecommenders',
-      new FormControl<FileUpload>(null)
+      new FormControl<FileUpload>(null, [Validators.required])
     );
 
     return form;
@@ -75,30 +75,30 @@ export class FormProposalService {
     const budgetParts = new FormArray([]);
     form.setControl('budgetParts', budgetParts);
 
-    form.addControl('uploadResearchIntro', new FormControl<FileUpload>(null));
+    form.addControl('uploadResearchIntro', new FormControl<FileUpload>(null, [Validators.required]));
     form.addControl(
       'uploadInnovationProject',
-      new FormControl<FileUpload>(null)
+      new FormControl<FileUpload>(null, [Validators.required])
     );
-    form.addControl('uploadTeam', new FormControl<FileUpload>(null));
-    form.addControl('uploadBudget', new FormControl<FileUpload>(null));
-    form.addControl('uploadExternalFunding', new FormControl<FileUpload>(null));
+    form.addControl('uploadTeam', new FormControl<FileUpload>(null, [Validators.required]));
+    form.addControl('uploadBudget', new FormControl<FileUpload>(null, [Validators.required]));
+    form.addControl('uploadExternalFunding', new FormControl<FileUpload>(null, [Validators.required]));
 
     return form;
   }
 
   getDatasetCollectionForm(): FormGroup {
     const form = _.cloneDeep(this.parentForm);
-    form.addControl('uploadResearchIntro', new FormControl<FileUpload>(null));
+    form.addControl('uploadResearchIntro', new FormControl<FileUpload>(null, [Validators.required]));
     form.addControl(
       'uploadInnovationProject',
-      new FormControl<FileUpload>(null)
+      new FormControl<FileUpload>(null, [Validators.required])
     );
-    form.addControl('uploadDatasetInfo', new FormControl<FileUpload>(null));
-    form.addControl('uploadTeam', new FormControl<FileUpload>(null));
-    form.addControl('uploadBudget', new FormControl<FileUpload>(null));
-    form.addControl('uploadEthics', new FormControl<FileUpload>(null));
-    form.addControl('uploadCopyrights', new FormControl<FileUpload>(null));
+    form.addControl('uploadDatasetInfo', new FormControl<FileUpload>(null, [Validators.required]));
+    form.addControl('uploadTeam', new FormControl<FileUpload>(null, [Validators.required]));
+    form.addControl('uploadBudget', new FormControl<FileUpload>(null, [Validators.required]));
+    form.addControl('uploadEthics', new FormControl<FileUpload>(null, [Validators.required]));
+    form.addControl('uploadCopyrights', new FormControl<FileUpload>(null, [Validators.required]));
     return form;
   }
 

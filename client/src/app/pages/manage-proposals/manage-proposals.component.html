@@ -152,202 +152,182 @@
           </div>
         </td>
       </tr>
-      <tr *ngIf="isDsDoctorlOrPostDocProposal(proposal.type)">
-        <td colspan="10">CV: 
-          <button
-          type="button"
-          pButton
-          pRipple
-          class="p-button-primary button-structure"
-          pTooltip="Download file"
-          tooltipPosition="bottom"
-          (click)="getFile(proposal.uploadCV)">
-          download file
-          </button>
-        </td>
-      </tr>
-      <tr *ngIf="isDsDoctorlOrPostDocProposal(proposal.type)">
-        <td colspan="10">Description 
-          <button
-          type="button"
-          pButton
-          pRipple
-          class="p-button-primary button-structure"
-          pTooltip="Download file"
-          tooltipPosition="bottom"
-          (click)="getFile(proposal.uploadDescription)">
-          download file
-          </button>
-        </td>
-      </tr>
-      <tr *ngIf="isDsDoctorlOrPostDocProposal(proposal.type)">
-        <td colspan="10">Grade transcripts & certificates
-          <button
-          type="button"
-          pButton
-          pRipple
-          class="p-button-primary button-structure"
-          pTooltip="Download file"
-          tooltipPosition="bottom"
-          (click)="getFile(proposal.uploadGradeTAndC)">
-          download file
-          </button>
-        </td>
-      </tr>
-      <tr *ngIf="isDsDoctorlOrPostDocProposal(proposal.type)">
-        <td colspan="10">Work Commitment
-          <button
-          type="button"
-          pButton
-          pRipple
-          class="p-button-primary button-structure"
-          pTooltip="Download file"
-          tooltipPosition="bottom"
-          (click)="getFile(proposal.uploadWorkCommitment)">
-          download file
-          </button>
-        </td>
-      </tr>
-      <tr *ngIf="isDsDoctorlOrPostDocProposal(proposal.type)">
-        <td colspan="10">Recommendation Letter
-          <button
-          type="button"
-          pButton
-          pRipple
-          class="p-button-primary button-structure"
-          pTooltip="Download file"
-          tooltipPosition="bottom"
-          (click)="getFile(proposal.uploadRecommendationLetter)">
-          download file
-          </button>
-        </td>
-      </tr>
-      <tr *ngIf="isDsDoctorlOrPostDocProposal(proposal.type)">
-        <td colspan="10">Contact Recommenders
-          <button
-          type="button"
-          pButton
-          pRipple
-          class="p-button-primary button-structure"
-          pTooltip="Download file"
-          tooltipPosition="bottom"
-          (click)="getFile(proposal.uploadContactRecommenders)">
-          download file
-          </button>
-        </td>
-      </tr>
-      <tr *ngIf="isSeedOrDatasetCollectionProposal(proposal.type)">
-        <td colspan="10">Research Introduction
-          <button
-          type="button"
-          pButton
-          pRipple
-          class="p-button-primary button-structure"
-          pTooltip="Download file"
-          tooltipPosition="bottom"
-          (click)="getFile(proposal.uploadResearchIntro)">
-          download file
-          </button>
-        </td>
-      </tr>
-      <tr *ngIf="isSeedOrDatasetCollectionProposal(proposal.type)">
-        <td colspan="10">Innovation Project
-          <button
-          type="button"
-          pButton
-          pRipple
-          class="p-button-primary button-structure"
-          pTooltip="Download file"
-          tooltipPosition="bottom"
-          (click)="getFile(proposal.uploadInnovationProject)">
-          download file
-          </button>
-        </td>
-      </tr>
-      <tr *ngIf="isSeedOrDatasetCollectionProposal(proposal.type)">
-        <td colspan="10">Team
-          <button
-          type="button"
-          pButton
-          pRipple
-          class="p-button-primary button-structure"
-          pTooltip="Download file"
-          tooltipPosition="bottom"
-          (click)="getFile(proposal.uploadTeam)">
-          download file
-          </button>
-        </td>
-      </tr>
-      <tr *ngIf="isSeedOrDatasetCollectionProposal(proposal.type)">
-        <td colspan="10">Budget
-          <button
-          type="button"
-          pButton
-          pRipple
-          class="p-button-primary button-structure"
-          pTooltip="Download file"
-          tooltipPosition="bottom"
-          (click)="getFile(proposal.uploadBudget)">
-          download file
-          </button>
-        </td>
-      </tr>
-      <tr *ngIf="this.GrantTypeEnum[proposal.type] === 'Seed Research'">
-        <td colspan="10">External Funding
-          <button
-          type="button"
-          pButton
-          pRipple
-          class="p-button-primary button-structure"
-          pTooltip="Download file"
-          tooltipPosition="bottom"
-          (click)="getFile(proposal.uploadExternalFunding)">
-          download file
-          </button>
-        </td>
-      </tr>
-      <tr *ngIf="this.GrantTypeEnum[proposal.type] === 'Dataset Collection'">
-        <td colspan="10">Dataset information
-          <button
-          type="button"
-          pButton
-          pRipple
-          class="p-button-primary button-structure"
-          pTooltip="Download file"
-          tooltipPosition="bottom"
-          (click)="getFile(proposal.uploadDatasetInfo)">
-          download file
-          </button>
-        </td>
-      </tr>
-      <tr *ngIf="this.GrantTypeEnum[proposal.type] === 'Dataset Collection'">
-        <td colspan="10">Ethics
-          <button
-          type="button"
-          pButton
-          pRipple
-          class="p-button-primary button-structure"
-          pTooltip="Download file"
-          tooltipPosition="bottom"
-          (click)="getFile(proposal.uploadEthics)">
-          download file
-          </button>
-        </td>
-      </tr>
-      <tr *ngIf="this.GrantTypeEnum[proposal.type] === 'Dataset Collection'">
-        <td colspan="10">Copyrights
-          <button
-          type="button"
-          pButton
-          pRipple
-          class="p-button-primary button-structure"
-          pTooltip="Download file"
-          tooltipPosition="bottom"
-          (click)="getFile(proposal.uploadCopyrights)">
-          download file
-          </button>
-        </td>
-      </tr>
+      <tr>
+        <td colspan="10">
+          <div class="expanded-content">
+            <div class="flex-container">
+              <div class="flex-item" *ngIf="isDsDoctorlOrPostDocProposal(proposal.type)">
+                CV: 
+                <button
+                type="button"
+                pButton
+                pRipple
+                class="p-button-primary button-structure"
+                tooltipPosition="bottom"
+                (click)="getFile(proposal.uploadCV)">
+                download file
+                </button>
+              </div>
+              <div class="flex-item" *ngIf="isDsDoctorlOrPostDocProposal(proposal.type)">
+                Description: 
+                <button
+                type="button"
+                pButton
+                pRipple
+                class="p-button-primary button-structure"
+                tooltipPosition="bottom"
+                (click)="getFile(proposal.uploadDescription)">
+                download file
+                </button>
+              </div>
+              <div class="flex-item" *ngIf="isDsDoctorlOrPostDocProposal(proposal.type)">
+                Grade transcripts & certificates:
+                <button
+                type="button"
+                pButton
+                pRipple
+                class="p-button-primary button-structure"
+                tooltipPosition="bottom"
+                (click)="getFile(proposal.uploadGradeTAndC)">
+                download file
+                </button>
+              </div>
+              <div class="flex-item" *ngIf="isDsDoctorlOrPostDocProposal(proposal.type)">
+                Work Commitment:
+                <button
+                type="button"
+                pButton
+                pRipple
+                class="p-button-primary button-structure"
+                tooltipPosition="bottom"
+                (click)="getFile(proposal.uploadWorkCommitment)">
+                download file
+                </button>
+              </div>
+              <div class="flex-item" *ngIf="isDsDoctorlOrPostDocProposal(proposal.type)">
+                Recommendation Letter:
+                <button
+                type="button"
+                pButton
+                pRipple
+                class="p-button-primary button-structure"
+                tooltipPosition="bottom"
+                (click)="getFile(proposal.uploadRecommendationLetter)">
+                download file
+                </button>
+              </div>
+              <div class="flex-item" *ngIf="isDsDoctorlOrPostDocProposal(proposal.type)">
+                Contact Recommenders:
+                <button
+                type="button"
+                pButton
+                pRipple
+                class="p-button-primary button-structure"
+                tooltipPosition="bottom"
+                (click)="getFile(proposal.uploadContactRecommenders)">
+                download file
+                </button>
+              </div>
+              <div class="flex-item" *ngIf="isSeedOrDatasetCollectionProposal(proposal.type)">
+                  Research Introduction:
+                  <button
+                  type="button"
+                  pButton
+                  pRipple
+                  class="p-button-primary button-structure"
+                  tooltipPosition="bottom"
+                  (click)="getFile(proposal.uploadResearchIntro)">
+                  download file
+                  </button>
+              </div>
+              <div class="flex-item" *ngIf="isSeedOrDatasetCollectionProposal(proposal.type)">
+                Innovation Project:
+                <button
+                type="button"
+                pButton
+                pRipple
+                class="p-button-primary button-structure"
+                tooltipPosition="bottom"
+                (click)="getFile(proposal.uploadInnovationProject)">
+                download file
+                </button>
+              </div>
+              <div class="flex-item" *ngIf="isSeedOrDatasetCollectionProposal(proposal.type)">
+                Team:
+                <button
+                type="button"
+                pButton
+                pRipple
+                class="p-button-primary button-structure"
+                tooltipPosition="bottom"
+                (click)="getFile(proposal.uploadTeam)">
+                download file
+                </button>
+              </div>
+              <div class="flex-item" *ngIf="isSeedOrDatasetCollectionProposal(proposal.type)">
+                Budget:
+                <button
+                type="button"
+                pButton
+                pRipple
+                class="p-button-primary button-structure"
+                tooltipPosition="bottom"
+                (click)="getFile(proposal.uploadBudget)">
+                download file
+                </button>
+              </div>
+              <div class="flex-item" *ngIf="this.GrantTypeEnum[proposal.type] === 'Seed Research'">
+                External Funding:
+                <button
+                type="button"
+                pButton
+                pRipple
+                class="p-button-primary button-structure"
+                tooltipPosition="bottom"
+                (click)="getFile(proposal.uploadExternalFunding)">
+                download file
+                </button>
+              </div>
+              <div class="flex-item" *ngIf="this.GrantTypeEnum[proposal.type] === 'Dataset Collection'">
+                Dataset information:
+                <button
+                type="button"
+                pButton
+                pRipple
+                class="p-button-primary button-structure"
+                tooltipPosition="bottom"
+                (click)="getFile(proposal.uploadDatasetInfo)">
+                download file
+                </button>
+              </div>
+              <div class="flex-item" *ngIf="this.GrantTypeEnum[proposal.type] === 'Dataset Collection'">
+                Ethics:
+                <button
+                type="button"
+                pButton
+                pRipple
+                class="p-button-primary button-structure"
+                tooltipPosition="bottom"
+                (click)="getFile(proposal.uploadEthics)">
+                download file
+                </button>
+              </div>
+              <div class="flex-item" *ngIf="this.GrantTypeEnum[proposal.type] === 'Dataset Collection'">
+                Copyrights:
+                <button
+                type="button"
+                pButton
+                pRipple
+                class="p-button-primary button-structure"
+                tooltipPosition="bottom"
+                (click)="getFile(proposal.uploadCopyrights)">
+                download file
+                </button>
+              </div>
+            </div>
+          </div>
+        </td>    
+      </tr>      
     </ng-template>
   </p-table>
 </div>

@@ -5,13 +5,15 @@
     <app-parent-form [form]="doctoralForm"></app-parent-form>
 
     <div class="field">
-      <p-fileUpload formControlName="uploadCV" #fileUpload
+      <p-fileUpload #fileUpload
        name="file"
        [maxFileSize]="1000000"  
         chooseLabel="Upload CV"
         [showCancelButton]="false"
         [customUpload]="true"
         (uploadHandler)="onUpload($event, 'uploadCV')"
+        accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,image/*"
+        class="file-upload-element-width"
         >
       </p-fileUpload>
       <i
@@ -22,13 +24,15 @@
     </div>
 
     <div class="field">
-      <p-fileUpload formControlName="uploadDescription" #fileUpload
+      <p-fileUpload #fileUpload
        name="file"
        [maxFileSize]="1000000"
         chooseLabel="Upload Description"
         [showCancelButton]="false"
         [customUpload]="true"
         (uploadHandler)="onUpload($event, 'uploadDescription')"
+        accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,image/*"
+        class="file-upload-element-width"
         >
       </p-fileUpload>
       <i
@@ -43,13 +47,15 @@
     </div>
 
     <div class="field">
-      <p-fileUpload formControlName="uploadGradeTAndC" #fileUpload
+      <p-fileUpload #fileUpload
        name="file"
        [maxFileSize]="1000000"
         chooseLabel="Upload grade transcripts & certificates"
         [showCancelButton]="false"
         [customUpload]="true"
         (uploadHandler)="onUpload($event, 'uploadGradeTAndC')"
+        accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,image/*"
+        class="file-upload-element-width"
         >
       </p-fileUpload>
       <i
@@ -59,13 +65,15 @@
     </div>
 
     <div class="field">
-      <p-fileUpload formControlName="uploadWorkCommitment" #fileUpload
+      <p-fileUpload #fileUpload
        name="file"
        [maxFileSize]="1000000"
         chooseLabel="Upload work commitment"
         [showCancelButton]="false"
         [customUpload]="true"
         (uploadHandler)="onUpload($event, 'uploadWorkCommitment')"
+        accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,image/*"
+        class="file-upload-element-width"
         >
       </p-fileUpload>
       <i
@@ -76,13 +84,15 @@
     </div>
 
     <div class="field">
-      <p-fileUpload formControlName="uploadRecommendationLetter" #fileUpload
+      <p-fileUpload #fileUpload
        name="file"
        [maxFileSize]="1000000"
         chooseLabel="Upload recommendation letter"
         [showCancelButton]="false"
         [customUpload]="true"
         (uploadHandler)="onUpload($event, 'uploadRecommendationLetter')"
+        accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,image/*"
+        class="file-upload-element-width"
         >
       </p-fileUpload>
       <i
@@ -92,13 +102,15 @@
     </div>
 
     <div class="field">
-      <p-fileUpload formControlName="uploadContactRecommenders" #fileUpload
+      <p-fileUpload #fileUpload
        name="file"
        [maxFileSize]="1000000"
        chooseLabel="Upload contact recommenders"
        [showCancelButton]="false"
        [customUpload]="true"
        (uploadHandler)="onUpload($event, 'uploadContactRecommenders')"
+       accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,image/*"
+       class="file-upload-element-width"
        >
        </p-fileUpload>
        <i

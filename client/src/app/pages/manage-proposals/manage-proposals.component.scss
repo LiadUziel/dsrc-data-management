@@ -30,6 +30,35 @@ h1 {
 }
 
 .button-structure {
-    font-size: 0.75rem;
-    padding: 0rem;
+    background: none;
+    border: none;
+    color: blue; 
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: inherit;
+    padding: 0;
 }
+
+.button-structure:hover {
+    text-decoration: none;
+}
+  
+.expanded-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+  
+.flex-item {
+    margin: 0.3125rem;
+    flex: 1 1 calc(35%);
+}
+  
+
+  
+
