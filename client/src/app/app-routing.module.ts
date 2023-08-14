@@ -16,11 +16,13 @@ import { RenewPasswordComponent } from './pages/renew-password/renew-password.co
 import { RenewPasswordLinkGuard } from './auth/services/renew-password-link.guard.service';
 import { VerificationRegistrationGuard } from './auth/services/verification-registration.guard.service';
 import { MyProposalsComponent } from './pages/my-proposals/my-proposals.component';
+import { HomePageComponent } from './pages/home-page/home-page.component';
 
 const routes: Routes = [
   // TODO - fix routing and guard
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
 
+  { path: 'home', component: HomePageComponent },
   // auth
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },

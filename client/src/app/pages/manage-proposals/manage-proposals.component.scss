@@ -53,33 +53,29 @@ h1 {
 .button-structure {
     background: none;
     border: none;
-    color: blue; 
+    color: blue;
     cursor: pointer;
     text-decoration: underline;
     font-size: inherit;
-    padding: 0;
+    padding: 0 0.5rem;
 }
 
 .button-structure:hover {
     text-decoration: none;
 }
-  
-.expanded-content {
+
+.expanded-content-files {
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
-  
+}
+
 .flex-container {
     display: flex;
     flex-wrap: wrap;
 }
-  
+
 .flex-item {
     margin: 0.3125rem;
     flex: 1 1 calc(35%);
 }
-  
-
-  
-

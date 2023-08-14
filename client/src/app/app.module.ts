@@ -23,6 +23,8 @@ import { MultiFieldComponent } from './pages/submit-proposal/multi-field/multi-f
 import { CustomFieldsDialogComponent } from './pages/manage-proposals/custom-fields-dialog/custom-fields-dialog.component';
 import { UpdateStatusDialogComponent } from './pages/manage-proposals/update-status-dialog/update-status-dialog.component';
 import { MyProposalsComponent } from './pages/my-proposals/my-proposals.component';
+import { HomePageComponent } from './pages/home-page/home-page.component';
+import { LottieModule } from 'ngx-lottie';
 
 @NgModule({
   declarations: [
@@ -43,6 +45,7 @@ import { MyProposalsComponent } from './pages/my-proposals/my-proposals.componen
     CustomFieldsDialogComponent,
     UpdateStatusDialogComponent,
     MyProposalsComponent,
+    HomePageComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,8 +55,13 @@ import { MyProposalsComponent } from './pages/my-proposals/my-proposals.componen
     ReactiveFormsModule,
     AppRoutingModule,
     SharedModule,
+    LottieModule.forRoot({ player: playerFactory }),
   ],
   providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
+
+export function playerFactory() {
+  return import('lottie-web');
+}

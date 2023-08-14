@@ -3,7 +3,7 @@ import { User, UserModel } from "../models/user.interface";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { Config } from "../config/config";
-import * as nodemailer  from 'nodemailer';
+import * as nodemailer from "nodemailer";
 import Mailgen from "mailgen";
 import { Mail } from "../models/mail.interface";
 
@@ -112,7 +112,7 @@ export const isAdminMiddleware: RequestHandler = async (req, res, next) => {
   try {
     const role = req.authUser?.role;
 
-    if (role !== 'admin') {
+    if (role !== "admin") {
       return res
         .status(403)
         .send({ status: 403, error: "You are not authorized" });
@@ -124,9 +124,13 @@ export const isAdminMiddleware: RequestHandler = async (req, res, next) => {
   }
 };
 
-export const validateEmailMiddleware: RequestHandler = async(req, res, next) => {
+export const validateEmailMiddleware: RequestHandler = async (
+  req,
+  res,
+  next
+) => {
   try {
-    const { email } = req.body.userData? req.body.userData : req.body;
+    const { email } = req.body.userData ? req.body.userData : req.body;
 
     // get user from db
     const user = await UserModel.findOne({ email });
@@ -136,36 +140,36 @@ export const validateEmailMiddleware: RequestHandler = async(req, res, next) => 
       return res.status(400).send({ status: 400, message: "Invalid email" });
     }
     next();
-  } catch(e) {
+  } catch (e) {
     next(e);
   }
-}
+};
 
 export const verifyJwtMiddleware: RequestHandler = async (req, res, next) => {
   try {
-      const authHeader = req.headers.authorization;
-      if (!authHeader) {
-        return res
-          .status(401)
-          .send({ status: 401, error: "Missing authorization header" });
-      }
-  
-      // extract the token from authHeader
-      const token = authHeader.split(" ")[1];
-      const jwtData = jwt.verify(token, Config.JWT_SECRET_KEY);
-      res.send({result: 'verified!', user: jwtData});
-  }
-  catch(e) {
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+      return res
+        .status(401)
+        .send({ status: 401, error: "Missing authorization header" });
+    }
+
+    // extract the token from authHeader
+    const token = authHeader.split(" ")[1];
+    const jwtData = jwt.verify(token, Config.JWT_SECRET_KEY);
+    res.send({ result: "verified!", user: jwtData });
+  } catch (e) {
     next(e);
-
   }
-
-}
+};
 
 export const updateUserDB: RequestHandler = async (req, res, next) => {
   try {
     const user: User = req.body;
-    const userDB = await UserModel.updateOne({email: user.email}, {password: user.password}).exec();
+    const userDB = await UserModel.updateOne(
+      { email: user.email },
+      { password: user.password }
+    ).exec();
 
     res.send(user);
   } catch (e) {
@@ -173,55 +177,53 @@ export const updateUserDB: RequestHandler = async (req, res, next) => {
   }
 };
 
-export const sendEmailWithLinkMiddleware: RequestHandler = async(req, res, next) => {
+export const sendEmailWithLinkMiddleware: RequestHandler = async (
+  req,
+  res,
+  next
+) => {
   try {
     /*req = {UserData, emailConfig}*/
     const user: User = req.body.userData;
     const mailToUser: Mail = req.body.emailConfig;
     const config = {
-      service: 'gmail',
+      service: "gmail",
       auth: {
         user: Config.NODEMAILER_USER,
-        pass: Config.NODEMAILER_PASS
-      }
+        pass: Config.NODEMAILER_PASS,
+      },
     };
     const transporter = nodemailer.createTransport(config);
     const mailGenerator = new Mailgen({
       theme: "default",
       product: {
-        name: 'DSRC - university of haifa',
-        link: 'https://mailgen.js/'
-      }
+        name: "DSRC - university of haifa",
+        link: "https://mailgen.js/",
+      },
     });
 
     const expiresIn = "5m";
-    let token = jwt.sign(
-      { user: user},
-      Config.JWT_SECRET_KEY,
-      { expiresIn }
-    );
-      
-    while(token.indexOf('?') > -1) {
-      token = jwt.sign(
-        { user: user},
-        Config.JWT_SECRET_KEY,
-        { expiresIn }
-      );
+    let token = jwt.sign({ user: user }, Config.JWT_SECRET_KEY, { expiresIn });
+
+    while (token.indexOf("?") > -1) {
+      token = jwt.sign({ user: user }, Config.JWT_SECRET_KEY, { expiresIn });
     }
-                      
+
     const linkToSend = Config.FRONTEND_URL + mailToUser.url + token;
 
     const mailContent = {
       body: {
-        name:'',
+        name: "",
         intro: mailToUser.content,
         table: {
-          data: [{
-            link: `<a href="${linkToSend}">${linkToSend}</a>` 
-          }]
+          data: [
+            {
+              link: `<a href="${linkToSend}">${linkToSend}</a>`,
+            },
+          ],
         },
-        outro: ""
-      }
+        outro: "",
+      },
     };
 
     const mail = mailGenerator.generate(mailContent);
@@ -229,18 +231,22 @@ export const sendEmailWithLinkMiddleware: RequestHandler = async(req, res, next)
       from: Config.NODEMAILER_USER,
       to: user.email,
       subject: mailToUser.subject,
-      html: mail
+      html: mail,
     };
 
     transporter.sendMail(mailOptions).then(() => {
-      res.send({token: token});
+      res.send({ token: token });
     });
-} catch (e) {
-  next(e);
-}
+  } catch (e) {
+    next(e);
+  }
 };
 
-export const validateEmailNotExistMiddleware: RequestHandler = async(req, res, next) => {
+export const validateEmailNotExistMiddleware: RequestHandler = async (
+  req,
+  res,
+  next
+) => {
   try {
     const { email } = req.body.userData;
 
@@ -249,10 +255,29 @@ export const validateEmailNotExistMiddleware: RequestHandler = async(req, res, n
 
     // bad request if user exists
     if (user) {
-      return res.status(400).send({ status: 400, message: "email already exists at the system" });
+      return res
+        .status(400)
+        .send({ status: 400, message: "email already exists at the system" });
     }
     next();
-  } catch(e) {
+  } catch (e) {
+    next(e);
+  }
+};
+
+// get details of logged user
+export const getLoggedUser: RequestHandler = async (req, res, next) => {
+  try {
+    const { email } = req.authUser!;
+
+    // get user from db
+    const user: User = (await UserModel.findOne(
+      { email },
+      "firstName lastName email role -_id"
+    ))!;
+
+    return res.send(user);
+  } catch (e) {
     next(e);
   }
 };
