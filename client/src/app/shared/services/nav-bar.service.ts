@@ -16,7 +16,7 @@ export class NavBarService {
       {
         label: 'Home',
         icon: 'pi pi-fw pi-home',
-        routerLink: 'login',
+        routerLink: 'home',
       },
       {
         label: 'Sign Up',
