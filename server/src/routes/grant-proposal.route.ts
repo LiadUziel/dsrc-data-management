@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   addFieldsToProposal,
   createGrantProposal,
+  getDepartments,
   getGrantProposals,
   getUserProposals,
   updateProposalStatus,
@@ -18,6 +19,9 @@ grantProposalRouter.get("/logged-user", authorizeMiddleware, getUserProposals);
 
 // Create a new grant proposal in db //* POST /api/grant-proposal
 grantProposalRouter.post("/", authorizeMiddleware, createGrantProposal);
+
+// Get departments
+grantProposalRouter.get("/departments", authorizeMiddleware, getDepartments);
 
 // get grant proposals by type or all of them //* GET /api/grant-proposal or /api/grant-proposal/:type
 grantProposalRouter.get(

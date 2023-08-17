@@ -4,6 +4,7 @@ import { GrantProposal } from '../models/grant-proposal.interface';
 import { HttpClient } from '@angular/common/http';
 import { TokenStorageService } from 'src/app/auth/services/token-storage.service';
 import { CustomFieldRaw } from '../models/new-field-raw.interface';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -106,5 +107,24 @@ export class GrantProposalService {
         },
       }
     );
+  }
+
+  getDepartments() {
+    const { href } = new URL('/api/grant-proposal/departments', this.apiUrl);
+
+    const token = this.tokenService.getToken();
+    return this.http
+      .get<string[]>(href, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .pipe(
+        map((departments) =>
+          departments.map((department) => ({
+            name: department,
+          }))
+        )
+      );
   }
 }

@@ -6,6 +6,7 @@ import {
 import { Role, User, UserModel } from "../models/user.interface";
 import { NewFieldRaw } from "../models/new-field-raw.interface";
 import { TeamMember } from "../models/team-member.interface";
+import { departments } from "../utils/depratments";
 
 export const createGrantProposal: RequestHandler = async (req, res, next) => {
   try {
@@ -131,6 +132,10 @@ export const updateProposalStatus: RequestHandler = async (req, res, next) => {
   } catch (e) {
     next(e);
   }
+};
+
+export const getDepartments: RequestHandler = (req, res, next) => {
+  return res.send(departments);
 };
 
 /**

@@ -1,8 +1,15 @@
 <div class="parent-form" [formGroup]="form">
-  <span class="p-float-label">
-    <input pInputText formControlName="department" />
-    <label>Department</label>
-  </span>
+  <p-dropdown
+    formControlName="department"
+    [options]="departments"
+    optionLabel="name"
+    optionValue="name"
+    [filter]="true"
+    filterBy="name"
+    [showClear]="true"
+    placeholder="Department"
+    styleClass="department"
+  ></p-dropdown>
 
   <span class="p-float-label">
     <input pInputText formControlName="studyTitle" />
