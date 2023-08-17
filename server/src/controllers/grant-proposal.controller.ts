@@ -3,8 +3,9 @@ import {
   GrantProposal,
   GrantProposalModel,
 } from "../models/grant-proposal.interface";
-import { User, UserModel } from "../models/user.interface";
+import { Role, User, UserModel } from "../models/user.interface";
 import { NewFieldRaw } from "../models/new-field-raw.interface";
+import { TeamMember } from "../models/team-member.interface";
 
 export const createGrantProposal: RequestHandler = async (req, res, next) => {
   try {
@@ -26,6 +27,10 @@ export const createGrantProposal: RequestHandler = async (req, res, next) => {
     proposal.amountGiven = 0;
 
     const proposalDb = await GrantProposalModel.create(proposal);
+
+    if (proposal.teamMembers?.length) {
+      addRolesByMembers(proposal.teamMembers);
+    }
 
     return res.status(201).send(proposalDb);
   } catch (e) {
@@ -127,3 +132,13 @@ export const updateProposalStatus: RequestHandler = async (req, res, next) => {
     next(e);
   }
 };
+
+/**
+ * Adding roles to the user when a new proposal is created if necessary
+ */
+async function addRolesByMembers(teamMembers: TeamMember[]) {
+  for (const member of teamMembers) {
+    const { memberRole: role, memberEmail: email } = member;
+    await UserModel.findOneAndUpdate({ email }, { $addToSet: { roles: role } });
+  }
+}

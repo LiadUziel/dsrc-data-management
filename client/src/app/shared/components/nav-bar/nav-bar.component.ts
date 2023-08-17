@@ -24,9 +24,9 @@ export class NavBarComponent {
     this.authService.isLogin().subscribe({
       next: (decryptToken) => {
         if (decryptToken) {
-          this.items = this.navBarService.getItems(true, decryptToken.role);
+          this.items = this.navBarService.getItems(true, decryptToken.roles);
         } else {
-          this.items = this.navBarService.getItems(false, 'member');
+          this.items = this.navBarService.getItems(false, ['submitter']);
         }
       },
       error: (err) => {
@@ -47,10 +47,10 @@ export class NavBarComponent {
       .subscribe({
         next: (user) => {
           if (user) {
-            this.items = this.navBarService.getItems(true, user.role);
+            this.items = this.navBarService.getItems(true, user.roles);
             this.user = user;
           } else {
-            this.items = this.navBarService.getItems(false, 'member');
+            this.items = this.navBarService.getItems(false, ['submitter']);
             this.user = null;
           }
         },
@@ -68,10 +68,10 @@ export class NavBarComponent {
       .subscribe({
         next: (user) => {
           if (user) {
-            this.items = this.navBarService.getItems(true, user.role);
+            this.items = this.navBarService.getItems(true, user.roles);
             this.user = user;
           } else {
-            this.items = this.navBarService.getItems(false, 'member');
+            this.items = this.navBarService.getItems(false, ['submitter']);
             this.user = null;
           }
         },

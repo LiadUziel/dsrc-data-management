@@ -6,7 +6,7 @@ export interface User {
   lastName: string;
   email: string;
   password: string;
-  role: string;
+  roles: Role[];
 }
 
 const userSchema = new mongoose.Schema<User>(
@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema<User>(
     lastName: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true, minlength: 6 },
-    role: { type: String, required: true, default: "member" },
+    roles: { type: [String], required: true, default: ["submitter"] },
   },
   {
     timestamps: true,
@@ -23,3 +23,5 @@ const userSchema = new mongoose.Schema<User>(
 );
 
 export const UserModel: Model<User> = mongoose.model<User>("User", userSchema);
+
+export type Role = "submitter" | "admin" | "reviewer" | "teamMember";

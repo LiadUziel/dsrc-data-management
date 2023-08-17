@@ -1,11 +1,15 @@
 import { RequestHandler } from "express";
-import { User, UserModel } from "../models/user.interface";
+import { Role, User, UserModel } from "../models/user.interface";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { Config } from "../config/config";
 import * as nodemailer from "nodemailer";
 import Mailgen from "mailgen";
 import { Mail } from "../models/mail.interface";
+import {
+  GrantProposal,
+  GrantProposalModel,
+} from "../models/grant-proposal.interface";
 
 // use this middleware to hash password before saving to db
 export const hashPasswordMiddleware: RequestHandler = async (
@@ -40,7 +44,9 @@ export const hashPasswordMiddleware: RequestHandler = async (
 // create user in db
 export const createUserDB: RequestHandler = async (req, res, next) => {
   try {
-    const user: User = req.body;
+    let user: User = req.body;
+
+    user = await initUserRoles(user);
 
     const userDB = await UserModel.create(user);
 
@@ -76,7 +82,7 @@ export const login: RequestHandler = async (req, res, next) => {
 
     // generate a jwt
     const token = jwt.sign(
-      { email: user.email, isLogged: true, role: user.role },
+      { email: user.email, isLogged: true, roles: user.roles },
       Config.JWT_SECRET_KEY,
       { expiresIn }
     );
@@ -100,8 +106,8 @@ export const authorizeMiddleware: RequestHandler = async (req, res, next) => {
     // extract the token from authHeader
     const token = authHeader.split(" ")[1];
     const jwtData = jwt.verify(token, Config.JWT_SECRET_KEY);
-    const { email, isLogged, role } = jwtData;
-    req.authUser = { email, isLogged, role };
+    const { email, isLogged, roles } = jwtData;
+    req.authUser = { email, isLogged, roles };
     next();
   } catch (e) {
     next(e);
@@ -110,9 +116,9 @@ export const authorizeMiddleware: RequestHandler = async (req, res, next) => {
 
 export const isAdminMiddleware: RequestHandler = async (req, res, next) => {
   try {
-    const role = req.authUser?.role;
+    const roles = req.authUser?.roles;
 
-    if (role !== "admin") {
+    if (!roles?.includes("admin")) {
       return res
         .status(403)
         .send({ status: 403, error: "You are not authorized" });
@@ -273,7 +279,7 @@ export const getLoggedUser: RequestHandler = async (req, res, next) => {
     // get user from db
     const user: User = (await UserModel.findOne(
       { email },
-      "firstName lastName email role -_id"
+      "firstName lastName email roles -_id"
     ))!;
 
     return res.send(user);
@@ -281,3 +287,26 @@ export const getLoggedUser: RequestHandler = async (req, res, next) => {
     next(e);
   }
 };
+
+/**
+ * Initialization of roles of a new registered user if there are proposals in which he has a special role such as: reviewer, admin, or team member
+ */
+async function initUserRoles(user: User) {
+  user.roles = ["submitter"];
+
+  const proposals: GrantProposal[] = await GrantProposalModel.find();
+
+  for (const proposal of proposals) {
+    if (proposal.teamMembers) {
+      for (const member of proposal.teamMembers) {
+        const { memberEmail, memberRole: role } = member;
+
+        // New role for given user
+        if (user.email === memberEmail && !user.roles.includes(role)) {
+          user.roles.push(role);
+        }
+      }
+    }
+  }
+  return user;
+}

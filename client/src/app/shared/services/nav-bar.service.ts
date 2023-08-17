@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Role } from 'src/app/auth/interfaces/user-interface';
 import { AuthService } from 'src/app/auth/services/auth.service';
 
 @Injectable({
@@ -7,7 +8,10 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 export class NavBarService {
   constructor(private authService: AuthService) {}
 
-  getItems(isLogged: boolean, role: string) {
+  getItems(isLogged: boolean, roles: Role[]) {
+    const isAdmin = roles.includes('admin');
+    const isReviewer = roles.includes('reviewer');
+    const isTeamMember = roles.includes('teamMember');
     return [
       {
         label: 'DSRC Data Management',
@@ -55,13 +59,23 @@ export class NavBarService {
         label: 'My Proposals',
         icon: 'pi pi-fw pi-list',
         routerLink: 'my-proposals',
-        visible: isLogged && role !== 'admin',
+        visible: isLogged && !isAdmin,
       },
       {
         label: 'Manage Proposals',
         icon: 'pi pi-wrench',
         routerLink: 'manage-proposals',
-        visible: isLogged && role === 'admin',
+        visible: isLogged && isAdmin,
+      },
+      {
+        label: 'For Reviewer',
+        routerLink: 'home', // TODO - change
+        visible: isLogged && isReviewer,
+      },
+      {
+        label: 'For Team Members',
+        routerLink: 'home', // TODO - change
+        visible: isLogged && isTeamMember,
       },
       {
         label: 'Log Out',
