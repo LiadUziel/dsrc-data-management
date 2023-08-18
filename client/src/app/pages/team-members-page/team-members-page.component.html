@@ -1,10 +1,21 @@
-<h1>My Proposals</h1>
+<h1>Team Members Page</h1>
+
+<p class="intro">
+  On this page you can view the grant proposals in which you are a team member
+</p>
 
 <div class="table-wrapper">
   <p-table
     [value]="proposals$ | async"
     #proposalTable
-    [globalFilterFields]="['type', 'department', 'studyTitle']"
+    [globalFilterFields]="[
+      'type',
+      'user.firstName',
+      'user.lastName',
+      'user.email',
+      'department',
+      'studyTitle'
+    ]"
     dataKey="_id"
     [paginator]="true"
     [rows]="10"
@@ -33,6 +44,18 @@
         <th pSortableColumn="type">
           <div>Grant Type</div>
           <p-sortIcon field="type"></p-sortIcon>
+        </th>
+        <th pSortableColumn="user.firstName">
+          <div>First Name</div>
+          <p-sortIcon field="user.firstName"></p-sortIcon>
+        </th>
+        <th pSortableColumn="user.lastName">
+          <div>Last Name</div>
+          <p-sortIcon field="user.lastName"></p-sortIcon>
+        </th>
+        <th pSortableColumn="user.email">
+          <div>Email</div>
+          <p-sortIcon field="user.email"></p-sortIcon>
         </th>
         <th pSortableColumn="department">
           <div>Department</div>
@@ -70,6 +93,9 @@
         </td>
 
         <td>{{ GrantTypeEnum[proposal.type] }}</td>
+        <td>{{ proposal.user.firstName }}</td>
+        <td>{{ proposal.user.lastName }}</td>
+        <td>{{ proposal.user.email }}</td>
         <td>{{ proposal.department }}</td>
         <td>{{ proposal.studyTitle }}</td>
         <td>{{ proposal.amountRequested | number }}₪</td>

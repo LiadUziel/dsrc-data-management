@@ -1,0 +1,383 @@
+<h1>My Submitted Proposals</h1>
+
+<p class="intro">
+  On this page you can view the grant proposals you have submitted.
+</p>
+
+<div class="table-wrapper">
+  <p-table
+    [value]="proposals$ | async"
+    #proposalTable
+    [globalFilterFields]="['type', 'department', 'studyTitle']"
+    dataKey="_id"
+    [paginator]="true"
+    [rows]="10"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    styleClass="p-datatable-striped"
+  >
+    <ng-template pTemplate="caption">
+      <div class="caption">
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            type="text"
+            (input)="
+              proposalTable.filterGlobal($any($event.target).value, 'contains')
+            "
+            placeholder="Search keyword"
+          />
+        </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th></th>
+        <th pSortableColumn="type">
+          <div>Grant Type</div>
+          <p-sortIcon field="type"></p-sortIcon>
+        </th>
+        <th pSortableColumn="department">
+          <div>Department</div>
+          <p-sortIcon field="department"></p-sortIcon>
+        </th>
+        <th pSortableColumn="studyTitle">
+          <div>Study Title</div>
+          <p-sortIcon field="studyTitle"></p-sortIcon>
+        </th>
+        <th pSortableColumn="amountRequested">
+          <div>Amount Requested</div>
+          <p-sortIcon field="amountRequested"></p-sortIcon>
+        </th>
+        <th pSortableColumn="status">
+          <div>Status</div>
+          <p-sortIcon field="status"></p-sortIcon>
+        </th>
+        <th pSortableColumn="applicationDate">
+          <div>Application Date</div>
+          <p-sortIcon field="applicationDate"></p-sortIcon>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-proposal let-expanded="expanded">
+      <tr>
+        <td>
+          <button
+            type="button"
+            pButton
+            pRipple
+            [pRowToggler]="proposal"
+            class="p-button-text p-button-rounded p-button-plain"
+            [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+          ></button>
+        </td>
+
+        <td>{{ GrantTypeEnum[proposal.type] }}</td>
+        <td>{{ proposal.department }}</td>
+        <td>{{ proposal.studyTitle }}</td>
+        <td>{{ proposal.amountRequested | number }}₪</td>
+        <td>
+          <div class="status">
+            <p-tag
+              [severity]="statusSeverity[proposal.status]"
+              [value]="ProposalStatus[proposal.status]"
+              [icon]="statusIcon[proposal.status]"
+            ></p-tag>
+          </div>
+          <div class="amount-given">
+            Amount Given: {{ proposal.amountGiven | number }}₪
+          </div>
+        </td>
+        <td>{{ proposal.applicationDate | date }}</td>
+      </tr>
+    </ng-template>
+
+    <!--* line extension -->
+    <ng-template pTemplate="rowexpansion" let-proposal>
+      <tr class="expanded-row">
+        <td colspan="11" class="expanded-cell">
+          <div *ngIf="proposal.teamMembers && proposal.teamMembers.length > 0">
+            <h3>Team Members:</h3>
+            <table class="team-members-table">
+              <tr>
+                <th>Member Email</th>
+                <th>Member Role</th>
+              </tr>
+              <tr *ngFor="let member of proposal.teamMembers">
+                <td>{{ member.memberEmail }}</td>
+                <td>{{ RoleEnum[member.memberRole] }}</td>
+              </tr>
+            </table>
+          </div>
+
+          <div *ngIf="proposal.budgetParts && proposal.budgetParts.length > 0">
+            <h3>Budget Parts:</h3>
+            <table class="budget-parts-table">
+              <tr>
+                <th>Reason</th>
+                <th>Amount</th>
+              </tr>
+              <tr *ngFor="let budgetPart of proposal.budgetParts">
+                <td>{{ budgetPart.reason }}</td>
+                <td>{{ budgetPart.amount | number }}</td>
+              </tr>
+            </table>
+            <b
+              >Total Budget:
+              {{ getTotalBudget(proposal.budgetParts) | number }}</b
+            >
+          </div>
+
+          <div *ngIf="proposal.customFields" class="custom-fields">
+            <h3>Custom Fields:</h3>
+
+            <div
+              *ngFor="let keyValuePair of proposal.customFields | keyvalue"
+              class="custom-field"
+            >
+              <b>{{ keyValuePair.key }}:</b>
+              <p>{{ keyValuePair.value }}</p>
+            </div>
+          </div>
+
+          <h3>Uploaded Files:</h3>
+          <div class="expanded-content-files">
+            <div class="flex-container">
+              <div
+                class="flex-item"
+                *ngIf="isDsDoctorlOrPostDocProposal(proposal.type)"
+              >
+                CV:
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  class="p-button-primary button-structure"
+                  tooltipPosition="bottom"
+                  (click)="getFile(proposal.uploadCV)"
+                >
+                  download file
+                </button>
+              </div>
+              <div
+                class="flex-item"
+                *ngIf="isDsDoctorlOrPostDocProposal(proposal.type)"
+              >
+                Description:
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  class="p-button-primary button-structure"
+                  tooltipPosition="bottom"
+                  (click)="getFile(proposal.uploadDescription)"
+                >
+                  download file
+                </button>
+              </div>
+              <div
+                class="flex-item"
+                *ngIf="isDsDoctorlOrPostDocProposal(proposal.type)"
+              >
+                Grade transcripts & certificates:
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  class="p-button-primary button-structure"
+                  tooltipPosition="bottom"
+                  (click)="getFile(proposal.uploadGradeTAndC)"
+                >
+                  download file
+                </button>
+              </div>
+              <div
+                class="flex-item"
+                *ngIf="isDsDoctorlOrPostDocProposal(proposal.type)"
+              >
+                Work Commitment:
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  class="p-button-primary button-structure"
+                  tooltipPosition="bottom"
+                  (click)="getFile(proposal.uploadWorkCommitment)"
+                >
+                  download file
+                </button>
+              </div>
+              <div
+                class="flex-item"
+                *ngIf="isDsDoctorlOrPostDocProposal(proposal.type)"
+              >
+                Recommendation Letter:
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  class="p-button-primary button-structure"
+                  tooltipPosition="bottom"
+                  (click)="getFile(proposal.uploadRecommendationLetter)"
+                >
+                  download file
+                </button>
+              </div>
+              <div
+                class="flex-item"
+                *ngIf="isDsDoctorlOrPostDocProposal(proposal.type)"
+              >
+                Contact Recommenders:
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  class="p-button-primary button-structure"
+                  tooltipPosition="bottom"
+                  (click)="getFile(proposal.uploadContactRecommenders)"
+                >
+                  download file
+                </button>
+              </div>
+              <div
+                class="flex-item"
+                *ngIf="isSeedOrDatasetCollectionProposal(proposal.type)"
+              >
+                Research Introduction:
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  class="p-button-primary button-structure"
+                  tooltipPosition="bottom"
+                  (click)="getFile(proposal.uploadResearchIntro)"
+                >
+                  download file
+                </button>
+              </div>
+              <div
+                class="flex-item"
+                *ngIf="isSeedOrDatasetCollectionProposal(proposal.type)"
+              >
+                Innovation Project:
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  class="p-button-primary button-structure"
+                  tooltipPosition="bottom"
+                  (click)="getFile(proposal.uploadInnovationProject)"
+                >
+                  download file
+                </button>
+              </div>
+              <div
+                class="flex-item"
+                *ngIf="isSeedOrDatasetCollectionProposal(proposal.type)"
+              >
+                Team:
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  class="p-button-primary button-structure"
+                  tooltipPosition="bottom"
+                  (click)="getFile(proposal.uploadTeam)"
+                >
+                  download file
+                </button>
+              </div>
+              <div
+                class="flex-item"
+                *ngIf="isSeedOrDatasetCollectionProposal(proposal.type)"
+              >
+                Budget:
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  class="p-button-primary button-structure"
+                  tooltipPosition="bottom"
+                  (click)="getFile(proposal.uploadBudget)"
+                >
+                  download file
+                </button>
+              </div>
+              <div
+                class="flex-item"
+                *ngIf="this.GrantTypeEnum[proposal.type] === 'Seed Research'"
+              >
+                External Funding:
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  class="p-button-primary button-structure"
+                  tooltipPosition="bottom"
+                  (click)="getFile(proposal.uploadExternalFunding)"
+                >
+                  download file
+                </button>
+              </div>
+              <div
+                class="flex-item"
+                *ngIf="
+                  this.GrantTypeEnum[proposal.type] === 'Dataset Collection'
+                "
+              >
+                Dataset information:
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  class="p-button-primary button-structure"
+                  tooltipPosition="bottom"
+                  (click)="getFile(proposal.uploadDatasetInfo)"
+                >
+                  download file
+                </button>
+              </div>
+              <div
+                class="flex-item"
+                *ngIf="
+                  this.GrantTypeEnum[proposal.type] === 'Dataset Collection'
+                "
+              >
+                Ethics:
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  class="p-button-primary button-structure"
+                  tooltipPosition="bottom"
+                  (click)="getFile(proposal.uploadEthics)"
+                >
+                  download file
+                </button>
+              </div>
+              <div
+                class="flex-item"
+                *ngIf="
+                  this.GrantTypeEnum[proposal.type] === 'Dataset Collection'
+                "
+              >
+                Copyrights:
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  class="p-button-primary button-structure"
+                  tooltipPosition="bottom"
+                  (click)="getFile(proposal.uploadCopyrights)"
+                >
+                  download file
+                </button>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

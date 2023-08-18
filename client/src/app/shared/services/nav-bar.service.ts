@@ -56,9 +56,9 @@ export class NavBarService {
         ],
       },
       {
-        label: 'My Proposals',
+        label: 'Submitted Proposals',
         icon: 'pi pi-fw pi-list',
-        routerLink: 'my-proposals',
+        routerLink: 'submitted-proposals',
         visible: isLogged && !isAdmin,
       },
       {
@@ -69,12 +69,12 @@ export class NavBarService {
       },
       {
         label: 'For Reviewer',
-        routerLink: 'home', // TODO - change
+        routerLink: 'reviewers', // TODO - change
         visible: isLogged && isReviewer,
       },
       {
         label: 'For Team Members',
-        routerLink: 'home', // TODO - change
+        routerLink: 'team-members', // TODO - change
         visible: isLogged && isTeamMember,
       },
       {

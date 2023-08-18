@@ -127,4 +127,26 @@ export class GrantProposalService {
         )
       );
   }
+
+  getReviewerProposals() {
+    const { href } = new URL('/api/grant-proposal/reviewer', this.apiUrl);
+
+    const token = this.tokenService.getToken();
+    return this.http.get<GrantProposal[]>(href, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+
+  getTeamMemberProposals() {
+    const { href } = new URL('/api/grant-proposal/team-member', this.apiUrl);
+
+    const token = this.tokenService.getToken();
+    return this.http.get<GrantProposal[]>(href, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
 }
