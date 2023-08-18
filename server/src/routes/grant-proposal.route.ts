@@ -4,6 +4,8 @@ import {
   createGrantProposal,
   getDepartments,
   getGrantProposals,
+  getReviewersProposals,
+  getTeamMembersProposals,
   getUserProposals,
   updateProposalStatus,
 } from "../controllers/grant-proposal.controller";
@@ -13,6 +15,20 @@ import {
 } from "../controllers/auth.controller";
 
 const grantProposalRouter = Router();
+
+// get proposals that the logged user is reviewer in them
+grantProposalRouter.get(
+  "/reviewer",
+  authorizeMiddleware,
+  getReviewersProposals
+);
+
+// get proposals that the logged user is teamMember in them
+grantProposalRouter.get(
+  "/team-member",
+  authorizeMiddleware,
+  getTeamMembersProposals
+);
 
 // get grant proposals of logged user //* GET /api/grant-proposal/logged-user
 grantProposalRouter.get("/logged-user", authorizeMiddleware, getUserProposals);

@@ -138,6 +138,42 @@ export const getDepartments: RequestHandler = (req, res, next) => {
   return res.send(departments);
 };
 
+// get proposals that the logged user is reviewer in them
+export const getReviewersProposals: RequestHandler = async (req, res, next) => {
+  try {
+    const email = req.authUser?.email!;
+
+    const proposals: GrantProposal[] = await findProposalsByRole(
+      email,
+      "reviewer"
+    );
+
+    return res.send(proposals);
+  } catch (e) {
+    next(e);
+  }
+};
+
+// get proposals that the logged user is teamMember in them
+export const getTeamMembersProposals: RequestHandler = async (
+  req,
+  res,
+  next
+) => {
+  try {
+    const email = req.authUser?.email!;
+
+    const proposals: GrantProposal[] = await findProposalsByRole(
+      email,
+      "teamMember"
+    );
+
+    return res.send(proposals);
+  } catch (e) {
+    next(e);
+  }
+};
+
 /**
  * Adding roles to the user when a new proposal is created if necessary
  */
@@ -146,4 +182,18 @@ async function addRolesByMembers(teamMembers: TeamMember[]) {
     const { memberRole: role, memberEmail: email } = member;
     await UserModel.findOneAndUpdate({ email }, { $addToSet: { roles: role } });
   }
+}
+
+/**
+ *
+ * @param email
+ * @param role 'reviewer' | 'teamMember'
+ * @returns the proposals that email user is team member by the given role
+ */
+async function findProposalsByRole(email: string, role: Role) {
+  const proposals: GrantProposal[] = await GrantProposalModel.find({
+    "teamMembers.memberEmail": email,
+    "teamMembers.memberRole": role,
+  }).populate("user", "firstName lastName email -_id");
+  return proposals;
 }
