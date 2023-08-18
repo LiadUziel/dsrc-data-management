@@ -11,6 +11,7 @@ import {
   validateEmailNotExistMiddleware,
   sendEmailWithLinkMiddleware,
   getLoggedUser,
+  getUsers,
 } from "../controllers/auth.controller";
 
 const authRouter: Router = express.Router();
@@ -61,5 +62,8 @@ authRouter.post(
 
 // get details of logged user - GET /api/auth/me
 authRouter.get("/me", authorizeMiddleware, getLoggedUser);
+
+// get all users except the logged in user
+authRouter.get("/users", authorizeMiddleware, getUsers);
 
 export default authRouter;

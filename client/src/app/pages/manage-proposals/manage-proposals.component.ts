@@ -10,6 +10,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { CustomFieldsDialogComponent } from './custom-fields-dialog/custom-fields-dialog.component';
 import { UpdateStatusDialogComponent } from './update-status-dialog/update-status-dialog.component';
 import { ProposalStatus } from './models/proposal-status.enum';
+import { RoleEnum } from 'src/app/shared/enums/role.enum';
 
 @Component({
   selector: 'app-manage-proposals',
@@ -19,6 +20,8 @@ import { ProposalStatus } from './models/proposal-status.enum';
 })
 export class ManageProposalsComponent implements OnInit {
   proposals$: Observable<GrantProposal[]>;
+
+  RoleEnum = RoleEnum;
 
   // These are the columns and values that will also appear in the Excel export
   cols = [

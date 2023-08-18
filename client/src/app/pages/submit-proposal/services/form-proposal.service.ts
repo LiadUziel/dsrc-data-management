@@ -116,9 +116,7 @@ export class FormProposalService {
    */
   addTeamMember(form: FormGroup) {
     const teamMemberControl = new FormGroup({
-      memberName: new FormControl('', Validators.required),
       memberEmail: new FormControl('', [Validators.required, Validators.email]),
-      memberDepartment: new FormControl('', Validators.required),
       memberRole: new FormControl('', Validators.required),
     });
 

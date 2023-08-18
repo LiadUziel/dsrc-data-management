@@ -15,6 +15,7 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { TagModule } from 'primeng/tag';
 import { DropdownModule } from 'primeng/dropdown';
+import { TabViewModule } from 'primeng/tabview';
 
 // ngx-toastr
 import { ToastrModule } from 'ngx-toastr';
@@ -54,6 +55,7 @@ import { PagesComponent } from '../pages/pages.component';
     RadioButtonModule,
     TagModule,
     DropdownModule,
+    TabViewModule,
 
     //materials
     MatPasswordStrengthModule.forRoot(),
@@ -75,6 +77,7 @@ import { PagesComponent } from '../pages/pages.component';
     RadioButtonModule,
     TagModule,
     DropdownModule,
+    TabViewModule,
 
     // materials
     MatPasswordStrengthModule,

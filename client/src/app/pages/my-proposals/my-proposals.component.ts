@@ -8,6 +8,7 @@ import { FilesService } from 'src/app/files/services/files.service';
 import { saveAs } from 'file-saver';
 import { DialogService } from 'primeng/dynamicdialog';
 import { ProposalStatus } from '../manage-proposals/models/proposal-status.enum';
+import { RoleEnum } from 'src/app/shared/enums/role.enum';
 
 @Component({
   selector: 'app-my-proposals',
@@ -19,6 +20,8 @@ export class MyProposalsComponent implements OnInit {
   proposals$: Observable<GrantProposal[]>;
 
   GrantTypeEnum = GrantType;
+
+  RoleEnum = RoleEnum;
 
   ProposalStatus = ProposalStatus;
 

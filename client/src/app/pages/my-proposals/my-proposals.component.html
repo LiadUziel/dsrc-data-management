@@ -97,16 +97,12 @@
             <h3>Team Members:</h3>
             <table class="team-members-table">
               <tr>
-                <th>Member Name</th>
                 <th>Member Email</th>
-                <th>Member Department</th>
                 <th>Member Role</th>
               </tr>
               <tr *ngFor="let member of proposal.teamMembers">
-                <td>{{ member.memberName }}</td>
                 <td>{{ member.memberEmail }}</td>
-                <td>{{ member.memberDepartment }}</td>
-                <td>{{ member.memberRole }}</td>
+                <td>{{ RoleEnum[member.memberRole] }}</td>
               </tr>
             </table>
           </div>

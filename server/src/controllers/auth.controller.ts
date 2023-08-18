@@ -288,6 +288,23 @@ export const getLoggedUser: RequestHandler = async (req, res, next) => {
   }
 };
 
+// get all users except the logged in user
+export const getUsers: RequestHandler = async (req, res, next) => {
+  try {
+    const { email } = req.authUser!;
+
+    // get user from db
+    const users: User[] = (await UserModel.find(
+      { email: { $ne: email } },
+      "firstName lastName email roles -_id"
+    ))!;
+
+    return res.send(users);
+  } catch (e) {
+    next(e);
+  }
+};
+
 /**
  * Initialization of roles of a new registered user if there are proposals in which he has a special role such as: reviewer, admin, or team member
  */

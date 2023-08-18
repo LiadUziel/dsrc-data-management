@@ -1,19 +1,47 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { FormArray, FormGroup } from '@angular/forms';
 import { FormProposalService } from '../services/form-proposal.service';
 import { BudgetPart } from 'src/app/shared/models/budget-part.interface';
+import { Role, User } from 'src/app/auth/interfaces/user-interface';
+import { AuthService } from 'src/app/auth/services/auth.service';
+import { RoleEnum } from 'src/app/shared/enums/role.enum';
 
 @Component({
   selector: 'app-multi-field',
   templateUrl: './multi-field.component.html',
   styleUrls: ['./multi-field.component.scss'],
 })
-export class MultiFieldComponent {
+export class MultiFieldComponent implements OnInit {
   @Input() form: FormGroup;
   @Input() formArrayName: 'teamMembers' | 'budgetParts';
   @Input() displayAction: 'Team Member' | 'Budget Part';
 
   formProposalService = inject(FormProposalService);
+  authService = inject(AuthService);
+
+  users: User[];
+
+  roles: Role[];
+  RoleEnum = RoleEnum;
+
+  ngOnInit(): void {
+    // init users list
+    this.authService.getUsers().subscribe({
+      next: (users) => {
+        this.users = users;
+      },
+    });
+
+    // init roles list
+    this.authService.getLoggedUser().subscribe({
+      next: (loggedUser) => {
+        this.roles = ['reviewer', 'submitter', 'teamMember'];
+        if (loggedUser.roles.includes('admin')) {
+          this.roles.push('admin');
+        }
+      },
+    });
+  }
 
   addField() {
     if (this.formArrayName === 'teamMembers') {

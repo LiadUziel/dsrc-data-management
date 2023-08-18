@@ -145,4 +145,16 @@ export class AuthService {
       },
     });
   }
+
+  // get all users except logged user
+  getUsers() {
+    const { href } = new URL('/api/auth/users', this.apiUrl);
+    const token = this.tokenService.getToken();
+
+    return this.http.get<User[]>(href, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
 }
