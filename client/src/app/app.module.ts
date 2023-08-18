@@ -22,7 +22,7 @@ import { RenewPasswordComponent } from './pages/renew-password/renew-password.co
 import { MultiFieldComponent } from './pages/submit-proposal/multi-field/multi-field.component';
 import { CustomFieldsDialogComponent } from './pages/manage-proposals/custom-fields-dialog/custom-fields-dialog.component';
 import { UpdateStatusDialogComponent } from './pages/manage-proposals/update-status-dialog/update-status-dialog.component';
-import { SubmittedProposalsComponent } from './pages/my-proposals/submitted-proposals.component';
+import { SubmittedProposalsComponent } from './pages/submitted-proposals/submitted-proposals.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { LottieModule } from 'ngx-lottie';
 import { ReviewersPageComponent } from './pages/reviewers-page/reviewers-page.component';
