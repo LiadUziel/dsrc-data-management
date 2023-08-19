@@ -7,6 +7,7 @@ import { Role, User, UserModel } from "../models/user.interface";
 import { NewFieldRaw } from "../models/new-field-raw.interface";
 import { TeamMember } from "../models/team-member.interface";
 import { departments } from "../utils/depratments";
+import { Review } from "../models/review.interface";
 
 export const createGrantProposal: RequestHandler = async (req, res, next) => {
   try {
@@ -169,6 +170,37 @@ export const getTeamMembersProposals: RequestHandler = async (
     );
 
     return res.send(proposals);
+  } catch (e) {
+    next(e);
+  }
+};
+
+// update reviewText if writer already wrote review, else add new review to proposal
+export const updateOrAddReview: RequestHandler = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const { reviewText, writerEmail } = req.body;
+
+    const proposal = (await GrantProposalModel.findById(id))!;
+
+    const existingReview = proposal.reviews?.find(
+      (review) => review.writerEmail === writerEmail
+    );
+
+    if (existingReview) {
+      existingReview.reviewText = reviewText;
+    } else {
+      proposal.reviews = proposal.reviews ?? [];
+      const review: Review = { writerEmail, reviewText };
+      proposal.reviews.push(review);
+    }
+
+    const updatedProposal: GrantProposal =
+      (await GrantProposalModel.findByIdAndUpdate(id, proposal))!;
+
+    await proposal.save();
+    return res.send(updatedProposal);
   } catch (e) {
     next(e);
   }

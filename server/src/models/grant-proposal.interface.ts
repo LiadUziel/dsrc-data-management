@@ -2,6 +2,7 @@ import mongoose, { Schema } from "mongoose";
 import { User } from "./user.interface";
 import { TeamMember } from "./team-member.interface";
 import { BudgetPart } from "./budget-part.interface";
+import { Review } from "./review.interface";
 
 export interface GrantProposal {
   _id?: string;
@@ -41,7 +42,7 @@ export interface GrantProposal {
   uploadInnovationProject?: string;
   uploadTeam?: string;
   uploadBudget?: string;
-  uploadExternalFunding?: string; 
+  uploadExternalFunding?: string;
   uniqueFieldSeedResearch1?: string; // required if type === "SEED_RESEARCH"
   uniqueFieldSeedResearch2?: number; // optional
   budgetParts?: BudgetPart[];
@@ -56,6 +57,8 @@ export interface GrantProposal {
   teamMembers?: TeamMember[];
 
   customFields?: { [key: string]: string };
+
+  reviews: Review[];
 }
 
 const grantProposalSchema = new Schema<GrantProposal>(
@@ -85,12 +88,12 @@ const grantProposalSchema = new Schema<GrantProposal>(
     applicationDate: { type: Date, required: true },
 
     // DS_DOCTORAL / POST_DOCTORAL
-    uploadCV: { type: String},
-    uploadDescription:{ type: String},
-    uploadGradeTAndC: { type: String},
-    uploadWorkCommitment: { type: String},
-    uploadRecommendationLetter: { type: String},
-    uploadContactRecommenders: { type: String},
+    uploadCV: { type: String },
+    uploadDescription: { type: String },
+    uploadGradeTAndC: { type: String },
+    uploadWorkCommitment: { type: String },
+    uploadRecommendationLetter: { type: String },
+    uploadContactRecommenders: { type: String },
     uniqueFieldDsDoctoral1: { type: String },
     uniqueFieldDsDoctoral2: { type: Number },
 
@@ -115,7 +118,7 @@ const grantProposalSchema = new Schema<GrantProposal>(
     uploadInnovationProject: { type: String },
     uploadTeam: { type: String },
     uploadBudget: { type: String },
-    uploadExternalFunding: { type: String }, 
+    uploadExternalFunding: { type: String },
     uniqueFieldSeedResearch2: { type: Number },
     budgetParts: { type: [Object], default: undefined, required: false },
 
@@ -134,6 +137,8 @@ const grantProposalSchema = new Schema<GrantProposal>(
     teamMembers: { type: [Object], default: undefined, required: false },
 
     customFields: { type: Object, default: undefined, required: false },
+
+    reviews: { type: [Object], default: undefined, required: false },
   },
   { timestamps: true }
 );

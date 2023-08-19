@@ -9,6 +9,7 @@ import { GrantProposal } from 'src/app/shared/models/grant-proposal.interface';
 import { GrantProposalService } from 'src/app/shared/services/grant-proposal.service';
 import { GrantType } from '../manage-proposals/models/grant-type.enum';
 import { ProposalStatus } from '../manage-proposals/models/proposal-status.enum';
+import { ReviewDialogComponent } from 'src/app/shared/components/review-dialog/review-dialog.component';
 
 @Component({
   selector: 'app-reviewers-page',
@@ -82,6 +83,15 @@ export class ReviewersPageComponent {
   }
 
   openReviewDialog(proposal: GrantProposal) {
-    // TODO - implement
+    const ref = this.dialogService.open(ReviewDialogComponent, {
+      header: `Review For "${proposal.studyTitle}"`,
+      width: '60%',
+      data: { proposal },
+    });
+
+    // render table after dialog is closed
+    ref.onClose.subscribe(() => {
+      this.initProposals();
+    });
   }
 }

@@ -28,9 +28,16 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { PagesComponent } from '../pages/pages.component';
+import { ReviewDialogComponent } from './components/review-dialog/review-dialog.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [NavBarComponent, FooterComponent, PagesComponent],
+  declarations: [
+    NavBarComponent,
+    FooterComponent,
+    PagesComponent,
+    ReviewDialogComponent,
+  ],
   imports: [
     // ngx-toastr
     ToastrModule.forRoot({
@@ -39,6 +46,7 @@ import { PagesComponent } from '../pages/pages.component';
       progressAnimation: 'increasing',
       closeButton: true,
     }),
+    FormsModule,
 
     // primeng
     ButtonModule,

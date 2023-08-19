@@ -149,4 +149,22 @@ export class GrantProposalService {
       },
     });
   }
+
+  sendReview(proposalId: string, reviewText: string, writerEmail: string) {
+    const { href } = new URL(
+      `/api/grant-proposal/review/${proposalId}`,
+      this.apiUrl
+    );
+
+    const token = this.tokenService.getToken();
+    return this.http.patch<GrantProposal>(
+      href,
+      { reviewText, writerEmail },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+  }
 }

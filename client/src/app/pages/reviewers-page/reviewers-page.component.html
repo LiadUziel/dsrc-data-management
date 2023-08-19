@@ -114,13 +114,14 @@
         <td>{{ proposal.applicationDate | date }}</td>
         <td class="actions">
           <button
+            *ngIf="proposal.status === 'PENDING'"
             pButton
             pRipple
             type="button"
             class="p-button-link review-btn"
             (click)="openReviewDialog(proposal)"
           >
-            <label>Add Review</label>
+            <label>Send Review</label>
           </button>
         </td>
       </tr>
@@ -171,6 +172,22 @@
             >
               <b>{{ keyValuePair.key }}:</b>
               <p>{{ keyValuePair.value }}</p>
+            </div>
+          </div>
+
+          <div *ngIf="proposal.reviews?.length > 0" class="reviews">
+            <h3>Reviews:</h3>
+
+            <div *ngFor="let review of proposal.reviews" class="review">
+              <div class="field-wrapper">
+                <b>Writer Email: </b>
+                <span>{{ review.writerEmail }}</span>
+              </div>
+
+              <div class="field-wrapper">
+                <b>Review: </b>
+                <span>{{ review.reviewText }}</span>
+              </div>
             </div>
           </div>
 

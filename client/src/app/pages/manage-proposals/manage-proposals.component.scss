@@ -25,6 +25,10 @@ h1 {
     }
 
     tr.expanded-row {
+        h3 {
+            margin-top: 2rem
+        }
+
         td.expanded-cell {
             padding: 1rem 6rem;
 
@@ -46,6 +50,15 @@ h1 {
             width: 35%;
             margin: 0 4rem;
 
+        }
+
+
+
+        .reviews {
+
+            .review {
+                margin: 0.5rem 0 0.5rem 2rem;
+            }
         }
     }
 }
