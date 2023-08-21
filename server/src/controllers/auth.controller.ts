@@ -47,6 +47,7 @@ export const createUserDB: RequestHandler = async (req, res, next) => {
     let user: User = req.body;
 
     user = await initUserRoles(user);
+    await initFullName(user);
 
     const userDB = await UserModel.create(user);
 
@@ -326,4 +327,36 @@ async function initUserRoles(user: User) {
     }
   }
   return user;
+}
+
+// init full names in teamMembers and reviews if the email is exist in these proposals
+async function initFullName(user: User) {
+  const proposals = await GrantProposalModel.find();
+
+  for (const proposal of proposals) {
+    // proposal id if should update the document
+    let idForUpdate: string | null = null;
+
+    if (proposal.teamMembers) {
+      for (const member of proposal.teamMembers) {
+        if (member.memberEmail === user.email) {
+          idForUpdate = proposal._id;
+          member.fullName = `${user.firstName} ${user.lastName}`;
+        }
+      }
+    }
+
+    if (proposal.reviews) {
+      for (const review of proposal.reviews) {
+        if (review.writerEmail === user.email) {
+          idForUpdate = proposal._id;
+          review.fullName = `${user.firstName} ${user.lastName}`;
+        }
+      }
+    }
+
+    if (idForUpdate) {
+      await GrantProposalModel.findByIdAndUpdate(idForUpdate, proposal);
+    }
+  }
 }

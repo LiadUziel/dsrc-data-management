@@ -49,16 +49,14 @@ p.intro {
 
         table.team-members-table {
             width: 80%;
+            table-layout: fixed;
+            text-align: center;
             margin: 0 auto;
         }
 
-        table.budget-parts-table {
-            width: 35%;
-            margin: 0 4rem;
-
+        .budget-part {
+            margin: 0.5rem 2rem;
         }
-
-
 
         .reviews {
 

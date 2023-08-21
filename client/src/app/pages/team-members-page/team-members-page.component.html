@@ -124,10 +124,12 @@
             <table class="team-members-table">
               <tr>
                 <th>Member Email</th>
+                <th>Full Name</th>
                 <th>Member Role</th>
               </tr>
               <tr *ngFor="let member of proposal.teamMembers">
                 <td>{{ member.memberEmail }}</td>
+                <td>{{ member.fullName }}</td>
                 <td>{{ RoleEnum[member.memberRole] }}</td>
               </tr>
             </table>
@@ -135,16 +137,19 @@
 
           <div *ngIf="proposal.budgetParts && proposal.budgetParts.length > 0">
             <h3>Budget Parts:</h3>
-            <table class="budget-parts-table">
-              <tr>
-                <th>Reason</th>
-                <th>Amount</th>
-              </tr>
-              <tr *ngFor="let budgetPart of proposal.budgetParts">
-                <td>{{ budgetPart.reason }}</td>
-                <td>{{ budgetPart.amount | number }}</td>
-              </tr>
-            </table>
+            <div
+              *ngFor="let budgetPart of proposal.budgetParts"
+              class="budget-part"
+            >
+              <div class="field-wrapper">
+                <b>Reason: </b>
+                <span>{{ budgetPart.reason }}</span>
+              </div>
+              <div class="field-wrapper">
+                <b>Amount: </b>
+                <span>{{ budgetPart.amount | number }}</span>
+              </div>
+            </div>
             <b
               >Total Budget:
               {{ getTotalBudget(proposal.budgetParts) | number }}</b
@@ -170,6 +175,11 @@
               <div class="field-wrapper">
                 <b>Writer Email: </b>
                 <span>{{ review.writerEmail }}</span>
+              </div>
+
+              <div class="field-wrapper">
+                <b>Full Name: </b>
+                <span>{{ review.fullName }}</span>
               </div>
 
               <div class="field-wrapper">

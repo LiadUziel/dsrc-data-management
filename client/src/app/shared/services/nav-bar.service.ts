@@ -69,12 +69,12 @@ export class NavBarService {
       },
       {
         label: 'For Reviewer',
-        routerLink: 'reviewers', // TODO - change
+        routerLink: 'reviewers',
         visible: isLogged && isReviewer,
       },
       {
         label: 'For Team Members',
-        routerLink: 'team-members', // TODO - change
+        routerLink: 'team-members', // TODO - add full name in UI for team members and reviews in table
         visible: isLogged && isTeamMember,
       },
       {

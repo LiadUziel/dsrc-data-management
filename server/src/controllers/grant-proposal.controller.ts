@@ -28,6 +28,10 @@ export const createGrantProposal: RequestHandler = async (req, res, next) => {
     proposal.status = "PENDING";
     proposal.amountGiven = 0;
 
+    if (proposal.teamMembers?.length) {
+      proposal.teamMembers = await addFullName(proposal.teamMembers);
+    }
+
     const proposalDb = await GrantProposalModel.create(proposal);
 
     if (proposal.teamMembers?.length) {
@@ -192,7 +196,11 @@ export const updateOrAddReview: RequestHandler = async (req, res, next) => {
       existingReview.reviewText = reviewText;
     } else {
       proposal.reviews = proposal.reviews ?? [];
-      const review: Review = { writerEmail, reviewText };
+
+      // init full name
+      const user: User = (await UserModel.findOne({ email: writerEmail }))!;
+      const fullName = `${user.firstName} ${user.lastName}`;
+      const review: Review = { writerEmail, reviewText, fullName };
       proposal.reviews.push(review);
     }
 
@@ -214,6 +222,23 @@ async function addRolesByMembers(teamMembers: TeamMember[]) {
     const { memberRole: role, memberEmail: email } = member;
     await UserModel.findOneAndUpdate({ email }, { $addToSet: { roles: role } });
   }
+}
+
+// add full name to team members
+async function addFullName(teamMembers: TeamMember[]) {
+  for (const member of teamMembers) {
+    const user: User = (await UserModel.findOne({
+      email: member.memberEmail,
+    }))!;
+
+    if (user) {
+      member.fullName = `${user.firstName} ${user.lastName}`;
+    } else {
+      member.fullName = `User still doesn't exist in system`;
+    }
+  }
+
+  return teamMembers;
 }
 
 /**
