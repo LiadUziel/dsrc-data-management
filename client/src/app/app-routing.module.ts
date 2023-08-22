@@ -15,8 +15,10 @@ import { AdminAuthGuard } from './auth/services/admin-auth-guard';
 import { RenewPasswordComponent } from './pages/renew-password/renew-password.component';
 import { RenewPasswordLinkGuard } from './auth/services/renew-password-link.guard.service';
 import { VerificationRegistrationGuard } from './auth/services/verification-registration.guard.service';
-import { MyProposalsComponent } from './pages/my-proposals/my-proposals.component';
+import { SubmittedProposalsComponent } from './pages/submitted-proposals/submitted-proposals.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
+import { ReviewersPageComponent } from './pages/reviewers-page/reviewers-page.component';
+import { TeamMembersPageComponent } from './pages/team-members-page/team-members-page.component';
 
 const routes: Routes = [
   // TODO - fix routing and guard
@@ -36,8 +38,16 @@ const routes: Routes = [
     component: DatasetCollectionComponent,
   },
   {
-    path: 'my-proposals',
-    component: MyProposalsComponent,
+    path: 'submitted-proposals',
+    component: SubmittedProposalsComponent,
+  },
+  {
+    path: 'reviewers',
+    component: ReviewersPageComponent,
+  },
+  {
+    path: 'team-members',
+    component: TeamMembersPageComponent,
   },
 
   {

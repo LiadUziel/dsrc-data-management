@@ -3,7 +3,9 @@ export interface User {
   lastName: string;
   email: string;
   isLogged: boolean;
-  role: string;
+  roles: Role[];
   iat: number;
   exp: number;
 }
+
+export type Role = 'submitter' | 'admin' | 'reviewer' | 'teamMember';

@@ -1,6 +1,7 @@
 import { User } from 'src/app/auth/interfaces/user-interface';
 import { TeamMember } from './team-member.interface';
 import { BudgetPart } from './budget-part.interface';
+import { Review } from './review.interface';
 
 export interface GrantProposal {
   _id?: string;
@@ -42,7 +43,7 @@ export interface GrantProposal {
   uploadInnovationProject?: string;
   uploadTeam?: string;
   uploadBudget?: string;
-  uploadExternalFunding?: string; 
+  uploadExternalFunding?: string;
   uniqueFieldSeedResearch1?: string; // required if type === "SEED_RESEARCH"
   uniqueFieldSeedResearch2?: number; // optional
   budgetParts?: BudgetPart[];
@@ -57,4 +58,6 @@ export interface GrantProposal {
   teamMembers: TeamMember[];
 
   customFields?: { [key: string]: string };
+
+  reviews: Review[];
 }

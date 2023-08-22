@@ -1,5 +1,8 @@
-<h1>Manage Proposals</h1>
-
+<h1>Reviewers Page</h1>
+<p class="intro">
+  On this page you see the grant proposals you are reviewing. You can add your
+  review and edit it.
+</p>
 <div class="table-wrapper">
   <p-table
     [value]="proposals$ | async"
@@ -18,7 +21,6 @@
     [showCurrentPageReport]="true"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
     styleClass="p-datatable-striped"
-    [columns]="cols"
   >
     <ng-template pTemplate="caption">
       <div class="caption">
@@ -33,16 +35,6 @@
             placeholder="Search keyword"
           />
         </span>
-        <button
-          type="button"
-          pButton
-          pRipple
-          icon="pi pi-file-excel"
-          (click)="proposalTable.exportCSV()"
-          class="p-button-success"
-          pTooltip="Export CSV"
-          tooltipPosition="bottom"
-        ></button>
       </div>
     </ng-template>
     <ng-template pTemplate="header">
@@ -122,24 +114,15 @@
         <td>{{ proposal.applicationDate | date }}</td>
         <td class="actions">
           <button
+            *ngIf="proposal.status === 'PENDING'"
             pButton
             pRipple
             type="button"
-            class="p-button-rounded p-button-text manage-fields-btn"
-            (click)="openCustomFieldsDialog(proposal)"
+            class="p-button-link review-btn"
+            (click)="openReviewDialog(proposal)"
           >
-            <img src="\assets\puzzle-piece.svg" alt="" height="25px" />
-            <label>Manage Custom Fields</label>
+            <label>Send Review</label>
           </button>
-
-          <button
-            pButton
-            pRipple
-            type="button"
-            class="p-button-rounded p-button-text"
-            label="Update Status"
-            (click)="openUpdateStatusDialog(proposal)"
-          ></button>
         </td>
       </tr>
     </ng-template>
@@ -458,5 +441,3 @@
     </ng-template>
   </p-table>
 </div>
-
-<pre>{{ proposals$ | async | json }}</pre>

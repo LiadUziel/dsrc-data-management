@@ -1,10 +1,21 @@
-<h1>My Proposals</h1>
+<h1>Team Members Page</h1>
+
+<p class="intro">
+  On this page you can view the grant proposals in which you are a team member
+</p>
 
 <div class="table-wrapper">
   <p-table
     [value]="proposals$ | async"
     #proposalTable
-    [globalFilterFields]="['type', 'department', 'studyTitle']"
+    [globalFilterFields]="[
+      'type',
+      'user.firstName',
+      'user.lastName',
+      'user.email',
+      'department',
+      'studyTitle'
+    ]"
     dataKey="_id"
     [paginator]="true"
     [rows]="10"
@@ -33,6 +44,18 @@
         <th pSortableColumn="type">
           <div>Grant Type</div>
           <p-sortIcon field="type"></p-sortIcon>
+        </th>
+        <th pSortableColumn="user.firstName">
+          <div>First Name</div>
+          <p-sortIcon field="user.firstName"></p-sortIcon>
+        </th>
+        <th pSortableColumn="user.lastName">
+          <div>Last Name</div>
+          <p-sortIcon field="user.lastName"></p-sortIcon>
+        </th>
+        <th pSortableColumn="user.email">
+          <div>Email</div>
+          <p-sortIcon field="user.email"></p-sortIcon>
         </th>
         <th pSortableColumn="department">
           <div>Department</div>
@@ -70,6 +93,9 @@
         </td>
 
         <td>{{ GrantTypeEnum[proposal.type] }}</td>
+        <td>{{ proposal.user.firstName }}</td>
+        <td>{{ proposal.user.lastName }}</td>
+        <td>{{ proposal.user.email }}</td>
         <td>{{ proposal.department }}</td>
         <td>{{ proposal.studyTitle }}</td>
         <td>{{ proposal.amountRequested | number }}₪</td>
@@ -97,32 +123,33 @@
             <h3>Team Members:</h3>
             <table class="team-members-table">
               <tr>
-                <th>Member Name</th>
                 <th>Member Email</th>
-                <th>Member Department</th>
+                <th>Full Name</th>
                 <th>Member Role</th>
               </tr>
               <tr *ngFor="let member of proposal.teamMembers">
-                <td>{{ member.memberName }}</td>
                 <td>{{ member.memberEmail }}</td>
-                <td>{{ member.memberDepartment }}</td>
-                <td>{{ member.memberRole }}</td>
+                <td>{{ member.fullName }}</td>
+                <td>{{ RoleEnum[member.memberRole] }}</td>
               </tr>
             </table>
           </div>
 
           <div *ngIf="proposal.budgetParts && proposal.budgetParts.length > 0">
             <h3>Budget Parts:</h3>
-            <table class="budget-parts-table">
-              <tr>
-                <th>Reason</th>
-                <th>Amount</th>
-              </tr>
-              <tr *ngFor="let budgetPart of proposal.budgetParts">
-                <td>{{ budgetPart.reason }}</td>
-                <td>{{ budgetPart.amount | number }}</td>
-              </tr>
-            </table>
+            <div
+              *ngFor="let budgetPart of proposal.budgetParts"
+              class="budget-part"
+            >
+              <div class="field-wrapper">
+                <b>Reason: </b>
+                <span>{{ budgetPart.reason }}</span>
+              </div>
+              <div class="field-wrapper">
+                <b>Amount: </b>
+                <span>{{ budgetPart.amount | number }}</span>
+              </div>
+            </div>
             <b
               >Total Budget:
               {{ getTotalBudget(proposal.budgetParts) | number }}</b
@@ -138,6 +165,27 @@
             >
               <b>{{ keyValuePair.key }}:</b>
               <p>{{ keyValuePair.value }}</p>
+            </div>
+          </div>
+
+          <div *ngIf="proposal.reviews?.length > 0" class="reviews">
+            <h3>Reviews:</h3>
+
+            <div *ngFor="let review of proposal.reviews" class="review">
+              <div class="field-wrapper">
+                <b>Writer Email: </b>
+                <span>{{ review.writerEmail }}</span>
+              </div>
+
+              <div class="field-wrapper">
+                <b>Full Name: </b>
+                <span>{{ review.fullName }}</span>
+              </div>
+
+              <div class="field-wrapper">
+                <b>Review: </b>
+                <span>{{ review.reviewText }}</span>
+              </div>
             </div>
           </div>
 

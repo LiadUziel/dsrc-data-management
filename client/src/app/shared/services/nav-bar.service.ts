@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Role } from 'src/app/auth/interfaces/user-interface';
 import { AuthService } from 'src/app/auth/services/auth.service';
 
 @Injectable({
@@ -7,7 +8,10 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 export class NavBarService {
   constructor(private authService: AuthService) {}
 
-  getItems(isLogged: boolean, role: string) {
+  getItems(isLogged: boolean, roles: Role[]) {
+    const isAdmin = roles.includes('admin');
+    const isReviewer = roles.includes('reviewer');
+    const isTeamMember = roles.includes('teamMember');
     return [
       {
         label: 'DSRC Data Management',
@@ -52,16 +56,26 @@ export class NavBarService {
         ],
       },
       {
-        label: 'My Proposals',
+        label: 'Submitted Proposals',
         icon: 'pi pi-fw pi-list',
-        routerLink: 'my-proposals',
-        visible: isLogged && role !== 'admin',
+        routerLink: 'submitted-proposals',
+        visible: isLogged && !isAdmin,
       },
       {
         label: 'Manage Proposals',
         icon: 'pi pi-wrench',
         routerLink: 'manage-proposals',
-        visible: isLogged && role === 'admin',
+        visible: isLogged && isAdmin,
+      },
+      {
+        label: 'For Reviewer',
+        routerLink: 'reviewers',
+        visible: isLogged && isReviewer,
+      },
+      {
+        label: 'For Team Members',
+        routerLink: 'team-members', // TODO - add full name in UI for team members and reviews in table
+        visible: isLogged && isTeamMember,
       },
       {
         label: 'Log Out',

@@ -3,6 +3,12 @@ h1 {
     margin-bottom: 2rem;
 }
 
+p.intro {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #707070;
+}
+
 .table-wrapper {
     max-width: 90vw;
 
@@ -25,6 +31,10 @@ h1 {
     }
 
     tr.expanded-row {
+        h3 {
+            margin-top: 2rem
+        }
+
         td.expanded-cell {
             padding: 1rem 6rem;
 
@@ -39,13 +49,20 @@ h1 {
 
         table.team-members-table {
             width: 80%;
+            table-layout: fixed;
+            text-align: center;
             margin: 0 auto;
         }
 
-        table.budget-parts-table {
-            width: 35%;
-            margin: 0 4rem;
+        .budget-part {
+            margin: 0.5rem 2rem;
+        }
 
+        .reviews {
+
+            .review {
+                margin: 0.5rem 0 0.5rem 2rem;
+            }
         }
     }
 }

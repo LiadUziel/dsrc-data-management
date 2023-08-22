@@ -3,8 +3,11 @@ import {
   GrantProposal,
   GrantProposalModel,
 } from "../models/grant-proposal.interface";
-import { User, UserModel } from "../models/user.interface";
+import { Role, User, UserModel } from "../models/user.interface";
 import { NewFieldRaw } from "../models/new-field-raw.interface";
+import { TeamMember } from "../models/team-member.interface";
+import { departments } from "../utils/depratments";
+import { Review } from "../models/review.interface";
 
 export const createGrantProposal: RequestHandler = async (req, res, next) => {
   try {
@@ -25,7 +28,15 @@ export const createGrantProposal: RequestHandler = async (req, res, next) => {
     proposal.status = "PENDING";
     proposal.amountGiven = 0;
 
+    if (proposal.teamMembers?.length) {
+      proposal.teamMembers = await addFullName(proposal.teamMembers);
+    }
+
     const proposalDb = await GrantProposalModel.create(proposal);
+
+    if (proposal.teamMembers?.length) {
+      addRolesByMembers(proposal.teamMembers);
+    }
 
     return res.status(201).send(proposalDb);
   } catch (e) {
@@ -127,3 +138,119 @@ export const updateProposalStatus: RequestHandler = async (req, res, next) => {
     next(e);
   }
 };
+
+export const getDepartments: RequestHandler = (req, res, next) => {
+  return res.send(departments);
+};
+
+// get proposals that the logged user is reviewer in them
+export const getReviewersProposals: RequestHandler = async (req, res, next) => {
+  try {
+    const email = req.authUser?.email!;
+
+    const proposals: GrantProposal[] = await findProposalsByRole(
+      email,
+      "reviewer"
+    );
+
+    return res.send(proposals);
+  } catch (e) {
+    next(e);
+  }
+};
+
+// get proposals that the logged user is teamMember in them
+export const getTeamMembersProposals: RequestHandler = async (
+  req,
+  res,
+  next
+) => {
+  try {
+    const email = req.authUser?.email!;
+
+    const proposals: GrantProposal[] = await findProposalsByRole(
+      email,
+      "teamMember"
+    );
+
+    return res.send(proposals);
+  } catch (e) {
+    next(e);
+  }
+};
+
+// update reviewText if writer already wrote review, else add new review to proposal
+export const updateOrAddReview: RequestHandler = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const { reviewText, writerEmail } = req.body;
+
+    const proposal = (await GrantProposalModel.findById(id))!;
+
+    const existingReview = proposal.reviews?.find(
+      (review) => review.writerEmail === writerEmail
+    );
+
+    if (existingReview) {
+      existingReview.reviewText = reviewText;
+    } else {
+      proposal.reviews = proposal.reviews ?? [];
+
+      // init full name
+      const user: User = (await UserModel.findOne({ email: writerEmail }))!;
+      const fullName = `${user.firstName} ${user.lastName}`;
+      const review: Review = { writerEmail, reviewText, fullName };
+      proposal.reviews.push(review);
+    }
+
+    const updatedProposal: GrantProposal =
+      (await GrantProposalModel.findByIdAndUpdate(id, proposal))!;
+
+    await proposal.save();
+    return res.send(updatedProposal);
+  } catch (e) {
+    next(e);
+  }
+};
+
+/**
+ * Adding roles to the user when a new proposal is created if necessary
+ */
+async function addRolesByMembers(teamMembers: TeamMember[]) {
+  for (const member of teamMembers) {
+    const { memberRole: role, memberEmail: email } = member;
+    await UserModel.findOneAndUpdate({ email }, { $addToSet: { roles: role } });
+  }
+}
+
+// add full name to team members
+async function addFullName(teamMembers: TeamMember[]) {
+  for (const member of teamMembers) {
+    const user: User = (await UserModel.findOne({
+      email: member.memberEmail,
+    }))!;
+
+    if (user) {
+      member.fullName = `${user.firstName} ${user.lastName}`;
+    } else {
+      member.fullName = `User still doesn't exist in system`;
+    }
+  }
+
+  return teamMembers;
+}
+
+/**
+ *
+ * @param email
+ * @param role 'reviewer' | 'teamMember'
+ * @returns the proposals that email user is team member by the given role
+ */
+async function findProposalsByRole(email: string, role: Role) {
+  const proposals: GrantProposal[] = await GrantProposalModel.find({
+    "teamMembers.memberEmail": email,
+    "teamMembers.memberRole": role,
+  }).populate("user", "firstName lastName email -_id");
+  return proposals;
+}
