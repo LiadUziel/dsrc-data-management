@@ -4,6 +4,7 @@ import { GrantProposal } from '../models/grant-proposal.interface';
 import { HttpClient } from '@angular/common/http';
 import { TokenStorageService } from 'src/app/auth/services/token-storage.service';
 import { CustomFieldRaw } from '../models/new-field-raw.interface';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -100,6 +101,65 @@ export class GrantProposalService {
     return this.http.patch<GrantProposal>(
       href,
       { status, amountGiven },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+  }
+
+  getDepartments() {
+    const { href } = new URL('/api/grant-proposal/departments', this.apiUrl);
+
+    const token = this.tokenService.getToken();
+    return this.http
+      .get<string[]>(href, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .pipe(
+        map((departments) =>
+          departments.map((department) => ({
+            name: department,
+          }))
+        )
+      );
+  }
+
+  getReviewerProposals() {
+    const { href } = new URL('/api/grant-proposal/reviewer', this.apiUrl);
+
+    const token = this.tokenService.getToken();
+    return this.http.get<GrantProposal[]>(href, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+
+  getTeamMemberProposals() {
+    const { href } = new URL('/api/grant-proposal/team-member', this.apiUrl);
+
+    const token = this.tokenService.getToken();
+    return this.http.get<GrantProposal[]>(href, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+
+  sendReview(proposalId: string, reviewText: string, writerEmail: string) {
+    const { href } = new URL(
+      `/api/grant-proposal/review/${proposalId}`,
+      this.apiUrl
+    );
+
+    const token = this.tokenService.getToken();
+    return this.http.patch<GrantProposal>(
+      href,
+      { reviewText, writerEmail },
       {
         headers: {
           Authorization: `Bearer ${token}`,

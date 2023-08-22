@@ -5,6 +5,7 @@ import { TokenStorageService } from './token-storage.service';
 import { Observable, Subject, filter, map, of } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { User } from '../interfaces/user-interface';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,8 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private tokenService: TokenStorageService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) {}
 
   login(email: string, password: string, rememberMe: boolean) {
@@ -112,7 +114,7 @@ export class AuthService {
     this.gonnaLogIn$.next(false);
     this.tokenService.removeToken();
     this.toastr.show('Logout successful!');
-    // TODO - navigate to home page
+    this.router.navigate(['/home']);
   }
 
   sendVerifyRegisterEmail(
@@ -130,5 +132,29 @@ export class AuthService {
     };
     const req = { userData, emailConfig };
     return this.http.post(this.apiUrl + '/sendVerifyRegisterEmail', req);
+  }
+
+  // get the logged in user
+  getLoggedUser() {
+    const { href } = new URL('/api/auth/me', this.apiUrl);
+    const token = this.tokenService.getToken();
+
+    return this.http.get<User>(href, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+
+  // get all users except logged user
+  getUsers() {
+    const { href } = new URL('/api/auth/users', this.apiUrl);
+    const token = this.tokenService.getToken();
+
+    return this.http.get<User[]>(href, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   }
 }

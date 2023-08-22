@@ -1,24 +1,20 @@
-<h1>Manage Proposals</h1>
+<h1>My Submitted Proposals</h1>
+
+<p class="intro">
+  On this page you can view the grant proposals you have submitted.
+</p>
 
 <div class="table-wrapper">
   <p-table
     [value]="proposals$ | async"
     #proposalTable
-    [globalFilterFields]="[
-      'type',
-      'user.firstName',
-      'user.lastName',
-      'user.email',
-      'department',
-      'studyTitle'
-    ]"
+    [globalFilterFields]="['type', 'department', 'studyTitle']"
     dataKey="_id"
     [paginator]="true"
     [rows]="10"
     [showCurrentPageReport]="true"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
     styleClass="p-datatable-striped"
-    [columns]="cols"
   >
     <ng-template pTemplate="caption">
       <div class="caption">
@@ -33,16 +29,6 @@
             placeholder="Search keyword"
           />
         </span>
-        <button
-          type="button"
-          pButton
-          pRipple
-          icon="pi pi-file-excel"
-          (click)="proposalTable.exportCSV()"
-          class="p-button-success"
-          pTooltip="Export CSV"
-          tooltipPosition="bottom"
-        ></button>
       </div>
     </ng-template>
     <ng-template pTemplate="header">
@@ -51,18 +37,6 @@
         <th pSortableColumn="type">
           <div>Grant Type</div>
           <p-sortIcon field="type"></p-sortIcon>
-        </th>
-        <th pSortableColumn="user.firstName">
-          <div>First Name</div>
-          <p-sortIcon field="user.firstName"></p-sortIcon>
-        </th>
-        <th pSortableColumn="user.lastName">
-          <div>Last Name</div>
-          <p-sortIcon field="user.lastName"></p-sortIcon>
-        </th>
-        <th pSortableColumn="user.email">
-          <div>Email</div>
-          <p-sortIcon field="user.email"></p-sortIcon>
         </th>
         <th pSortableColumn="department">
           <div>Department</div>
@@ -84,7 +58,6 @@
           <div>Application Date</div>
           <p-sortIcon field="applicationDate"></p-sortIcon>
         </th>
-        <th>Actions</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-proposal let-expanded="expanded">
@@ -101,9 +74,6 @@
         </td>
 
         <td>{{ GrantTypeEnum[proposal.type] }}</td>
-        <td>{{ proposal.user.firstName }}</td>
-        <td>{{ proposal.user.lastName }}</td>
-        <td>{{ proposal.user.email }}</td>
         <td>{{ proposal.department }}</td>
         <td>{{ proposal.studyTitle }}</td>
         <td>{{ proposal.amountRequested | number }}₪</td>
@@ -120,35 +90,6 @@
           </div>
         </td>
         <td>{{ proposal.applicationDate | date }}</td>
-        <td class="actions">
-          <button
-            pButton
-            pRipple
-            type="button"
-            class="p-button-rounded p-button-text manage-fields-btn"
-            (click)="openCustomFieldsDialog(proposal)"
-          >
-            <img src="\assets\puzzle-piece.svg" alt="" height="25px" />
-            <label>Manage Custom Fields</label>
-          </button>
-
-          <button
-            pButton
-            pRipple
-            type="button"
-            class="p-button-rounded p-button-text"
-            label="Update Status"
-            (click)="openUpdateStatusDialog(proposal)"
-          ></button>
-          <button
-            pButton
-            pRipple
-            type="button"
-            class="p-button-rounded p-button-text"
-            label="Watch proposal products"
-            (click)="navigateToProposalProducts(proposal)"
-          ></button>
-        </td>
       </tr>
     </ng-template>
 
@@ -466,5 +407,3 @@
     </ng-template>
   </p-table>
 </div>
-
-<pre>{{ proposals$ | async | json }}</pre>

@@ -1,4 +1,8 @@
-<h1>Manage Proposals</h1>
+<h1>Team Members Page</h1>
+
+<p class="intro">
+  On this page you can view the grant proposals in which you are a team member
+</p>
 
 <div class="table-wrapper">
   <p-table
@@ -18,7 +22,6 @@
     [showCurrentPageReport]="true"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
     styleClass="p-datatable-striped"
-    [columns]="cols"
   >
     <ng-template pTemplate="caption">
       <div class="caption">
@@ -33,16 +36,6 @@
             placeholder="Search keyword"
           />
         </span>
-        <button
-          type="button"
-          pButton
-          pRipple
-          icon="pi pi-file-excel"
-          (click)="proposalTable.exportCSV()"
-          class="p-button-success"
-          pTooltip="Export CSV"
-          tooltipPosition="bottom"
-        ></button>
       </div>
     </ng-template>
     <ng-template pTemplate="header">
@@ -84,7 +77,6 @@
           <div>Application Date</div>
           <p-sortIcon field="applicationDate"></p-sortIcon>
         </th>
-        <th>Actions</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-proposal let-expanded="expanded">
@@ -120,35 +112,6 @@
           </div>
         </td>
         <td>{{ proposal.applicationDate | date }}</td>
-        <td class="actions">
-          <button
-            pButton
-            pRipple
-            type="button"
-            class="p-button-rounded p-button-text manage-fields-btn"
-            (click)="openCustomFieldsDialog(proposal)"
-          >
-            <img src="\assets\puzzle-piece.svg" alt="" height="25px" />
-            <label>Manage Custom Fields</label>
-          </button>
-
-          <button
-            pButton
-            pRipple
-            type="button"
-            class="p-button-rounded p-button-text"
-            label="Update Status"
-            (click)="openUpdateStatusDialog(proposal)"
-          ></button>
-          <button
-            pButton
-            pRipple
-            type="button"
-            class="p-button-rounded p-button-text"
-            label="Watch proposal products"
-            (click)="navigateToProposalProducts(proposal)"
-          ></button>
-        </td>
       </tr>
     </ng-template>
 
@@ -466,5 +429,3 @@
     </ng-template>
   </p-table>
 </div>
-
-<pre>{{ proposals$ | async | json }}</pre>

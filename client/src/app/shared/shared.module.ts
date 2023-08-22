@@ -16,6 +16,8 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { TagModule } from 'primeng/tag';
+import { DropdownModule } from 'primeng/dropdown';
+import { TabViewModule } from 'primeng/tabview';
 import { ListboxModule } from 'primeng/listbox';
 
 // ngx-toastr
@@ -29,10 +31,17 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { PagesComponent } from '../pages/pages.component';
+import { ReviewDialogComponent } from './components/review-dialog/review-dialog.component';
+import { FormsModule } from '@angular/forms';
 import { MultiFieldComponent } from './components/multi-field/multi-field.component';
 
 @NgModule({
-  declarations: [NavBarComponent, FooterComponent, PagesComponent, MultiFieldComponent],
+  declarations: [
+    NavBarComponent,
+    FooterComponent,
+    PagesComponent,
+    ReviewDialogComponent,
+    MultiFieldComponent],
   imports: [
     // ngx-toastr
     ToastrModule.forRoot({
@@ -41,6 +50,7 @@ import { MultiFieldComponent } from './components/multi-field/multi-field.compon
       progressAnimation: 'increasing',
       closeButton: true,
     }),
+    FormsModule,
 
     // primeng
     ButtonModule,
@@ -56,6 +66,8 @@ import { MultiFieldComponent } from './components/multi-field/multi-field.compon
     DynamicDialogModule,
     RadioButtonModule,
     TagModule,
+    DropdownModule,
+    TabViewModule,
     ListboxModule,
     //materials
     MatPasswordStrengthModule,
@@ -78,6 +90,8 @@ import { MultiFieldComponent } from './components/multi-field/multi-field.compon
     DynamicDialogModule,
     RadioButtonModule,
     TagModule,
+    DropdownModule,
+    TabViewModule,
     ListboxModule,
     // materials
     MatPasswordStrengthModule,

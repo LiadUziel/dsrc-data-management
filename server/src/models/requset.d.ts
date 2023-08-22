@@ -6,7 +6,7 @@ declare global {
       authUser?: {
         email: string;
         isLogged: boolean;
-        role: string;
+        roles: string[];
       };
       data?: object;
     }

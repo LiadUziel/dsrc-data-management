@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Role } from 'src/app/auth/interfaces/user-interface';
 import { AuthService } from 'src/app/auth/services/auth.service';
 
 @Injectable({
@@ -7,7 +8,10 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 export class NavBarService {
   constructor(private authService: AuthService) {}
 
-  getItems(isLogged: boolean, role: string) {
+  getItems(isLogged: boolean, roles: Role[]) {
+    const isAdmin = roles.includes('admin');
+    const isReviewer = roles.includes('reviewer');
+    const isTeamMember = roles.includes('teamMember');
     return [
       {
         label: 'DSRC Data Management',
@@ -16,7 +20,7 @@ export class NavBarService {
       {
         label: 'Home',
         icon: 'pi pi-fw pi-home',
-        routerLink: 'login',
+        routerLink: 'home',
       },
       {
         label: 'Sign Up',
@@ -60,22 +64,33 @@ export class NavBarService {
       {
         label: 'My Submissions',
         icon: 'pi pi-fw pi-list',
-        visible: isLogged && role !== 'admin',
+        visible: isLogged && !isAdmin,
         items: [
           {
             label: 'My proposals',
-            routerLink: 'my-proposals',
+            routerLink: 'submitted-proposals',
           },
           {
             label: 'My products',
             routerLink: 'my-products',
+          },
+          {
+            label: 'Proposals to review',
+            routerLink: 'reviewers',
+            visible: isLogged && isReviewer,
+          },
+
+          {
+            label: 'Proposals I am a Team Member',
+            routerLink: 'team-members', 
+            visible: isLogged && isTeamMember,
           },
         ]
       },
       {
         label: 'Management',
         icon: 'pi pi-wrench',
-        visible: isLogged && role === 'admin',
+        visible: isLogged && isAdmin,
         items: [
           {
             label:'Manage Proposals',

@@ -19,4 +19,8 @@
             width: 100%;
         }
     }
+
+    ::ng-deep.department {
+        width: 100%;
+    }
 }

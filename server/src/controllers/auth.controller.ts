@@ -1,11 +1,15 @@
 import { RequestHandler } from "express";
-import { User, UserModel } from "../models/user.interface";
+import { Role, User, UserModel } from "../models/user.interface";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { Config } from "../config/config";
-import * as nodemailer  from 'nodemailer';
+import * as nodemailer from "nodemailer";
 import Mailgen from "mailgen";
 import { Mail } from "../models/mail.interface";
+import {
+  GrantProposal,
+  GrantProposalModel,
+} from "../models/grant-proposal.interface";
 
 // use this middleware to hash password before saving to db
 export const hashPasswordMiddleware: RequestHandler = async (
@@ -40,7 +44,10 @@ export const hashPasswordMiddleware: RequestHandler = async (
 // create user in db
 export const createUserDB: RequestHandler = async (req, res, next) => {
   try {
-    const user: User = req.body;
+    let user: User = req.body;
+
+    user = await initUserRoles(user);
+    await initFullName(user);
 
     const userDB = await UserModel.create(user);
 
@@ -76,7 +83,7 @@ export const login: RequestHandler = async (req, res, next) => {
 
     // generate a jwt
     const token = jwt.sign(
-      { email: user.email, isLogged: true, role: user.role },
+      { email: user.email, isLogged: true, roles: user.roles },
       Config.JWT_SECRET_KEY,
       { expiresIn }
     );
@@ -100,8 +107,8 @@ export const authorizeMiddleware: RequestHandler = async (req, res, next) => {
     // extract the token from authHeader
     const token = authHeader.split(" ")[1];
     const jwtData = jwt.verify(token, Config.JWT_SECRET_KEY);
-    const { email, isLogged, role } = jwtData;
-    req.authUser = { email, isLogged, role };
+    const { email, isLogged, roles } = jwtData;
+    req.authUser = { email, isLogged, roles };
     next();
   } catch (e) {
     next(e);
@@ -110,9 +117,9 @@ export const authorizeMiddleware: RequestHandler = async (req, res, next) => {
 
 export const isAdminMiddleware: RequestHandler = async (req, res, next) => {
   try {
-    const role = req.authUser?.role;
+    const roles = req.authUser?.roles;
 
-    if (role !== 'admin') {
+    if (!roles?.includes("admin")) {
       return res
         .status(403)
         .send({ status: 403, error: "You are not authorized" });
@@ -124,9 +131,13 @@ export const isAdminMiddleware: RequestHandler = async (req, res, next) => {
   }
 };
 
-export const validateEmailMiddleware: RequestHandler = async(req, res, next) => {
+export const validateEmailMiddleware: RequestHandler = async (
+  req,
+  res,
+  next
+) => {
   try {
-    const { email } = req.body.userData? req.body.userData : req.body;
+    const { email } = req.body.userData ? req.body.userData : req.body;
 
     // get user from db
     const user = await UserModel.findOne({ email });
@@ -136,36 +147,36 @@ export const validateEmailMiddleware: RequestHandler = async(req, res, next) => 
       return res.status(400).send({ status: 400, message: "Invalid email" });
     }
     next();
-  } catch(e) {
+  } catch (e) {
     next(e);
   }
-}
+};
 
 export const verifyJwtMiddleware: RequestHandler = async (req, res, next) => {
   try {
-      const authHeader = req.headers.authorization;
-      if (!authHeader) {
-        return res
-          .status(401)
-          .send({ status: 401, error: "Missing authorization header" });
-      }
-  
-      // extract the token from authHeader
-      const token = authHeader.split(" ")[1];
-      const jwtData = jwt.verify(token, Config.JWT_SECRET_KEY);
-      res.send({result: 'verified!', user: jwtData});
-  }
-  catch(e) {
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+      return res
+        .status(401)
+        .send({ status: 401, error: "Missing authorization header" });
+    }
+
+    // extract the token from authHeader
+    const token = authHeader.split(" ")[1];
+    const jwtData = jwt.verify(token, Config.JWT_SECRET_KEY);
+    res.send({ result: "verified!", user: jwtData });
+  } catch (e) {
     next(e);
-
   }
-
-}
+};
 
 export const updateUserDB: RequestHandler = async (req, res, next) => {
   try {
     const user: User = req.body;
-    const userDB = await UserModel.updateOne({email: user.email}, {password: user.password}).exec();
+    const userDB = await UserModel.updateOne(
+      { email: user.email },
+      { password: user.password }
+    ).exec();
 
     res.send(user);
   } catch (e) {
@@ -173,55 +184,53 @@ export const updateUserDB: RequestHandler = async (req, res, next) => {
   }
 };
 
-export const sendEmailWithLinkMiddleware: RequestHandler = async(req, res, next) => {
+export const sendEmailWithLinkMiddleware: RequestHandler = async (
+  req,
+  res,
+  next
+) => {
   try {
     /*req = {UserData, emailConfig}*/
     const user: User = req.body.userData;
     const mailToUser: Mail = req.body.emailConfig;
     const config = {
-      service: 'gmail',
+      service: "gmail",
       auth: {
         user: Config.NODEMAILER_USER,
-        pass: Config.NODEMAILER_PASS
-      }
+        pass: Config.NODEMAILER_PASS,
+      },
     };
     const transporter = nodemailer.createTransport(config);
     const mailGenerator = new Mailgen({
       theme: "default",
       product: {
-        name: 'DSRC - university of haifa',
-        link: 'https://mailgen.js/'
-      }
+        name: "DSRC - university of haifa",
+        link: "https://mailgen.js/",
+      },
     });
 
     const expiresIn = "5m";
-    let token = jwt.sign(
-      { user: user},
-      Config.JWT_SECRET_KEY,
-      { expiresIn }
-    );
-      
-    while(token.indexOf('?') > -1) {
-      token = jwt.sign(
-        { user: user},
-        Config.JWT_SECRET_KEY,
-        { expiresIn }
-      );
+    let token = jwt.sign({ user: user }, Config.JWT_SECRET_KEY, { expiresIn });
+
+    while (token.indexOf("?") > -1) {
+      token = jwt.sign({ user: user }, Config.JWT_SECRET_KEY, { expiresIn });
     }
-                      
+
     const linkToSend = Config.FRONTEND_URL + mailToUser.url + token;
 
     const mailContent = {
       body: {
-        name:'',
+        name: "",
         intro: mailToUser.content,
         table: {
-          data: [{
-            link: `<a href="${linkToSend}">${linkToSend}</a>` 
-          }]
+          data: [
+            {
+              link: `<a href="${linkToSend}">${linkToSend}</a>`,
+            },
+          ],
         },
-        outro: ""
-      }
+        outro: "",
+      },
     };
 
     const mail = mailGenerator.generate(mailContent);
@@ -229,18 +238,22 @@ export const sendEmailWithLinkMiddleware: RequestHandler = async(req, res, next)
       from: Config.NODEMAILER_USER,
       to: user.email,
       subject: mailToUser.subject,
-      html: mail
+      html: mail,
     };
 
     transporter.sendMail(mailOptions).then(() => {
-      res.send({token: token});
+      res.send({ token: token });
     });
-} catch (e) {
-  next(e);
-}
+  } catch (e) {
+    next(e);
+  }
 };
 
-export const validateEmailNotExistMiddleware: RequestHandler = async(req, res, next) => {
+export const validateEmailNotExistMiddleware: RequestHandler = async (
+  req,
+  res,
+  next
+) => {
   try {
     const { email } = req.body.userData;
 
@@ -249,10 +262,101 @@ export const validateEmailNotExistMiddleware: RequestHandler = async(req, res, n
 
     // bad request if user exists
     if (user) {
-      return res.status(400).send({ status: 400, message: "email already exists at the system" });
+      return res
+        .status(400)
+        .send({ status: 400, message: "email already exists at the system" });
     }
     next();
-  } catch(e) {
+  } catch (e) {
     next(e);
   }
 };
+
+// get details of logged user
+export const getLoggedUser: RequestHandler = async (req, res, next) => {
+  try {
+    const { email } = req.authUser!;
+
+    // get user from db
+    const user: User = (await UserModel.findOne(
+      { email },
+      "firstName lastName email roles -_id"
+    ))!;
+
+    return res.send(user);
+  } catch (e) {
+    next(e);
+  }
+};
+
+// get all users except the logged in user
+export const getUsers: RequestHandler = async (req, res, next) => {
+  try {
+    const { email } = req.authUser!;
+
+    // get user from db
+    const users: User[] = (await UserModel.find(
+      { email: { $ne: email } },
+      "firstName lastName email roles -_id"
+    ))!;
+
+    return res.send(users);
+  } catch (e) {
+    next(e);
+  }
+};
+
+/**
+ * Initialization of roles of a new registered user if there are proposals in which he has a special role such as: reviewer, admin, or team member
+ */
+async function initUserRoles(user: User) {
+  user.roles = ["submitter"];
+
+  const proposals: GrantProposal[] = await GrantProposalModel.find();
+
+  for (const proposal of proposals) {
+    if (proposal.teamMembers) {
+      for (const member of proposal.teamMembers) {
+        const { memberEmail, memberRole: role } = member;
+
+        // New role for given user
+        if (user.email === memberEmail && !user.roles.includes(role)) {
+          user.roles.push(role);
+        }
+      }
+    }
+  }
+  return user;
+}
+
+// init full names in teamMembers and reviews if the email is exist in these proposals
+async function initFullName(user: User) {
+  const proposals = await GrantProposalModel.find();
+
+  for (const proposal of proposals) {
+    // proposal id if should update the document
+    let idForUpdate: string | null = null;
+
+    if (proposal.teamMembers) {
+      for (const member of proposal.teamMembers) {
+        if (member.memberEmail === user.email) {
+          idForUpdate = proposal._id;
+          member.fullName = `${user.firstName} ${user.lastName}`;
+        }
+      }
+    }
+
+    if (proposal.reviews) {
+      for (const review of proposal.reviews) {
+        if (review.writerEmail === user.email) {
+          idForUpdate = proposal._id;
+          review.fullName = `${user.firstName} ${user.lastName}`;
+        }
+      }
+    }
+
+    if (idForUpdate) {
+      await GrantProposalModel.findByIdAndUpdate(idForUpdate, proposal);
+    }
+  }
+}

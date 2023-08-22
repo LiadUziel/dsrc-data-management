@@ -1,0 +1,28 @@
+<main class="dialog-wrapper">
+  <p>
+    Here you can write a review for the "{{ proposal.studyTitle }}" grant
+    proposal in your name
+  </p>
+
+  <div class="input-wrapper">
+    <b>Your opinion...</b>
+    <textarea
+      pInputTextarea
+      cols="40"
+      rows="1"
+      [autoResize]="true"
+      [(ngModel)]="reviewText"
+      class="review"
+    ></textarea>
+  </div>
+
+  <button
+    pButton
+    pRipple
+    class="p-button-primary submit-btn"
+    (click)="onSendReview()"
+    [loading]="loading"
+  >
+    Send Review
+  </button>
+</main>

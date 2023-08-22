@@ -21,7 +21,11 @@ import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password
 import { RenewPasswordComponent } from './pages/renew-password/renew-password.component';
 import { CustomFieldsDialogComponent } from './pages/manage-proposals/custom-fields-dialog/custom-fields-dialog.component';
 import { UpdateStatusDialogComponent } from './pages/manage-proposals/update-status-dialog/update-status-dialog.component';
-import { MyProposalsComponent } from './pages/my-proposals/my-proposals.component';
+import { SubmittedProposalsComponent } from './pages/submitted-proposals/submitted-proposals.component';
+import { HomePageComponent } from './pages/home-page/home-page.component';
+import { LottieModule } from 'ngx-lottie';
+import { ReviewersPageComponent } from './pages/reviewers-page/reviewers-page.component';
+import { TeamMembersPageComponent } from './pages/team-members-page/team-members-page.component';
 import { ProductFormComponent } from './pages/submit-product/product-form/product-form.component';
 import { SGDOptionComponent } from './pages/submit-product/sdg-option/sgdoption/sgdoption.component';
 import { MarkAsteriskDirective } from './pages/submit-product/directives/mark-asterisk/mark-asterisk.directive';
@@ -45,7 +49,10 @@ import { MyProductsComponent } from './pages/my-products/my-products/my-products
     RenewPasswordComponent,
     CustomFieldsDialogComponent,
     UpdateStatusDialogComponent,
-    MyProposalsComponent,
+    SubmittedProposalsComponent,
+    HomePageComponent,
+    ReviewersPageComponent,
+    TeamMembersPageComponent,
     ProductFormComponent,
     SGDOptionComponent,
     MarkAsteriskDirective,
@@ -60,8 +67,13 @@ import { MyProductsComponent } from './pages/my-products/my-products/my-products
     ReactiveFormsModule,
     AppRoutingModule,
     SharedModule,
+    LottieModule.forRoot({ player: playerFactory }),
   ],
   providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
+
+export function playerFactory() {
+  return import('lottie-web');
+}

@@ -1,24 +1,29 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import * as saveAs from 'file-saver';
+import { DialogService } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
+import { FilesService } from 'src/app/files/services/files.service';
+import { RoleEnum } from 'src/app/shared/enums/role.enum';
+import { BudgetPart } from 'src/app/shared/models/budget-part.interface';
 import { GrantProposal } from 'src/app/shared/models/grant-proposal.interface';
 import { GrantProposalService } from 'src/app/shared/services/grant-proposal.service';
 import { GrantType } from '../manage-proposals/models/grant-type.enum';
-import { BudgetPart } from 'src/app/shared/models/budget-part.interface';
-import { FilesService } from 'src/app/files/services/files.service';
-import { saveAs } from 'file-saver';
-import { DialogService } from 'primeng/dynamicdialog';
 import { ProposalStatus } from '../manage-proposals/models/proposal-status.enum';
+import { ReviewDialogComponent } from 'src/app/shared/components/review-dialog/review-dialog.component';
 
 @Component({
-  selector: 'app-my-proposals',
-  templateUrl: './my-proposals.component.html',
-  styleUrls: ['./my-proposals.component.scss'],
+  selector: 'app-reviewers-page',
+  templateUrl: './reviewers-page.component.html',
+  styleUrls: ['./reviewers-page.component.scss'],
   providers: [DialogService],
 })
-export class MyProposalsComponent implements OnInit {
+export class ReviewersPageComponent {
   proposals$: Observable<GrantProposal[]>;
 
+  RoleEnum = RoleEnum;
+
   GrantTypeEnum = GrantType;
+  private readonly dialogService = inject(DialogService);
 
   ProposalStatus = ProposalStatus;
 
@@ -39,13 +44,12 @@ export class MyProposalsComponent implements OnInit {
     private grantProposalsService: GrantProposalService,
     private filesService: FilesService
   ) {}
-
   ngOnInit(): void {
     this.initProposals();
   }
 
   initProposals() {
-    this.proposals$ = this.grantProposalsService.getUserProposal();
+    this.proposals$ = this.grantProposalsService.getReviewerProposals();
   }
 
   // get the total amount of the budget parts1
@@ -76,5 +80,18 @@ export class MyProposalsComponent implements OnInit {
       this.GrantTypeEnum[proposalType] === 'Seed Research' ||
       this.GrantTypeEnum[proposalType] === 'Dataset Collection'
     );
+  }
+
+  openReviewDialog(proposal: GrantProposal) {
+    const ref = this.dialogService.open(ReviewDialogComponent, {
+      header: `Review For "${proposal.studyTitle}"`,
+      width: '60%',
+      data: { proposal },
+    });
+
+    // render table after dialog is closed
+    ref.onClose.subscribe(() => {
+      this.initProposals();
+    });
   }
 }

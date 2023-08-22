@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
           this.tokenService.setToken(result.token);
           this.toastr.success('Login successful!');
           this.authService.gonnaLogIn$.next(true);
-          // TODO - navigate to home page
+          this.router.navigate(['/home']);
         },
         error: (error) => {
           this.toastr.error(error.error.message);
