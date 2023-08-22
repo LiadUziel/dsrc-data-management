@@ -19,6 +19,9 @@ import { SubmittedProposalsComponent } from './pages/submitted-proposals/submitt
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { ReviewersPageComponent } from './pages/reviewers-page/reviewers-page.component';
 import { TeamMembersPageComponent } from './pages/team-members-page/team-members-page.component';
+import { ProductFormComponent } from './pages/submit-product/product-form/product-form.component';
+import { ManageProductsComponent } from './pages/manage-products/manage-products/manage-products.component';
+import { MyProductsComponent } from './pages/my-products/my-products/my-products.component';
 
 const routes: Routes = [
   // TODO - fix routing and guard
@@ -70,6 +73,12 @@ const routes: Routes = [
     path: 'verifyRegister',
     component: LoginComponent,
     canActivate: [VerificationRegistrationGuard],
+  },
+  {path: 'submit-product', component: ProductFormComponent, canActivate: [AuthGuard]},
+  {path: 'manage-products', component: ManageProductsComponent, canActivate: [AdminAuthGuard]},
+  {
+    path: 'my-products',
+    component: MyProductsComponent,
   },
   { path: '**', component: PageNotFoundComponent },
 ];

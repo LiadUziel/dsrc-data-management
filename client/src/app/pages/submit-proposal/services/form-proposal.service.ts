@@ -72,6 +72,9 @@ export class FormProposalService {
   getSeedResearchForm(): FormGroup {
     const form = _.cloneDeep(this.parentForm);
 
+    const teamMembers = new FormArray([]);
+    form.setControl('teamMembers', teamMembers);
+
     const budgetParts = new FormArray([]);
     form.setControl('budgetParts', budgetParts);
 
@@ -80,8 +83,6 @@ export class FormProposalService {
       'uploadInnovationProject',
       new FormControl<FileUpload>(null, [Validators.required])
     );
-    form.addControl('uploadTeam', new FormControl<FileUpload>(null, [Validators.required]));
-    form.addControl('uploadBudget', new FormControl<FileUpload>(null, [Validators.required]));
     form.addControl('uploadExternalFunding', new FormControl<FileUpload>(null, [Validators.required]));
 
     return form;
@@ -89,14 +90,17 @@ export class FormProposalService {
 
   getDatasetCollectionForm(): FormGroup {
     const form = _.cloneDeep(this.parentForm);
+    const teamMembers = new FormArray([]);
+    form.setControl('teamMembers', teamMembers);
+
+    const budgetParts = new FormArray([]);
+    form.setControl('budgetParts', budgetParts);
     form.addControl('uploadResearchIntro', new FormControl<FileUpload>(null, [Validators.required]));
     form.addControl(
       'uploadInnovationProject',
       new FormControl<FileUpload>(null, [Validators.required])
     );
     form.addControl('uploadDatasetInfo', new FormControl<FileUpload>(null, [Validators.required]));
-    form.addControl('uploadTeam', new FormControl<FileUpload>(null, [Validators.required]));
-    form.addControl('uploadBudget', new FormControl<FileUpload>(null, [Validators.required]));
     form.addControl('uploadEthics', new FormControl<FileUpload>(null, [Validators.required]));
     form.addControl('uploadCopyrights', new FormControl<FileUpload>(null, [Validators.required]));
     return form;

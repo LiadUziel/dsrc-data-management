@@ -19,7 +19,6 @@ import { GrantsAwardedComponent } from './pages/grants-awarded/grants-awarded.co
 import { ManageProposalsComponent } from './pages/manage-proposals/manage-proposals.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { RenewPasswordComponent } from './pages/renew-password/renew-password.component';
-import { MultiFieldComponent } from './pages/submit-proposal/multi-field/multi-field.component';
 import { CustomFieldsDialogComponent } from './pages/manage-proposals/custom-fields-dialog/custom-fields-dialog.component';
 import { UpdateStatusDialogComponent } from './pages/manage-proposals/update-status-dialog/update-status-dialog.component';
 import { SubmittedProposalsComponent } from './pages/submitted-proposals/submitted-proposals.component';
@@ -27,6 +26,11 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
 import { LottieModule } from 'ngx-lottie';
 import { ReviewersPageComponent } from './pages/reviewers-page/reviewers-page.component';
 import { TeamMembersPageComponent } from './pages/team-members-page/team-members-page.component';
+import { ProductFormComponent } from './pages/submit-product/product-form/product-form.component';
+import { SGDOptionComponent } from './pages/submit-product/sdg-option/sgdoption/sgdoption.component';
+import { MarkAsteriskDirective } from './pages/submit-product/directives/mark-asterisk/mark-asterisk.directive';
+import { ManageProductsComponent } from './pages/manage-products/manage-products/manage-products.component';
+import { MyProductsComponent } from './pages/my-products/my-products/my-products.component';  
 
 @NgModule({
   declarations: [
@@ -43,13 +47,17 @@ import { TeamMembersPageComponent } from './pages/team-members-page/team-members
     ManageProposalsComponent,
     ForgotPasswordComponent,
     RenewPasswordComponent,
-    MultiFieldComponent,
     CustomFieldsDialogComponent,
     UpdateStatusDialogComponent,
     SubmittedProposalsComponent,
     HomePageComponent,
     ReviewersPageComponent,
     TeamMembersPageComponent,
+    ProductFormComponent,
+    SGDOptionComponent,
+    MarkAsteriskDirective,
+    ManageProductsComponent,
+    MyProductsComponent
   ],
   imports: [
     BrowserModule,

@@ -56,26 +56,51 @@ export class NavBarService {
         ],
       },
       {
-        label: 'Submitted Proposals',
+        label: 'Submit Product',
+        icon: 'pi pi-briefcase',
+        routerLink: 'submit-product',
+        visible: isLogged,
+      },
+      {
+        label: 'My Submissions',
         icon: 'pi pi-fw pi-list',
-        routerLink: 'submitted-proposals',
         visible: isLogged && !isAdmin,
+        items: [
+          {
+            label: 'My proposals',
+            routerLink: 'submitted-proposals',
+          },
+          {
+            label: 'My products',
+            routerLink: 'my-products',
+          },
+          {
+            label: 'Proposals to review',
+            routerLink: 'reviewers',
+            visible: isLogged && isReviewer,
+          },
+
+          {
+            label: 'Proposals I am a Team Member',
+            routerLink: 'team-members', 
+            visible: isLogged && isTeamMember,
+          },
+        ]
       },
       {
-        label: 'Manage Proposals',
+        label: 'Management',
         icon: 'pi pi-wrench',
-        routerLink: 'manage-proposals',
         visible: isLogged && isAdmin,
-      },
-      {
-        label: 'For Reviewer',
-        routerLink: 'reviewers',
-        visible: isLogged && isReviewer,
-      },
-      {
-        label: 'For Team Members',
-        routerLink: 'team-members', // TODO - add full name in UI for team members and reviews in table
-        visible: isLogged && isTeamMember,
+        items: [
+          {
+            label:'Manage Proposals',
+            routerLink: 'manage-proposals'
+          },
+          {
+            label: 'Manage Products',
+            routerLink: 'manage-products'
+          }
+        ]
       },
       {
         label: 'Log Out',

@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { GrantProposal } from 'src/app/shared/models/grant-proposal.interface';
 import { GrantProposalService } from 'src/app/shared/services/grant-proposal.service';
 import { GrantType } from './models/grant-type.enum';
@@ -11,6 +11,8 @@ import { CustomFieldsDialogComponent } from './custom-fields-dialog/custom-field
 import { UpdateStatusDialogComponent } from './update-status-dialog/update-status-dialog.component';
 import { ProposalStatus } from './models/proposal-status.enum';
 import { RoleEnum } from 'src/app/shared/enums/role.enum';
+import { ProductsService } from 'src/app/shared/services/products.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-manage-proposals',
@@ -37,6 +39,10 @@ export class ManageProposalsComponent implements OnInit {
   ];
 
   GrantTypeEnum = GrantType;
+  private productsService = inject(ProductsService);
+
+  private router = inject(Router);
+
   private readonly dialogService = inject(DialogService);
 
   ProposalStatus = ProposalStatus;
@@ -119,5 +125,11 @@ export class ManageProposalsComponent implements OnInit {
     ref.onClose.subscribe(() => {
       this.initProposals();
     });
+  }
+
+  
+  navigateToProposalProducts(proposal: GrantProposal) {
+    const queryParams = {studyTitle: proposal.studyTitle,email: proposal.user.email};
+    this.router.navigate(['manage-products'], {queryParams});
   }
 }
