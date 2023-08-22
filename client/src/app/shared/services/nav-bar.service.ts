@@ -52,16 +52,40 @@ export class NavBarService {
         ],
       },
       {
-        label: 'My Proposals',
-        icon: 'pi pi-fw pi-list',
-        routerLink: 'my-proposals',
-        visible: isLogged && role !== 'admin',
+        label: 'Submit Product',
+        icon: 'pi pi-briefcase',
+        routerLink: 'submit-product',
+        visible: isLogged,
       },
       {
-        label: 'Manage Proposals',
+        label: 'My Submissions',
+        icon: 'pi pi-fw pi-list',
+        visible: isLogged && role !== 'admin',
+        items: [
+          {
+            label: 'My proposals',
+            routerLink: 'my-proposals',
+          },
+          {
+            label: 'My products',
+            routerLink: 'my-products',
+          },
+        ]
+      },
+      {
+        label: 'Management',
         icon: 'pi pi-wrench',
-        routerLink: 'manage-proposals',
         visible: isLogged && role === 'admin',
+        items: [
+          {
+            label:'Manage Proposals',
+            routerLink: 'manage-proposals'
+          },
+          {
+            label: 'Manage Products',
+            routerLink: 'manage-products'
+          }
+        ]
       },
       {
         label: 'Log Out',

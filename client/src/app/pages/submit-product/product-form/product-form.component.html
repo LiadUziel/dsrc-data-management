@@ -1,0 +1,336 @@
+<div class="page-wrapper">
+    <h1>Reporting about research activity products</h1>
+
+    <form class="form" [formGroup]="productForm" (ngSubmit)="onSubmit()">
+        <div>This form has the follow purposes:
+            <ol class="intended-list">
+                <li>Help us publish the research activity as a blog that appeals to the general public</li>
+                <li>Help us report to the CHE regarding grants to external funds or articles that came out following the funding from the Center</li>
+                <li>Report SDG affiliation</li>
+            </ol>
+        </div>
+       <div class="p-float-label">
+        <label class="black-font-and-margin" appMarkAsterisk>project title that was granted: (pick one)</label>
+        </div>
+        <div class="p-float-label">
+            <p-listbox *ngIf="studyTitles.length > 0;else noResults" [options]="studyTitles"
+            formControlName="projectTitleThatWasGranted"
+            >
+            </p-listbox>
+            <ng-template #noResults>
+                <p-listbox
+                 [options]="['You have no granted proposal']"
+                 [disabled]="true">
+                </p-listbox>
+            </ng-template>
+       </div>
+       <div class="p-float-label">
+        <label class="black-font-and-margin" appMarkAsterisk>Types of funding received from: (pick one)</label>
+        </div>
+        <div class="p-float-label">
+            <p-listbox *ngIf="studyTitles.length > 0;else noResults" [options]="typeOfFundings"
+            formControlName="typeOfFundingsReceivedFromDsrc"
+            >
+            </p-listbox>
+       </div>
+       <div class="p-float-label">
+        <label class="black-font-and-margin-B">
+            Please complete the following questions that together will form your blog.
+             examples are found at the following link:
+        </label>
+        </div>
+        <div>
+            <a href="https://dsrc.haifa.ac.il/index.php/research/blog" target="_blank">
+                https://dsrc.haifa.ac.il/index.php/research/blog
+            </a>
+        </div>
+        <span class="p-float-label">
+            <input pInputText formControlName="catchyTitle"/>
+            <label appMarkAsterisk>
+                A catchy title (e.g. "can sea anemones help treat depression?")
+            </label>
+       </span>
+       <span class="p-float-label">
+        <textarea
+          pInputTextarea
+          formControlName="openingMotivatingSentence"
+          cols="40"
+          rows="1"
+          [autoResize]="true"
+        ></textarea>
+        <label>
+            An opening motivating sentence for your research
+        </label>
+      </span>
+      <span class="p-float-label">
+        <textarea
+          pInputTextarea
+          formControlName="presentLink"
+          cols="40"
+          rows="1"
+          [autoResize]="true"
+        ></textarea>
+        <label>
+            presenting a link to a fact from the media that is related and invokes interest
+        </label>
+      </span>
+       <span class="p-float-label">
+            <input pInputText formControlName="urlToAdd"/>
+            <label>
+                URL to add to the previous sentence
+            </label>
+        </span>
+        <div class="asterisk-special-field-display">
+            <label appMarkAsterisk></label>
+            <app-multi-field class="margin-special-field"
+                [form]="productForm"
+                [formArrayName]="'researchTeam'"
+                [displayAction]="'Research Team Member'"
+            ></app-multi-field>
+        </div>
+        <span class="p-float-label">
+            <textarea
+              pInputTextarea
+              formControlName="oneSentenceSummarizing"
+              cols="40"
+              rows="2"
+              [autoResize]="true"
+            ></textarea>
+            <label>
+                One sentence summarizing what your research did to address that motivating need 
+            </label>
+        </span>
+        <span class="p-float-label">
+            <textarea
+              pInputTextarea
+              formControlName="summarizingSentences"
+              cols="40"
+              rows="2"
+              [autoResize]="true"
+            ></textarea>
+            <label>
+                2-3 sentences that summarize the contribution and links
+                to papers or abstracts that resulted
+            </label>
+        </span>
+        <span class="p-float-label">
+            <textarea
+              pInputTextarea
+              formControlName="conclusion"
+              cols="40"
+              rows="2"
+              [autoResize]="true"
+            ></textarea>
+            <label>
+                conclusion
+            </label>
+        </span>
+        <div class="asterisk-special-field-display">
+            <label appMarkAsterisk></label>
+            <div class="field margin-special-field">
+                <p-fileUpload #fileUpload
+                name="file"
+                [maxFileSize]="1000000"
+                chooseLabel="Upload Blog"
+                [showCancelButton]="false"
+                [customUpload]="true"
+                (uploadHandler)="onUpload($event, 'uploadBlog')"
+                accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,image/*"
+                class="file-upload-element-width"
+                >
+                </p-fileUpload>
+                <i
+                class="pi pi-question-circle"
+                pTooltip="Your blog based on the questions above (up to one page)"
+                ></i>
+            </div>
+        </div>
+        <div class="asterisk-special-field-display">
+            <label appMarkAsterisk></label>
+            <div class="field margin-special-field">
+                <p-fileUpload #fileUpload
+                name="file"
+                [maxFileSize]="1000000"
+                chooseLabel="Upload figure or video"
+                [showCancelButton]="false"
+                [customUpload]="true"
+                (uploadHandler)="onUpload($event, 'uploadFigureOrVideo')"
+                accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,.avi,.mp4,.mkv.wmv,.mov,.flv,.webm,.3gp,.mpeg
+                ,.mts,.xvid,.rmvb,.dv,.drc,.rv,.mxf,.r3d,image/*"
+                class="file-upload-element-width"
+                >
+                </p-fileUpload>
+                <i
+                class="pi pi-question-circle"
+                pTooltip="Figure or video for the blog"
+                ></i>
+            </div>
+        </div>
+        <div class="asterisk-special-field-display">
+            <label appMarkAsterisk></label>
+            <app-multi-field class="margin-special-field"
+                [form]="productForm"
+                [formArrayName]="'publications'"
+                [displayAction]="'publication resulting from the funding'"
+            ></app-multi-field>
+        </div>
+        <div class="asterisk-special-field-display">
+            <label appMarkAsterisk></label>
+            <app-multi-field class="margin-special-field"
+                [form]="productForm"
+                [formArrayName]="'researchGrants'"
+                [displayAction]="'research grant that submitted to external granting agencies'"
+            ></app-multi-field>
+        </div>
+        <div class="p-float-label">
+            <label appMarkAsterisk class="black-font-and-margin">
+                Does your research fall into any of the Sustainable Development Goals (SDG)? Please check all that apply
+            </label>
+        </div>
+        <div class="card flex justify-content-center gap-3 display-SDG-options">
+            <app-sgdoption #sdgOption
+             [value]="'No poverty'"
+             [id]="'noPoverty'"
+             (onChange)="onChangeSDGOption($event.event, $event.value)">
+            </app-sgdoption>
+            <app-sgdoption #sdgOption
+             [value]="'Zero hunger'"
+             [id]="'zeroHunger'"
+             (onChange)="onChangeSDGOption($event.event, $event.value)">
+            </app-sgdoption>
+            <app-sgdoption #sdgOption
+             [value]="'Good health and well-being'"
+             [id]="'goodHealthAndWellBeing'"
+             (onChange)="onChangeSDGOption($event.event, $event.value)">
+            </app-sgdoption>
+            <app-sgdoption #sdgOption
+             [value]="'Quality education'"
+             [id]="'qualityEducation'"
+             (onChange)="onChangeSDGOption($event.event, $event.value)">
+            </app-sgdoption>
+            <app-sgdoption #sdgOption
+            [value]="'Gender equality'"
+            [id]="'genderEquality'"
+            (onChange)="onChangeSDGOption($event.event, $event.value)">
+           </app-sgdoption>
+           <app-sgdoption #sdgOption
+           [value]="'Clean water and sanitation'"
+           [id]="'cleanWaterAndSanistation'"
+           (onChange)="onChangeSDGOption($event.event, $event.value)">
+           </app-sgdoption>
+           <app-sgdoption #sdgOption
+           [value]="'Affordable and clean energy'"
+           [id]="'affordableAndCleanEnergy'"
+           (onChange)="onChangeSDGOption($event.event, $event.value)">
+           </app-sgdoption> 
+           <app-sgdoption #sdgOption
+           [value]="'Decent work and economic growth'"
+           [id]="'decentWorkAndEconomicGrowth'"
+           (onChange)="onChangeSDGOption($event.event, $event.value)">
+           </app-sgdoption> 
+           <app-sgdoption #sdgOption
+             [value]="'Industry, Innovation and Infrastructure'"
+             [id]="'industryInnovationAndInfrastructure'"
+             (onChange)="onChangeSDGOption($event.event, $event.value)">
+            </app-sgdoption>
+            <app-sgdoption #sdgOption
+             [value]="'Reduced inequality'"
+             [id]="'reducedInequality'"
+             (onChange)="onChangeSDGOption($event.event, $event.value)">
+            </app-sgdoption>
+            <app-sgdoption #sdgOption
+             [value]="'Sustainable cities and communities'"
+             [id]="'susCitiesAndComs'"
+             (onChange)="onChangeSDGOption($event.event, $event.value)">
+            </app-sgdoption>
+            <app-sgdoption #sdgOption
+             [value]="'Responsible consumption and production'"
+             [id]="'resConsumptionAndProduction'"
+             (onChange)="onChangeSDGOption($event.event, $event.value)">
+            </app-sgdoption>  
+            <app-sgdoption #sdgOption
+            [value]="'Climate action'"
+            [id]="'climateAction'"
+            (onChange)="onChangeSDGOption($event.event, $event.value)">
+           </app-sgdoption>
+           <app-sgdoption #sdgOption
+            [value]="'Life below water'"
+            [id]="'lifeBelowWater'"
+            (onChange)="onChangeSDGOption($event.event, $event.value)">
+           </app-sgdoption>
+           <app-sgdoption #sdgOption
+            [value]="'Life on land'"
+            [id]="'lifeOnLand'"
+            (onChange)="onChangeSDGOption($event.event, $event.value)">
+           </app-sgdoption>
+           <app-sgdoption #sdgOption
+            [value]="'Peace, justice and strong institutions'"
+            [id]="'peaceJusticeAndStrongInstitutions'"
+            (onChange)="onChangeSDGOption($event.event, $event.value)">
+           </app-sgdoption>
+           <app-sgdoption #sdgOption
+            [value]="'Partnership for the goals'"
+            [id]="'partnershipForTheGoals'"
+            (onChange)="onChangeSDGOption($event.event, $event.value)">
+           </app-sgdoption>
+        </div>
+        <span class="p-float-label">
+            <textarea class="ta-margin"
+            pInputTextarea
+            formControlName="government"
+            cols="40"
+            rows="3"
+            [autoResize]="true"
+            ></textarea>
+            <label>
+                Is your project related to cooperation with government (local  or national) or with non-profit organizations in order to develop policies? 
+            </label>
+        </span>
+        <span class="p-float-label">
+            <textarea
+            pInputTextarea
+            formControlName="internationalCoopreration"
+            cols="40"
+            rows="2"
+            [autoResize]="true"
+            ></textarea>
+            <label>
+                Did the project lead to international cooperation?
+            </label>
+        </span>
+        <span class="p-float-label">
+            <textarea
+            pInputTextarea
+            formControlName="volunteerWork"
+            cols="40"
+            rows="2"
+            [autoResize]="true"
+            ></textarea>
+            <label>
+                Does the project include students volunteer work?
+            </label>
+        </span>
+        <span class="p-float-label">
+            <textarea
+            pInputTextarea
+            formControlName="developCourses"
+            cols="40"
+            rows="2"
+            [autoResize]="true"
+            ></textarea>
+            <label>
+                Are you developing courses related to the research? 
+            </label>
+        </span>       
+        <button
+            pButton
+            type="submit"
+            class="p-button-primary"
+            [disabled]="!productForm.valid"
+            [loading]="loading"
+        >
+            Submit
+        </button>
+    </form>
+  </div>
+  

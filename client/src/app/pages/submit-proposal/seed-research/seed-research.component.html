@@ -47,47 +47,6 @@
         #fileUpload
         name="file"
         [maxFileSize]="1000000"
-        chooseLabel="Upload Team"
-        [showCancelButton]="false"
-        [customUpload]="true"
-        (uploadHandler)="onUpload($event, 'uploadTeam')"
-        accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,image/*"
-        class="file-upload-element-width"
-      >
-      </p-fileUpload>
-      <i
-        class="pi pi-question-circle"
-        pTooltip="Seed money should not fund existing research but new research. Following the seed
-        research, the researchers are expected to submit a proposal for external funding.
-        Please specify your plans for external funding."
-      ></i>
-    </div>
-
-    <div class="field">
-      <p-fileUpload
-        #fileUpload
-        name="file"
-        [maxFileSize]="1000000"
-        chooseLabel="Upload Budget"
-        [showCancelButton]="false"
-        [customUpload]="true"
-        (uploadHandler)="onUpload($event, 'uploadBudget')"
-        accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,image/*"
-        class="file-upload-element-width"
-      >
-      </p-fileUpload>
-      <i
-        class="pi pi-question-circle"
-        pTooltip="Detailed budget request including the different expenses (e.g., purchase of a data
-        set, purchase of equipment)"
-      ></i>
-    </div>
-
-    <div class="field">
-      <p-fileUpload
-        #fileUpload
-        name="file"
-        [maxFileSize]="1000000"
         chooseLabel="Upload External Funding"
         [showCancelButton]="false"
         [customUpload]="true"
@@ -104,6 +63,12 @@
       ></i>
       change
     </div>
+
+    <app-multi-field
+      [form]="seedForm"
+      [formArrayName]="'teamMembers'"
+      [displayAction]="'Team Member'"
+    ></app-multi-field>
 
     <app-multi-field
       [form]="seedForm"

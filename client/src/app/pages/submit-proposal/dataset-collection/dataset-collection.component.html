@@ -62,45 +62,6 @@
       <p-fileUpload #fileUpload
        name="file"
        [maxFileSize]="1000000"
-        chooseLabel="Upload Team"
-        [showCancelButton]="false"
-        [customUpload]="true"
-        (uploadHandler)="onUpload($event, 'uploadTeam')"
-        accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,image/*"
-        class="file-upload-element-width"
-        >
-      </p-fileUpload>
-      <i
-        class="pi pi-question-circle"
-        pTooltip="Information on the collaborating team and the role of each of the team members"
-      ></i>
-      changeee
-    </div>
-
-    <div class="field">
-      <p-fileUpload #fileUpload
-       name="file"
-       [maxFileSize]="1000000"
-        chooseLabel="Upload Budget"
-        [showCancelButton]="false"
-        [customUpload]="true"
-        (uploadHandler)="onUpload($event, 'uploadBudget')"
-        accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,image/*"
-        class="file-upload-element-width"
-        >
-      </p-fileUpload>
-      <i
-        class="pi pi-question-circle"
-        pTooltip="Detailed budget request including the different expenses (e.g., purchase of a data
-        set, purchase of equipment)"
-      ></i>
-      change
-    </div>
-
-    <div class="field">
-      <p-fileUpload #fileUpload
-       name="file"
-       [maxFileSize]="1000000"
         chooseLabel="Upload Ethics"
         [showCancelButton]="false"
         [customUpload]="true"
@@ -133,6 +94,18 @@
         concerns that might prevent the publication of the data in an open access format."
       ></i>
     </div>
+
+    <app-multi-field
+      [form]="dsCollectionForm"
+      [formArrayName]="'teamMembers'"
+      [displayAction]="'Team Member'"
+    ></app-multi-field>
+
+    <app-multi-field
+      [form]="dsCollectionForm"
+      [formArrayName]="'budgetParts'"
+      [displayAction]="'Budget Part'"
+    ></app-multi-field>
 
     <button
       pButton

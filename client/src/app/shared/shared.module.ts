@@ -1,4 +1,6 @@
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 // primeng
 import { ButtonModule } from 'primeng/button';
@@ -14,6 +16,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { TagModule } from 'primeng/tag';
+import { ListboxModule } from 'primeng/listbox';
 
 // ngx-toastr
 import { ToastrModule } from 'ngx-toastr';
@@ -26,9 +29,10 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { PagesComponent } from '../pages/pages.component';
+import { MultiFieldComponent } from './components/multi-field/multi-field.component';
 
 @NgModule({
-  declarations: [NavBarComponent, FooterComponent, PagesComponent],
+  declarations: [NavBarComponent, FooterComponent, PagesComponent, MultiFieldComponent],
   imports: [
     // ngx-toastr
     ToastrModule.forRoot({
@@ -52,10 +56,12 @@ import { PagesComponent } from '../pages/pages.component';
     DynamicDialogModule,
     RadioButtonModule,
     TagModule,
-
+    ListboxModule,
     //materials
-    MatPasswordStrengthModule.forRoot(),
+    MatPasswordStrengthModule,
     MatSlideToggleModule,
+    ReactiveFormsModule,
+    CommonModule
   ],
   exports: [
     // primeng
@@ -72,13 +78,15 @@ import { PagesComponent } from '../pages/pages.component';
     DynamicDialogModule,
     RadioButtonModule,
     TagModule,
-
+    ListboxModule,
     // materials
     MatPasswordStrengthModule,
     MatSlideToggleModule,
 
     // components
     PagesComponent,
+    MultiFieldComponent
   ],
+
 })
 export class SharedModule {}

@@ -1,11 +1,17 @@
-<div class="intro">
+<div *ngIf="config.data.proposal" class="intro">
   <b>
     This is the proposal of {{ proposal.user.firstName }}
     {{ proposal.user.lastName }} ({{ proposal.user.email }}).
   </b>
   <b>Here you can manage custom fields to this proposal</b>
 </div>
-
+<div *ngIf="config.data.product" class="intro">
+  <b>
+    This is the product of {{ product.user.firstName }}
+    {{ product.user.lastName }} ({{ product.user.email }}).
+  </b>
+  <b>Here you can manage custom fields to this product</b>
+</div>
 <form [formGroup]="dynamicForm" (ngSubmit)="onSubmit()">
   <div formArrayName="fields">
     <div

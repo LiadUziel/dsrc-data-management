@@ -6,6 +6,9 @@ import { FormProposalService } from '../../submit-proposal/services/form-proposa
 import { GrantProposalService } from 'src/app/shared/services/grant-proposal.service';
 import { CustomFieldRaw } from 'src/app/shared/models/new-field-raw.interface';
 import { ToastrService } from 'ngx-toastr';
+import { ProductFormService } from '../../submit-product/services/product-form-service.service';
+import { ProductsService } from 'src/app/shared/services/products.service';
+import { Product } from '../../submit-product/interfaces/product.interface';
 
 @Component({
   selector: 'app-custom-fields-dialog',
@@ -14,10 +17,15 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class CustomFieldsDialogComponent implements OnInit {
   private readonly toastr = inject(ToastrService);
-  private readonly config = inject(DynamicDialogConfig);
+  readonly config = inject(DynamicDialogConfig);
   private readonly ref = inject(DynamicDialogRef);
   private readonly formProposalService = inject(FormProposalService);
   private readonly grantProposalService = inject(GrantProposalService);
+
+  private readonly formProductService = inject(ProductFormService);
+  private readonly productsService = inject(ProductsService);
+
+  product: Product;
 
   proposal: GrantProposal;
 
@@ -27,11 +35,18 @@ export class CustomFieldsDialogComponent implements OnInit {
   rawExistsCustomFields: CustomFieldRaw[] = [];
 
   ngOnInit(): void {
-    this.proposal = this.config.data.proposal;
+    if (this.config.data.proposal) {
+      this.proposal = this.config.data.proposal;
+      this.dynamicForm = this.formProposalService.getAddFieldsForm();
+      this.initProposalExistsCustomFields();
+    }
+    else if (this.config.data.product) {
+      this.product = this.config.data.product;
+      this.dynamicForm = this.formProductService.getAddFieldsForm();
+      this.initProductExistsCustomFields();
+    }
 
-    this.dynamicForm = this.formProposalService.getAddFieldsForm();
-
-    this.initExistsCustomFields();
+    
   }
 
   get fields() {
@@ -39,22 +54,43 @@ export class CustomFieldsDialogComponent implements OnInit {
   }
 
   addField() {
-    this.formProposalService.addNewField(this.dynamicForm);
+    if (this.config.data.proposal) {
+      this.formProposalService.addNewField(this.dynamicForm);
+    }
+    else if (this.config.data.product) {
+      this.formProductService.addNewField(this.dynamicForm);
+    }
   }
 
   removeField(index: number) {
     this.formProposalService.removeNewField(this.dynamicForm, index);
   }
 
-  private initExistsCustomFields() {
-    this.rawExistsCustomFields = Object.entries(this.proposal.customFields).map(
-      ([fieldName, value]) => ({ fieldName, value })
-    );
-    let i = 0;
-    for (const customField of this.rawExistsCustomFields) {
-      this.formProposalService.addNewField(this.dynamicForm);
-      this.fields.at(i).patchValue(customField);
-      i++;
+  private initProposalExistsCustomFields() {
+    if (this.proposal?.customFields) {
+      this.rawExistsCustomFields = Object.entries(this.proposal.customFields).map(
+        ([fieldName, value]) => ({ fieldName, value })
+      );
+      let i = 0;
+      for (const customField of this.rawExistsCustomFields) {
+        this.formProposalService.addNewField(this.dynamicForm);
+        this.fields.at(i).patchValue(customField);
+        i++;
+      }
+    }
+  }
+
+  private initProductExistsCustomFields() {
+    if (this.product?.customFields) {
+      this.rawExistsCustomFields = Object.entries(this.product.customFields).map(
+        ([fieldName, value]) => ({ fieldName, value })
+      );
+      let i = 0;
+      for (const customField of this.rawExistsCustomFields) {
+        this.formProductService.addNewField(this.dynamicForm);
+        this.fields.at(i).patchValue(customField);
+        i++;
+      }
     }
   }
 
@@ -73,7 +109,8 @@ export class CustomFieldsDialogComponent implements OnInit {
     }
 
     const fields: CustomFieldRaw[] = this.dynamicForm.value.fields;
-    this.grantProposalService
+    if (this.config.data.proposal) {
+      this.grantProposalService
       .updateCustomFields(this.proposal, fields)
       .subscribe({
         next: (proposal) => {
@@ -86,5 +123,22 @@ export class CustomFieldsDialogComponent implements OnInit {
           this.toastr.error(`Something went wrong!`);
         },
       });
+    }
+    
+    else if (this.config.data.product) {
+      this.productsService
+      .updateCustomFields(this.product, fields)
+      .subscribe({
+        next: (product) => {
+          this.toastr.success(
+            `The fields for ${product.projectTitleThatWasGranted} were added!`
+          );
+          this.ref.close();
+        },
+        error: (err) => {
+          this.toastr.error(`Something went wrong!`);
+        },
+      });
+    }
   }
 }

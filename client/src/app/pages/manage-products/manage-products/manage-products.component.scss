@@ -1,0 +1,96 @@
+h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.table-wrapper {
+    max-width: 90vw;
+
+    .caption {
+        display: flex;
+        gap: 1rem;
+    }
+
+    td {
+        .amount-given {
+            margin-top: 0.25rem;
+        }
+    }
+
+    button.manage-fields-btn {
+        label {
+            cursor: pointer;
+            margin-left: 0.25rem;
+        }
+    }
+
+    tr.expanded-row {
+        td.expanded-cell {
+            padding: 1rem 6rem;
+
+            .custom-fields {
+                margin: 1rem 0;
+
+                .custom-field {
+                    margin-bottom: 0.5rem;
+                }
+            }
+        }
+
+        table.multi-field-table {
+            width: 80%;
+            margin: 0 auto;
+            margin-bottom: 0.625rem;
+        }
+        
+    }
+}
+
+.button-structure {
+    background: none;
+    border: none;
+    color: blue; 
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: inherit;
+    padding: 0;
+}
+
+.button-structure:hover {
+    text-decoration: none;
+}
+  
+.expanded-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: baseline;
+    padding-left: 5rem;
+
+    .margin-field {
+        margin-bottom: 0.625rem;
+    }
+
+    .multi-field-content-margin {
+        margin-left: 4.375rem;
+    }
+
+    .margin-u {
+        margin-right: 0.3125rem;
+    }
+}
+  
+.flex-item {
+    margin: 0.3125rem;
+    flex: 1 1 calc(35%);
+}
+  
+
+  
+
