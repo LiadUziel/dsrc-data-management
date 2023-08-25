@@ -19,23 +19,60 @@
       </h3>
 
       <div *ngIf="formArrayName === 'teamMembers'" class="inputs-wrapper">
-        <span class="p-float-label">
-          <input pInputText formControlName="memberName" />
-          <label>Member Name</label>
-        </span>
-        <span class="p-float-label">
-          <input pInputText formControlName="memberEmail" />
-          <label>Member Email</label>
-        </span>
+        <p-tabView styleClass="tab-view">
+          <p-tabPanel header="Exist User">
+            <span class="p-float-label">
+              <p-dropdown
+                formControlName="memberEmail"
+                [options]="users"
+                optionValue="email"
+                [filter]="true"
+                filterBy="firstName, lastName, email"
+                [showClear]="true"
+                placeholder="Choose User"
+                styleClass="exist-users"
+                inputId="float-label"
+              >
+              <ng-template let-user pTemplate="selectedItem">
+                <div>
+                  {{ user.firstName }} {{ user.lastName }} - {{ user.email }}
+                </div>
+              </ng-template>
+              <ng-template let-user pTemplate="item">
+                <div>
+                  {{ user.firstName }} {{ user.lastName }} - {{ user.email }}
+                </div>
+              </ng-template>
+            </p-dropdown>
+            <label for="float-label">Choose User</label>
+          </span>
+        </p-tabPanel>
+        <p-tabPanel header="Non Exist User">
+          <span class="p-float-label">
+            <input pInputText formControlName="memberEmail" />
+            <label>Member Email</label>
+          </span>
+        </p-tabPanel>
+      </p-tabView>
 
         <span class="p-float-label">
-          <input pInputText formControlName="memberDepartment" />
-          <label>Member Department</label>
-        </span>
 
-        <span class="p-float-label">
-          <input pInputText formControlName="memberRole" />
-          <label>Member Role</label>
+          <p-dropdown
+            formControlName="memberRole"
+            [options]="roles"
+            [showClear]="true"
+            placeholder="Choose Role"
+            styleClass="exist-users"
+            inputId="float-label"
+          >
+            <ng-template let-role pTemplate="selectedItem">
+              <div>{{ RoleEnum[role] }}</div>
+            </ng-template>
+            <ng-template let-role pTemplate="item">
+              <div>{{ RoleEnum[role] }}</div>
+            </ng-template>
+          </p-dropdown>
+          <label for="float-label">Choose Role</label>
         </span>
       </div>
 

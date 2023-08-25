@@ -11,7 +11,6 @@ import { CustomFieldsDialogComponent } from './custom-fields-dialog/custom-field
 import { UpdateStatusDialogComponent } from './update-status-dialog/update-status-dialog.component';
 import { ProposalStatus } from './models/proposal-status.enum';
 import { RoleEnum } from 'src/app/shared/enums/role.enum';
-import { ProductsService } from 'src/app/shared/services/products.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -39,7 +38,6 @@ export class ManageProposalsComponent implements OnInit {
   ];
 
   GrantTypeEnum = GrantType;
-  private productsService = inject(ProductsService);
 
   private router = inject(Router);
 

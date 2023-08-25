@@ -32,7 +32,7 @@ export const getProducts: RequestHandler = async (req, res, next) => {
   try {
     let email;
     if (Object.keys(req.query).length === 0) {
-      if (req.authUser?.role !== 'admin') {
+      if (!req.authUser?.roles.includes('admin')) {
         email = req.authUser?.email;
       }
     }
