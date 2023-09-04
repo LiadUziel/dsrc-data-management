@@ -20,6 +20,13 @@
         input {
             width: 100%
         }
+        ::ng-deep.avg {
+            width: 100%;
+    
+            .p-inputnumber {
+                width: 100%;
+            }
+        }
 
         .field {
             align-self: flex-start;
@@ -41,6 +48,9 @@
             }
         }
 
+        p-dropdown {
+            width: 100%;
+        }
     }
 }
 
@@ -55,4 +65,8 @@
             margin-left: 0.312rem;
         }
     }
+}
+
+:host ::ng-deep .p-dropdown {
+    width: 100%;
 }

@@ -128,6 +128,25 @@ export class GrantProposalService {
       );
   }
 
+  getUniversities() {
+    const { href } = new URL('/api/grant-proposal/universities', this.apiUrl);
+
+    const token = this.tokenService.getToken();
+    return this.http
+      .get<string[]>(href, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .pipe(
+        map((universities) =>
+        universities.map((university) => ({
+            name: university,
+          }))
+        )
+      );
+  }
+
   getReviewerProposals() {
     const { href } = new URL('/api/grant-proposal/reviewer', this.apiUrl);
 

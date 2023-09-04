@@ -8,6 +8,7 @@ import { NewFieldRaw } from "../models/new-field-raw.interface";
 import { TeamMember } from "../models/team-member.interface";
 import { departments } from "../utils/depratments";
 import { Review } from "../models/review.interface";
+import { universities } from "../utils/universities";
 
 export const createGrantProposal: RequestHandler = async (req, res, next) => {
   try {
@@ -141,6 +142,10 @@ export const updateProposalStatus: RequestHandler = async (req, res, next) => {
 
 export const getDepartments: RequestHandler = (req, res, next) => {
   return res.send(departments);
+};
+
+export const getUniversities: RequestHandler = (req, res, next) => {
+  return res.send(universities);
 };
 
 // get proposals that the logged user is reviewer in them

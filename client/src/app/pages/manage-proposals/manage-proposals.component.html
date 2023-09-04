@@ -225,7 +225,29 @@
               </div>
             </div>
           </div>
-
+          <h3 *ngIf="isDsDoctorlOrPostDocProposal(proposal.type)">Degrees: </h3>
+          <div *ngIf="isDsDoctorlOrPostDocProposal(proposal.type)" class="expanded-content-files">
+            <div class="flex-container">
+              <div class="flex-item">
+                <b>BA:</b>
+                  <div><u>department:</u> {{ proposal.BADepartment }}</div>
+                  <div><u>university:</u> {{ proposal.BAUniversity }}</div>
+                  <div><u>average grade:</u> {{ proposal.BAAvg }}</div>
+              </div>
+              <div class="flex-item">
+                <b>MA:</b> 
+                  <div><u>department:</u> {{ proposal.MADepartment }}</div>
+                  <div><u>university:</u> {{ proposal.MAUniversity }}</div>
+                  <div><u>average grade:</u> {{ proposal.MAAvg }}</div>
+              </div>
+              <div *ngIf="this.GrantTypeEnum[proposal.type] === 'Post Doctoral'" class="flex-item">
+                <b>PhD:</b> 
+                  <div><u>department:</u> {{ proposal.PhDDepartment }}</div>
+                  <div><u>university:</u> {{ proposal.PhDUniversity }}</div>
+                  <div><u>average grade:</u> {{ proposal.PhDAvg }}</div>
+              </div>
+            </div>
+          </div>
           <h3>Uploaded Files:</h3>
           <div class="expanded-content-files">
             <div class="flex-container">

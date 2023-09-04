@@ -17,6 +17,9 @@ export const createProduct: RequestHandler = async (req, res, next) => {
   
       // add application date
       product.applicationDate = new Date();
+
+      // init blogStatus
+      product.blogStatus = "DID_NOT_SUBMIT";
   
       const productDb = await ProductModel.create(product);
 
@@ -80,5 +83,24 @@ export const addFieldsToProduct: RequestHandler = async (req, res, next) => {
   }
 };
 
+// update product blog status
+export const updateProductBlogStatus: RequestHandler = async (req, res, next) => {
+  try {
+    const { id } = req.params;
 
+    const { blogStatus } = req.body;
+
+    const updatedProduct = await ProductModel.findByIdAndUpdate(
+      id,
+      { $set: { blogStatus } },
+      {
+        new: true,
+      }
+    );
+
+    return res.send(updatedProduct);
+  } catch (e) {
+    next(e);
+  }
+};
 

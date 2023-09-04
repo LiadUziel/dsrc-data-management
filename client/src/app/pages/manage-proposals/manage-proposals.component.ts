@@ -35,6 +35,15 @@ export class ManageProposalsComponent implements OnInit {
     { field: 'amountRequested', header: 'Amount Requested' },
     { field: 'amountGiven', header: 'Amount Given' },
     { field: 'applicationDate', header: 'Application Date' },
+    { field: 'BADepartment', header: 'BA Department' },
+    { field: 'BAUniversity', header: 'BA University' },
+    { field: 'BAAvg', header: 'BA Average' },
+    { field: 'MADepartment', header: 'MA Department' },
+    { field: 'MAUniversity', header: 'MA University' },
+    { field: 'MAAvg', header: 'MA Average' },
+    { field: 'PhDDepartment', header: 'PhD Department' },
+    { field: 'PhDUniversity', header: 'PhD University' },
+    { field: 'PhDAvg', header: 'PhD Average' },
   ];
 
   GrantTypeEnum = GrantType;

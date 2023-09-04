@@ -3,7 +3,7 @@ import {
   authorizeMiddleware,
   isAdminMiddleware,
 } from "../controllers/auth.controller";
-import { addFieldsToProduct, createProduct, getProducts } from "../controllers/products.controller";
+import { addFieldsToProduct, createProduct, getProducts, updateProductBlogStatus } from "../controllers/products.controller";
 
 const productRouter = Router();
 
@@ -27,6 +27,15 @@ productRouter.patch(
   authorizeMiddleware,
   isAdminMiddleware,
   addFieldsToProduct
+);
+
+// update product blog status
+//* PATCH /api/product/update-blog-status/:id
+productRouter.patch(
+  "/update-blog-status/:id",
+  authorizeMiddleware,
+  isAdminMiddleware,
+  updateProductBlogStatus
 );
 
 export default productRouter;

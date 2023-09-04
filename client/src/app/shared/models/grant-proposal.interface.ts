@@ -29,6 +29,12 @@ export interface GrantProposal {
   uploadWorkCommitment?: string;
   uploadRecommendationLetter?: string;
   uploadContactRecommenders?: string;
+  BADepartment?: string,
+  MADepartment?: string,
+  BAUniversity?: string,
+  MAUniversity?: string,
+  BAAvg?: number,
+  MAAvg?: number,
 
   //DS_DOCTORAL
   uniqueFieldDsDoctoral1?: string; // required if type === "DS_DOCTORAL"
@@ -37,6 +43,9 @@ export interface GrantProposal {
   // POST_DOCTORAL
   uniqueFieldPostDoctoral1?: string; // required if type === "POST_DOCTORAL"
   uniqueFieldPostDoctoral2?: number; // optional
+  PhDDepartment?: string,
+  PhDUniversity?: string,
+  PhDAvg?: number,
 
   // SEED_RESEARCH(part of the fields are also at dataset collection)
   uploadResearchIntro?: string;

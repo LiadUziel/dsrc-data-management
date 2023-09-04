@@ -20,6 +20,9 @@ export class PostDoctoralComponent implements OnInit {
 
   private apiUrl = environment.apiUrl;
 
+  departments: {name : string} [];
+  universities: {name : string} [];
+
   @ViewChildren('fileUpload') pFormUpload: QueryList<any>;
 
   constructor(
@@ -31,6 +34,9 @@ export class PostDoctoralComponent implements OnInit {
 
   ngOnInit(): void {
     this.postDoctoralForm = this.formProposalService.getPostDoctoralForm();
+    this.grantProposalService.getDepartments().subscribe(departments => this.departments = departments);
+    this.grantProposalService.getUniversities().subscribe(universities => this.universities = universities);  
+  
   }
 
   onSubmit() {
