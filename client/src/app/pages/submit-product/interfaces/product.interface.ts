@@ -31,4 +31,6 @@ export interface Product {
     volunteerWork?: string;
     developCourses?: string; 
     customFields?: { [key: string]: string };
+    blogStatus: 'APPEARED_IN_RESEARCH_BLOG' | 'TO_APPEAR_IN_BLOG' | 'SENT_A_DRAFT' | 'DID_NOT_SUBMIT' |
+                'SENT_REMINDERS';
 }

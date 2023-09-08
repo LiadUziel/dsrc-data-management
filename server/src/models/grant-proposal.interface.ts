@@ -28,6 +28,12 @@ export interface GrantProposal {
   uploadWorkCommitment?: string;
   uploadRecommendationLetter?: string;
   uploadContactRecommenders?: string;
+  BADepartment?: string;
+  MADepartment?: string;
+  BAUniversity?: string;
+  MAUniversity?: string;
+  BAAvg?: number;
+  MAAvg?: number;
 
   //DS_DOCTORAL
   uniqueFieldDsDoctoral1?: string; // required if type === "DS_DOCTORAL"
@@ -36,6 +42,9 @@ export interface GrantProposal {
   // POST_DOCTORAL
   uniqueFieldPostDoctoral1?: string; // required if type === "POST_DOCTORAL"
   uniqueFieldPostDoctoral2?: number; // optional
+  PhDDepartment?: string;
+  PhDUniversity?: string;
+  PhDAvg?: number;
 
   // SEED_RESEARCH
   uploadResearchIntro?: string;
@@ -96,7 +105,15 @@ const grantProposalSchema = new Schema<GrantProposal>(
     uploadContactRecommenders: { type: String },
     uniqueFieldDsDoctoral1: { type: String },
     uniqueFieldDsDoctoral2: { type: Number },
-
+    BADepartment: {type: String},
+    MADepartment: {type: String},
+    BAUniversity: {type: String},
+    MAUniversity: {type: String},
+    BAAvg: {type: Number },
+    MAAvg: {type: Number },
+    PhDDepartment: {type: String},
+    PhDUniversity: {type: String},
+    PhDAvg: {type: Number },
     // POST_DOCTORAL
     // uniqueFieldPostDoctoral1: {
     //   type: String,

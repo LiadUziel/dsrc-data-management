@@ -44,6 +44,19 @@ export class FormProposalService {
       new FormControl<FileUpload>(null, [Validators.required])
     );
 
+    form.addControl('BADepartment', new FormControl<string>('', [Validators.required]));
+    form.addControl('MADepartment', new FormControl<string>('', [Validators.required]));
+    form.addControl('BAUniversity', new FormControl<string>('', [Validators.required]));
+    form.addControl('MAUniversity', new FormControl<string>('', [Validators.required]));
+    form.addControl('BAAvg', new FormControl<number>(null, [
+      Validators.required,
+      Validators.pattern('^[0-9]*$'),
+    ]));
+    form.addControl('MAAvg', new FormControl<number>(null, [
+      Validators.required,
+      Validators.pattern('^[0-9]*$'),
+    ]));
+
     return form;
   }
 
@@ -65,6 +78,26 @@ export class FormProposalService {
       'uploadContactRecommenders',
       new FormControl<FileUpload>(null, [Validators.required])
     );
+
+    form.addControl('BADepartment', new FormControl<string>('', [Validators.required]));
+    form.addControl('MADepartment', new FormControl<string>('', [Validators.required]));
+    form.addControl('BAUniversity', new FormControl<string>('', [Validators.required]));
+    form.addControl('MAUniversity', new FormControl<string>('', [Validators.required]));
+    form.addControl('BAAvg', new FormControl<number>(null, [
+      Validators.required,
+      Validators.pattern('^[0-9]*$'),
+    ]));
+    form.addControl('MAAvg', new FormControl<number>(null, [
+      Validators.required,
+      Validators.pattern('^[0-9]*$'),
+    ]));
+
+    form.addControl('PhDDepartment', new FormControl<string>('', [Validators.required]));
+    form.addControl('PhDUniversity', new FormControl<string>('', [Validators.required]));
+    form.addControl('PhDAvg', new FormControl<number>(null, [
+      Validators.required,
+      Validators.pattern('^[0-9]*$'),
+    ]));
 
     return form;
   }

@@ -20,6 +20,9 @@ export class DsDoctoralComponent implements OnInit {
 
   private apiUrl = environment.apiUrl;
 
+  departments: {name : string} [];
+  universities: {name : string} [];
+
   @ViewChildren('fileUpload') pFormUpload: QueryList<any>;
 
   constructor(
@@ -30,7 +33,10 @@ export class DsDoctoralComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.doctoralForm = this.formProposalService.getDsDoctoralForm();  
+    this.doctoralForm = this.formProposalService.getDsDoctoralForm();
+    this.grantProposalService.getDepartments().subscribe(departments => this.departments = departments);
+    this.grantProposalService.getUniversities().subscribe(universities => this.universities = universities);  
+  
   }
 
   onSubmit() {
@@ -79,6 +85,10 @@ export class DsDoctoralComponent implements OnInit {
           }
         );
       }
+  }
+
+  getDepartments(departments) {
+    this.departments = departments;
   }
 }
 

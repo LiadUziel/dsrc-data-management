@@ -72,5 +72,26 @@ export class ProductsService {
     );
   }
 
+  updateProductBlogStatus(
+    id: string,
+    blogStatus: 'APPEARED_IN_RESEARCH_BLOG' | 'TO_APPEAR_IN_BLOG' | 'SENT_A_DRAFT' | 'DID_NOT_SUBMIT' |
+    'SENT_REMINDERS'
+  ) {
+    const { href } = new URL(
+      `/api/product/update-blog-status/${id}`,
+      this.apiUrl
+    );
+    const token = this.tokenService.getToken();
+    return this.http.patch<Product>(
+      href,
+      { blogStatus },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+  }
+
 }
 

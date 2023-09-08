@@ -6,6 +6,7 @@ import {
   getGrantProposals,
   getReviewersProposals,
   getTeamMembersProposals,
+  getUniversities,
   getUserProposals,
   updateOrAddReview,
   updateProposalStatus,
@@ -40,6 +41,9 @@ grantProposalRouter.post("/", authorizeMiddleware, createGrantProposal);
 
 // Get departments
 grantProposalRouter.get("/departments", authorizeMiddleware, getDepartments);
+
+// Get universities
+grantProposalRouter.get("/universities", authorizeMiddleware, getUniversities);
 
 // get grant proposals by type or all of them //* GET /api/grant-proposal or /api/grant-proposal/:type
 grantProposalRouter.get(

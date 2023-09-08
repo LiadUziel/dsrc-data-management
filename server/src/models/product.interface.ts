@@ -30,7 +30,9 @@ export interface Product {
   internationalCoopreration?: string;
   volunteerWork?: string;
   developCourses?: string;
-  customFields?: { [key: string]: string };   
+  customFields?: { [key: string]: string };
+  blogStatus: 'APPEARED_IN_RESEARCH_BLOG' | 'TO_APPEAR_IN_BLOG' | 'SENT A DRAFT' | 'DID_NOT_SUBMIT' |
+               'SENT_REMINDERS';
 }
 
 const productSchema = new Schema<Product>(
@@ -56,7 +58,12 @@ const productSchema = new Schema<Product>(
         internationalCoopreration: {type: String},
         volunteerWork: {type: String},
         developCourses: {type: String},
-        customFields: { type: Object, default: undefined, required: false },  
+        customFields: { type: Object, default: undefined, required: false },
+        blogStatus: {
+          type: String,
+          enum: ['APPEARED_IN_RESEARCH_BLOG', 'TO_APPEAR_IN_BLOG', 'SENT A DRAFT', 'DID_NOT_SUBMIT', 'SENT_REMINDERS'],
+          required: true,
+        },  
     },
     { timestamps: true }
 );

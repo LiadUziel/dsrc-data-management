@@ -25,7 +25,7 @@ export class ProductFormService {
     for (const type of typesSet) {
       switch (type) {
         case 'DS_DOCTORAL':
-          typesOfFunding.push('Project supervision by data scientist');
+          typesOfFunding.push('Data science doctoral');
           break;
         case 'POST_DOCTORAL':
           typesOfFunding.push('PhD/PostDoc fellowship');
@@ -38,6 +38,7 @@ export class ProductFormService {
           break;       
       }
     }
+    typesOfFunding.push('Project supervision by data scientist');
     typesOfFunding.push('VATAT');
   }
   

@@ -2,8 +2,77 @@
   <h1>Data Science Doctoral candidates</h1>
 
   <form class="form" action="/upload" mehod="POST" enctype="multipart/form-data" [formGroup]="doctoralForm" (ngSubmit)="onSubmit()">
-    <app-parent-form [form]="doctoralForm"></app-parent-form>
-
+    <app-parent-form [form]="doctoralForm" (departmentsEventEmitter)="getDepartments($event)"></app-parent-form>
+    <b>please tell us about your BA: </b>
+    <p-dropdown
+      formControlName="BADepartment"
+      [options]="departments"
+      optionLabel="name"
+      optionValue="name"
+      [filter]="true"
+      filterBy="name"
+      [showClear]="true"
+      placeholder="Department"
+      styleClass="department"
+      inputId="float-label"
+    ></p-dropdown>
+    <p-dropdown
+    formControlName="BAUniversity"
+    [options]="universities"
+    optionLabel="name"
+    optionValue="name"
+    [filter]="true"
+    filterBy="name"
+    [showClear]="true"
+    placeholder="University"
+    styleClass="University"
+    inputId="float-label"
+    ></p-dropdown>
+    <span class="p-float-label">
+      <p-inputNumber
+        formControlName="BAAvg"
+        inputId="integeronly"
+        class="avg"
+        [min]="0"
+        [max]="100"
+      ></p-inputNumber>
+      <label>Average grade</label>
+    </span>
+    <b>please tell us about your MA: </b>
+    <p-dropdown
+      formControlName="MADepartment"
+      [options]="departments"
+      optionLabel="name"
+      optionValue="name"
+      [filter]="true"
+      filterBy="name"
+      [showClear]="true"
+      placeholder="Department"
+      styleClass="department"
+      inputId="float-label"
+    ></p-dropdown>
+    <p-dropdown
+    formControlName="MAUniversity"
+    [options]="universities"
+    optionLabel="name"
+    optionValue="name"
+    [filter]="true"
+    filterBy="name"
+    [showClear]="true"
+    placeholder="University"
+    styleClass="University"
+    inputId="float-label"
+    ></p-dropdown>
+    <span class="p-float-label">
+      <p-inputNumber
+        formControlName="MAAvg"
+        inputId="integeronly"
+        class="avg"
+        [min]="0"
+        [max]="100"
+      ></p-inputNumber>
+      <label>Average grade</label>
+    </span>
     <div class="field">
       <p-fileUpload #fileUpload
        name="file"

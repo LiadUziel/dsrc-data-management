@@ -38,7 +38,7 @@
           pButton
           pRipple
           icon="pi pi-file-excel"
-          (click)="productsTable.exportCSV()"
+          (click)="getTableToExportCSV().exportCSV()"
           class="p-button-success"
           pTooltip="Export CSV"
           tooltipPosition="bottom"
@@ -71,7 +71,11 @@
         <th pSortableColumn="catchyTitle">
             <div>Catchy Title</div>
             <p-sortIcon field="catchyTitle"></p-sortIcon>
-          </th>
+        </th>
+        <th pSortableColumn="blogStatus">
+          <div>Blog Status</div>
+          <p-sortIcon field="blogStatus"></p-sortIcon>
+        </th>
         <th pSortableColumn="applicationDate">
           <div>Application Date</div>
           <p-sortIcon field="applicationDate"></p-sortIcon>
@@ -98,6 +102,13 @@
         <td>{{ product.user.email }}</td>
         <td>{{ product.projectTitleThatWasGranted }}</td>
         <td>{{ product.catchyTitle }}</td>
+        <td>
+          <p-tag
+          [severity]="blogStatusSeverity[product.blogStatus]"
+          [value]="ProductBlogStatus[product.blogStatus]"
+          [icon]="blogStatusIcon[product.blogStatus]"
+        ></p-tag>
+        </td>
         <td>{{ product.applicationDate | date }}</td>
         <td class="actions">
           <button
@@ -110,6 +121,14 @@
             <img src="\assets\puzzle-piece.svg" alt="" height="25px" />
             <label>Manage Custom Fields</label>
           </button>
+          <button
+          pButton
+          pRipple
+          type="button"
+          class="p-button-rounded p-button-text"
+          label="Update Blog Status"
+          (click)="openUpdateBlogStatusDialog(product)"
+        ></button>
         </td>
       </tr>
     </ng-template>
@@ -152,9 +171,9 @@
                 <h3><u>Research Team:</u></h3>
                 <table class="multi-field-table">
                   <tr>
-                    <th>Member Name</th>
-                    <th>Member degree</th>
-                    <th>Member URL website</th>
+                    <th class="th-padding">Member Name</th>
+                    <th class="th-padding">Member degree</th>
+                    <th class="th-padding">Member URL website</th>
                   </tr>
                   <tr *ngFor="let member of product.researchTeam">
                     <td>{{ member.firstName }} {{member.lastName}}</td>
