@@ -15,13 +15,15 @@
         width: 40vw;
         border: 1px solid #707070;
         border-radius: 1rem;
-        
+
         .intended-list {
             padding-left: 2.5rem;
             padding-top: 0.3125rem;
         }
+
         .p-float-label,
-        input, textarea {
+        input,
+        textarea {
             width: 100%
         }
 
@@ -40,20 +42,21 @@
                     color: #000;
                 }
             }
+
             .file-upload-element-width {
                 width: 22.1875rem;
             }
         }
-        .black-font-and-margin {
-            color: #000;
+
+        .margin-top {
             margin-top: 0.625rem;
+
         }
-        .black-font-and-margin-B {
-            color: #000;
-        }
+
         .margin-div {
             margin-bottom: 3.75rem;
         }
+
         .display-SDG-options {
             display: flex;
             flex-direction: column;
@@ -83,8 +86,10 @@
     gap: 0.5rem;
     display: flex;
     align-items: center;
+
     .p-fileupload-choose {
         justify-content: center;
+
         .p-button-label {
             margin-left: 0.312rem;
         }
@@ -94,4 +99,3 @@
 .ta-margin {
     margin-top: 10px;
 }
-
