@@ -58,11 +58,6 @@ const routes: Routes = [
     component: ManageProposalsComponent,
     canActivate: [AuthGuard],
   },
-  {
-    path: 'grantsAwarded',
-    component: GrantsAwardedComponent,
-    canActivate: [AdminAuthGuard],
-  }, // example of AdminAuthGuard,TODO: remove (/ work on) component
   { path: 'forgotPassword', component: ForgotPasswordComponent },
   {
     path: 'renewPassword',
