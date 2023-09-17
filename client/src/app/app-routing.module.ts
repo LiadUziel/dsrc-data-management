@@ -7,7 +7,6 @@ import { DsDoctoralComponent } from './pages/submit-proposal/ds-doctoral/ds-doct
 import { PostDoctoralComponent } from './pages/submit-proposal/post-doctoral/post-doctoral.component';
 import { SeedResearchComponent } from './pages/submit-proposal/seed-research/seed-research.component';
 import { DatasetCollectionComponent } from './pages/submit-proposal/dataset-collection/dataset-collection.component';
-import { GrantsAwardedComponent } from './pages/grants-awarded/grants-awarded.component';
 import { ManageProposalsComponent } from './pages/manage-proposals/manage-proposals.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { AuthGuard } from './auth/services/auth.guard';
@@ -33,30 +32,46 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
 
   // submit proposal
-  { path: 'submit-proposal/ds-doctoral', component: DsDoctoralComponent },
-  { path: 'submit-proposal/post-doctoral', component: PostDoctoralComponent },
-  { path: 'submit-proposal/seed-research', component: SeedResearchComponent },
+  {
+    path: 'submit-proposal/ds-doctoral',
+    component: DsDoctoralComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'submit-proposal/post-doctoral',
+    component: PostDoctoralComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'submit-proposal/seed-research',
+    component: SeedResearchComponent,
+    canActivate: [AuthGuard],
+  },
   {
     path: 'submit-proposal/dataset-collection',
     component: DatasetCollectionComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'submitted-proposals',
     component: SubmittedProposalsComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'reviewers',
     component: ReviewersPageComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'team-members',
     component: TeamMembersPageComponent,
+    canActivate: [AuthGuard],
   },
 
   {
     path: 'manage-proposals',
     component: ManageProposalsComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, AdminAuthGuard],
   },
   { path: 'forgotPassword', component: ForgotPasswordComponent },
   {
@@ -69,11 +84,20 @@ const routes: Routes = [
     component: LoginComponent,
     canActivate: [VerificationRegistrationGuard],
   },
-  {path: 'submit-product', component: ProductFormComponent, canActivate: [AuthGuard]},
-  {path: 'manage-products', component: ManageProductsComponent, canActivate: [AdminAuthGuard]},
+  {
+    path: 'submit-product',
+    component: ProductFormComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'manage-products',
+    component: ManageProductsComponent,
+    canActivate: [AuthGuard, AdminAuthGuard],
+  },
   {
     path: 'my-products',
     component: MyProductsComponent,
+    canActivate: [AuthGuard],
   },
   { path: '**', component: PageNotFoundComponent },
 ];
