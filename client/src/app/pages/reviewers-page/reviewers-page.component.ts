@@ -10,6 +10,7 @@ import { GrantProposalService } from 'src/app/shared/services/grant-proposal.ser
 import { GrantType } from '../manage-proposals/models/grant-type.enum';
 import { ProposalStatus } from '../manage-proposals/models/proposal-status.enum';
 import { ReviewDialogComponent } from 'src/app/shared/components/review-dialog/review-dialog.component';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-reviewers-page',
@@ -40,12 +41,24 @@ export class ReviewersPageComponent {
     REJECTED: 'pi pi-times',
   };
 
+  statusesKeys = Object.keys(ProposalStatus);
+
+  grantTypesKeys = Object.keys(GrantType);
+
+  departments: { name: string }[];
+
   constructor(
     private grantProposalsService: GrantProposalService,
     private filesService: FilesService
   ) {}
   ngOnInit(): void {
     this.initProposals();
+
+    this.grantProposalsService.getDepartments().subscribe({
+      next: (departments) => {
+        this.departments = departments;
+      },
+    });
   }
 
   initProposals() {
@@ -93,5 +106,9 @@ export class ReviewersPageComponent {
     ref.onClose.subscribe(() => {
       this.initProposals();
     });
+  }
+
+  clear(table: Table) {
+    table.clear();
   }
 }

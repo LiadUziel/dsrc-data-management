@@ -9,6 +9,7 @@ import { GrantProposal } from 'src/app/shared/models/grant-proposal.interface';
 import { GrantProposalService } from 'src/app/shared/services/grant-proposal.service';
 import { GrantType } from '../manage-proposals/models/grant-type.enum';
 import { ProposalStatus } from '../manage-proposals/models/proposal-status.enum';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-team-members-page',
@@ -39,12 +40,24 @@ export class TeamMembersPageComponent {
     REJECTED: 'pi pi-times',
   };
 
+  statusesKeys = Object.keys(ProposalStatus);
+
+  grantTypesKeys = Object.keys(GrantType);
+
+  departments: { name: string }[];
+
   constructor(
     private grantProposalsService: GrantProposalService,
     private filesService: FilesService
   ) {}
   ngOnInit(): void {
     this.initProposals();
+
+    this.grantProposalsService.getDepartments().subscribe({
+      next: (departments) => {
+        this.departments = departments;
+      },
+    });
   }
 
   initProposals() {
@@ -79,5 +92,9 @@ export class TeamMembersPageComponent {
       this.GrantTypeEnum[proposalType] === 'Seed Research' ||
       this.GrantTypeEnum[proposalType] === 'Dataset Collection'
     );
+  }
+
+  clear(table: Table) {
+    table.clear();
   }
 }

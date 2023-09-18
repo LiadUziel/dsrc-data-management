@@ -9,6 +9,7 @@ import { saveAs } from 'file-saver';
 import { DialogService } from 'primeng/dynamicdialog';
 import { ProposalStatus } from '../manage-proposals/models/proposal-status.enum';
 import { RoleEnum } from 'src/app/shared/enums/role.enum';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-submitted-proposals',
@@ -38,6 +39,12 @@ export class SubmittedProposalsComponent implements OnInit {
     REJECTED: 'pi pi-times',
   };
 
+  statusesKeys = Object.keys(ProposalStatus);
+
+  grantTypesKeys = Object.keys(GrantType);
+
+  departments: { name: string }[];
+
   constructor(
     private grantProposalsService: GrantProposalService,
     private filesService: FilesService
@@ -45,6 +52,12 @@ export class SubmittedProposalsComponent implements OnInit {
 
   ngOnInit(): void {
     this.initProposals();
+
+    this.grantProposalsService.getDepartments().subscribe({
+      next: (departments) => {
+        this.departments = departments;
+      },
+    });
   }
 
   initProposals() {
@@ -79,5 +92,9 @@ export class SubmittedProposalsComponent implements OnInit {
       this.GrantTypeEnum[proposalType] === 'Seed Research' ||
       this.GrantTypeEnum[proposalType] === 'Dataset Collection'
     );
+  }
+
+  clear(table: Table) {
+    table.clear();
   }
 }

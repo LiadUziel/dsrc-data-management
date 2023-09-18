@@ -2,29 +2,41 @@ import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from './auth.service';
 import { Router, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
+import { EMPTY, Observable, catchError, map } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AdminAuthGuard {
+  constructor(
+    private toastr: ToastrService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
-  private isAuthorized :boolean = false;
-  constructor(private toastr: ToastrService, private authService: AuthService, private router: Router) { }
-  canActivate(): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-    this.authService.protectedAdmin().subscribe({
-      next:(res) => {
+  canActivate():
+    | boolean
+    | UrlTree
+    | Observable<boolean | UrlTree>
+    | Promise<boolean | UrlTree> {
+    return this.authService.protectedAdmin().pipe(
+      catchError((err) => {
+        this.toastr.info(
+          'To access this page you need to be logged in as an admin'
+        );
+        this.router.navigate(['home']);
+        return EMPTY;
+      }),
+      map((res) => {
         if (res.result) {
-          this.isAuthorized = true;
+          return true;
         }
-      },
-      error:(error) => {
-        this.toastr.info('To get to this page, you first need to log in as Admin'); 
-        this.router.navigate(['login']);
-      }
-    }  
+        this.toastr.info(
+          'To access this page you need to be logged in as an admin'
+        );
+        this.router.navigate(['home']);
+        return false;
+      })
     );
-    
-    return this.isAuthorized;
   }
 }

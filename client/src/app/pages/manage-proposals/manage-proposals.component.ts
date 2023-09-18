@@ -12,6 +12,7 @@ import { UpdateStatusDialogComponent } from './update-status-dialog/update-statu
 import { ProposalStatus } from './models/proposal-status.enum';
 import { RoleEnum } from 'src/app/shared/enums/role.enum';
 import { Router } from '@angular/router';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-manage-proposals',
@@ -67,12 +68,24 @@ export class ManageProposalsComponent implements OnInit {
     REJECTED: 'pi pi-times',
   };
 
+  statusesKeys = Object.keys(ProposalStatus);
+
+  grantTypesKeys = Object.keys(GrantType);
+
+  departments: { name: string }[];
+
   constructor(
     private grantProposalsService: GrantProposalService,
     private filesService: FilesService
   ) {}
   ngOnInit(): void {
     this.initProposals();
+
+    this.grantProposalsService.getDepartments().subscribe({
+      next: (departments) => {
+        this.departments = departments;
+      },
+    });
   }
 
   initProposals() {
@@ -134,9 +147,15 @@ export class ManageProposalsComponent implements OnInit {
     });
   }
 
-  
   navigateToProposalProducts(proposal: GrantProposal) {
-    const queryParams = {studyTitle: proposal.studyTitle,email: proposal.user.email};
-    this.router.navigate(['manage-products'], {queryParams});
+    const queryParams = {
+      studyTitle: proposal.studyTitle,
+      email: proposal.user.email,
+    };
+    this.router.navigate(['manage-products'], { queryParams });
+  }
+
+  clear(table: Table) {
+    table.clear();
   }
 }

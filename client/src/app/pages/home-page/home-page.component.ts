@@ -11,17 +11,17 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 export class HomePageComponent implements OnInit {
   lotties: { [name: string]: AnimationOptions } = {
     home: {
-      path: 'assets/lottie/home-page.json',
+      path: 'assets/lottie/welcome.json',
       autoplay: true,
-      loop: true,
+      loop: false,
     },
     login: {
-      path: 'assets/lottie/login.json',
+      path: 'assets/lottie/login-purple.json',
       autoplay: true,
       loop: true,
     },
     register: {
-      path: 'assets/lottie/register.json',
+      path: 'assets/lottie/register-purple.json',
       autoplay: true,
       loop: true,
     },

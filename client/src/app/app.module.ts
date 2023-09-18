@@ -15,7 +15,6 @@ import { DsDoctoralComponent } from './pages/submit-proposal/ds-doctoral/ds-doct
 import { PostDoctoralComponent } from './pages/submit-proposal/post-doctoral/post-doctoral.component';
 import { SeedResearchComponent } from './pages/submit-proposal/seed-research/seed-research.component';
 import { DatasetCollectionComponent } from './pages/submit-proposal/dataset-collection/dataset-collection.component';
-import { GrantsAwardedComponent } from './pages/grants-awarded/grants-awarded.component';
 import { ManageProposalsComponent } from './pages/manage-proposals/manage-proposals.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { RenewPasswordComponent } from './pages/renew-password/renew-password.component';
@@ -30,7 +29,7 @@ import { ProductFormComponent } from './pages/submit-product/product-form/produc
 import { SGDOptionComponent } from './pages/submit-product/sdg-option/sgdoption/sgdoption.component';
 import { MarkAsteriskDirective } from './pages/submit-product/directives/mark-asterisk/mark-asterisk.directive';
 import { ManageProductsComponent } from './pages/manage-products/manage-products/manage-products.component';
-import { MyProductsComponent } from './pages/my-products/my-products/my-products.component';  
+import { MyProductsComponent } from './pages/my-products/my-products/my-products.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +42,6 @@ import { MyProductsComponent } from './pages/my-products/my-products/my-products
     PostDoctoralComponent,
     SeedResearchComponent,
     DatasetCollectionComponent,
-    GrantsAwardedComponent,
     ManageProposalsComponent,
     ForgotPasswordComponent,
     RenewPasswordComponent,
@@ -57,7 +55,7 @@ import { MyProductsComponent } from './pages/my-products/my-products/my-products
     SGDOptionComponent,
     MarkAsteriskDirective,
     ManageProductsComponent,
-    MyProductsComponent
+    MyProductsComponent,
   ],
   imports: [
     BrowserModule,

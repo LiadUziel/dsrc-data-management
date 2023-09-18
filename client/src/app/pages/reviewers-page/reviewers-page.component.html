@@ -35,15 +35,45 @@
             placeholder="Search keyword"
           />
         </span>
+        <button
+          pButton
+          label="Clear"
+          class="p-button-outlined"
+          icon="pi pi-filter-slash"
+          (click)="clear(proposalTable)"
+        ></button>
       </div>
     </ng-template>
     <ng-template pTemplate="header">
       <tr>
         <th></th>
-        <th pSortableColumn="type">
+        <th>
           <div>Grant Type</div>
-          <p-sortIcon field="type"></p-sortIcon>
+
+          <p-columnFilter field="type" matchMode="equals" [showMenu]="false">
+            <ng-template
+              pTemplate="filter"
+              let-value
+              let-filter="filterCallback"
+            >
+              <p-dropdown
+                [ngModel]="value"
+                [options]="grantTypesKeys"
+                placeholder="Choose Type"
+                (onChange)="filter($event.value)"
+                [showClear]="true"
+              >
+                <ng-template let-option pTemplate="item">
+                  {{ GrantTypeEnum[option] }}
+                </ng-template>
+                <ng-template let-option pTemplate="selectedItem">
+                  {{ GrantTypeEnum[option] }}
+                </ng-template>
+              </p-dropdown>
+            </ng-template>
+          </p-columnFilter>
         </th>
+
         <th pSortableColumn="user.firstName">
           <div>First Name</div>
           <p-sortIcon field="user.firstName"></p-sortIcon>
@@ -56,22 +86,91 @@
           <div>Email</div>
           <p-sortIcon field="user.email"></p-sortIcon>
         </th>
-        <th pSortableColumn="department">
+        <th>
           <div>Department</div>
-          <p-sortIcon field="department"></p-sortIcon>
+          <p-columnFilter
+            field="department"
+            matchMode="equals"
+            [showMenu]="false"
+          >
+            <ng-template
+              pTemplate="filter"
+              let-value
+              let-filter="filterCallback"
+            >
+              <p-dropdown
+                [ngModel]="value"
+                [options]="departments"
+                placeholder="Choose Department"
+                (onChange)="filter($event.value)"
+                optionLabel="name"
+                optionValue="name"
+                [showClear]="true"
+                [filter]="true"
+                filterBy="name"
+              >
+                <ng-template let-option pTemplate="item">
+                  <div>{{ option.name }}</div>
+                </ng-template>
+              </p-dropdown>
+            </ng-template>
+          </p-columnFilter>
         </th>
+
         <th pSortableColumn="studyTitle">
           <div>Study Title</div>
           <p-sortIcon field="studyTitle"></p-sortIcon>
         </th>
-        <th pSortableColumn="amountRequested">
+        <th>
           <div>Amount Requested</div>
-          <p-sortIcon field="amountRequested"></p-sortIcon>
+          <p-columnFilter
+            type="numeric"
+            field="amountRequested"
+            display="menu"
+          ></p-columnFilter>
         </th>
-        <th pSortableColumn="status">
+        <th>
           <div>Status</div>
-          <p-sortIcon field="status"></p-sortIcon>
+          <p-columnFilter field="status" matchMode="equals" [showMenu]="false">
+            <ng-template
+              pTemplate="filter"
+              let-value
+              let-filter="filterCallback"
+            >
+              <p-dropdown
+                [ngModel]="value"
+                [options]="statusesKeys"
+                placeholder="Choose Status"
+                (onChange)="filter($event.value)"
+                [showClear]="true"
+              >
+                <ng-template let-option pTemplate="selectedItem">
+                  <p-tag
+                    [severity]="statusSeverity[option]"
+                    [value]="ProposalStatus[option]"
+                    [icon]="statusIcon[option]"
+                  ></p-tag>
+                </ng-template>
+                <ng-template let-option pTemplate="item">
+                  <p-tag
+                    [severity]="statusSeverity[option]"
+                    [value]="ProposalStatus[option]"
+                    [icon]="statusIcon[option]"
+                  ></p-tag>
+                </ng-template>
+              </p-dropdown>
+            </ng-template>
+          </p-columnFilter>
         </th>
+        <th>
+          Amount Given
+          <p-columnFilter
+            type="numeric"
+            field="amountGiven"
+            display="menu"
+          ></p-columnFilter>
+        </th>
+
         <th pSortableColumn="applicationDate">
           <div>Application Date</div>
           <p-sortIcon field="applicationDate"></p-sortIcon>
@@ -107,11 +206,9 @@
               [icon]="statusIcon[proposal.status]"
             ></p-tag>
           </div>
-          <div class="amount-given">
-            Amount Given: {{ proposal.amountGiven | number }}₪
-          </div>
         </td>
-        <td>{{ proposal.applicationDate | date }}</td>
+        <td>{{ proposal.amountGiven | number }}₪</td>
+        <td>{{ proposal.applicationDate | date : "dd/MM/yyyy HH:mm" }}</td>
         <td class="actions">
           <button
             *ngIf="proposal.status === 'PENDING'"
@@ -130,7 +227,7 @@
     <!--* line extension -->
     <ng-template pTemplate="rowexpansion" let-proposal>
       <tr class="expanded-row">
-        <td colspan="11" class="expanded-cell">
+        <td colspan="12" class="expanded-cell">
           <div *ngIf="proposal.teamMembers && proposal.teamMembers.length > 0">
             <h3>Team Members:</h3>
             <table class="team-members-table">
