@@ -22,6 +22,8 @@
     [showCurrentPageReport]="true"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
     styleClass="p-datatable-striped"
+    [loading]="loading"
+    [showLoader]="false"
   >
     <ng-template pTemplate="caption">
       <div class="caption">
@@ -175,6 +177,11 @@
           <div>Application Date</div>
           <p-sortIcon field="applicationDate"></p-sortIcon>
         </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="loadingbody">
+      <tr *ngFor="let i of rowsSkeleton">
+        <td *ngFor="let i of colsSkeleton"><p-skeleton></p-skeleton></td>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-proposal let-expanded="expanded">

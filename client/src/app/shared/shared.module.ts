@@ -20,6 +20,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { TabViewModule } from 'primeng/tabview';
 import { ListboxModule } from 'primeng/listbox';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { SkeletonModule } from 'primeng/skeleton';
 
 // ngx-toastr
 import { ToastrModule } from 'ngx-toastr';
@@ -72,6 +73,7 @@ import { MultiFieldComponent } from './components/multi-field/multi-field.compon
     TabViewModule,
     ListboxModule,
     InputSwitchModule,
+    SkeletonModule,
 
     //materials
     MatPasswordStrengthModule,
@@ -98,6 +100,7 @@ import { MultiFieldComponent } from './components/multi-field/multi-field.compon
     TabViewModule,
     ListboxModule,
     InputSwitchModule,
+    SkeletonModule,
 
     // materials
     MatPasswordStrengthModule,

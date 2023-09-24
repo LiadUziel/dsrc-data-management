@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable, delay, finalize } from 'rxjs';
 import { GrantProposal } from 'src/app/shared/models/grant-proposal.interface';
 import { GrantProposalService } from 'src/app/shared/services/grant-proposal.service';
 import { GrantType } from './models/grant-type.enum';
@@ -74,6 +74,10 @@ export class ManageProposalsComponent implements OnInit {
 
   departments: { name: string }[];
 
+  loading = true;
+  rowsSkeleton = new Array(5);
+  colsSkeleton = new Array(12);
+
   constructor(
     private grantProposalsService: GrantProposalService,
     private filesService: FilesService
@@ -89,7 +93,13 @@ export class ManageProposalsComponent implements OnInit {
   }
 
   initProposals() {
-    this.proposals$ = this.grantProposalsService.getAllProposals();
+    this.loading = true;
+    this.proposals$ = this.grantProposalsService.getAllProposals().pipe(
+      delay(1500),
+      finalize(() => {
+        this.loading = false;
+      })
+    );
   }
 
   // get the total amount of the budget parts1
