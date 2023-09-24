@@ -13,6 +13,7 @@ import { ProposalStatus } from './models/proposal-status.enum';
 import { RoleEnum } from 'src/app/shared/enums/role.enum';
 import { Router } from '@angular/router';
 import { Table } from 'primeng/table';
+import { ReviewDialogComponent } from 'src/app/shared/components/review-dialog/review-dialog.component';
 
 @Component({
   selector: 'app-manage-proposals',
@@ -134,6 +135,19 @@ export class ManageProposalsComponent implements OnInit {
   openCustomFieldsDialog(proposal: GrantProposal) {
     const ref = this.dialogService.open(CustomFieldsDialogComponent, {
       header: `Manage Custom Fields For ${proposal.studyTitle}`,
+      width: '60%',
+      data: { proposal },
+    });
+
+    // render table after dialog is closed
+    ref.onClose.subscribe(() => {
+      this.initProposals();
+    });
+  }
+
+  openReviewDialog(proposal: GrantProposal) {
+    const ref = this.dialogService.open(ReviewDialogComponent, {
+      header: `Review For "${proposal.studyTitle}"`,
       width: '60%',
       data: { proposal },
     });

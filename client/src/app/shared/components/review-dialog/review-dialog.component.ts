@@ -5,6 +5,7 @@ import { GrantProposalService } from '../../services/grant-proposal.service';
 import { GrantProposal } from '../../models/grant-proposal.interface';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { finalize } from 'rxjs';
+import { User } from 'src/app/auth/interfaces/user-interface';
 
 @Component({
   selector: 'app-review-dialog',
@@ -13,7 +14,7 @@ import { finalize } from 'rxjs';
 })
 export class ReviewDialogComponent implements OnInit {
   proposal: GrantProposal;
-  loggedUser;
+  loggedUser: User;
 
   reviewText: string;
 
