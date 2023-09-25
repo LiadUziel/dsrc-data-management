@@ -1,0 +1,220 @@
+<div [formGroup]="form">
+  <div [formArrayName]="formArrayName">
+    <div
+      *ngFor="let field of fields.controls; let i = index"
+      [formGroupName]="i"
+      class="fields"
+    >
+      <h3>
+        {{ displayAction }} {{ i + 1 }}
+
+        <button
+          pButton
+          type="button"
+          icon="pi pi-trash"
+          class="p-button-danger p-button-text p-button-rounded"
+          [pTooltip]="'Remove ' + displayAction"
+          (click)="removeField(i)"
+        ></button>
+      </h3>
+
+      <div *ngIf="formArrayName === 'teamMembers'" class="inputs-wrapper">
+        <p-tabView styleClass="tab-view">
+          <p-tabPanel header="Exist User">
+            <span class="p-float-label">
+              <p-dropdown
+                formControlName="memberEmail"
+                [options]="users"
+                optionValue="email"
+                [filter]="true"
+                filterBy="firstName, lastName, email"
+                [showClear]="true"
+                placeholder="Choose User"
+                styleClass="exist-users"
+                inputId="float-label"
+              >
+              <ng-template let-user pTemplate="selectedItem">
+                <div>
+                  {{ user.firstName }} {{ user.lastName }} - {{ user.email }}
+                </div>
+              </ng-template>
+              <ng-template let-user pTemplate="item">
+                <div>
+                  {{ user.firstName }} {{ user.lastName }} - {{ user.email }}
+                </div>
+              </ng-template>
+            </p-dropdown>
+            <label for="float-label">Choose User</label>
+          </span>
+        </p-tabPanel>
+        <p-tabPanel header="Non Exist User">
+          <span class="p-float-label">
+            <input pInputText formControlName="memberEmail" />
+            <label>Member Email</label>
+          </span>
+        </p-tabPanel>
+      </p-tabView>
+
+        <span class="p-float-label">
+
+          <p-dropdown
+            formControlName="memberRole"
+            [options]="roles"
+            [showClear]="true"
+            placeholder="Choose Role"
+            styleClass="exist-users"
+            inputId="float-label"
+          >
+            <ng-template let-role pTemplate="selectedItem">
+              <div>{{ RoleEnum[role] }}</div>
+            </ng-template>
+            <ng-template let-role pTemplate="item">
+              <div>{{ RoleEnum[role] }}</div>
+            </ng-template>
+          </p-dropdown>
+          <label for="float-label">Choose Role</label>
+        </span>
+      </div>
+
+      <div *ngIf="formArrayName === 'budgetParts'" class="inputs-wrapper">
+        <span class="p-float-label">
+          <textarea
+            pInputTextarea
+            formControlName="reason"
+            cols="40"
+            rows="1"
+            [autoResize]="true"
+          ></textarea>
+          <label>Reason</label>
+        </span>
+
+        <span class="p-float-label">
+          <p-inputNumber
+            inputId="integeronly"
+            formControlName="amount"
+          ></p-inputNumber>
+          <label>Amount</label>
+        </span>
+      </div>
+
+      <div *ngIf="formArrayName === 'researchTeam'" class="inputs-wrapper">
+        <span class="p-float-label margin-input">
+          <input pInputText formControlName="firstName" />
+          <label>first name</label>
+        </span>
+        <span class="p-float-label">
+          <input pInputText formControlName="lastName" />
+          <label>last name</label>
+        </span>
+        <div>
+          <label class="black-font-and-margin">Degree:</label>
+          <p-listbox [options]="degrees"
+          formControlName="degree"
+          >
+          </p-listbox>
+        </div>
+        <span class="p-float-label">
+          <input pInputText formControlName="urlOfPersonalWebsite" />
+          <label>url of personal website</label>
+        </span>
+      </div>
+      <div *ngIf="formArrayName === 'publications'" class="inputs-wrapper">
+        <div>
+          <label class="black-font-and-margin">type (pick one):</label>
+          <p-listbox [options]="publicationTypes"
+          formControlName="publicationTypes" (onClick)="setIsOther($event)"
+          >
+          </p-listbox>
+        </div>
+        <span *ngIf="isOtherChosen()" class="p-float-label">
+          <input pInputText formControlName="otherPublicationType"/>
+          <label>please type the other type here</label>
+        </span>
+        <span class="p-float-label margin-input-x2">
+          <textarea
+            pInputTextarea
+            formControlName="publicationName"
+            cols="40"
+            rows="2"
+            [autoResize]="true"
+          ></textarea>
+          <label>
+            Name
+          </label>
+        </span>
+        <div>
+          <label class="black-font-and-margin">status (pick one):</label>
+          <p-listbox [options]="publicationStatuses"
+          formControlName="publicationStatus"
+          >
+          </p-listbox>
+        </div>
+      </div>
+      <div *ngIf="formArrayName === 'researchGrants'" class="inputs-wrapper">
+        <span class="p-float-label margin-input-x2">
+          <textarea
+            pInputTextarea
+            formControlName="coauthors"
+            cols="40"
+            rows="2"
+            [autoResize]="true"
+          ></textarea>
+          <label>
+            coauthors
+          </label>
+        </span>
+        <span class="p-float-label">
+          <textarea
+            pInputTextarea
+            formControlName="nameOfGrantProposal"
+            cols="40"
+            rows="2"
+            [autoResize]="true"
+          ></textarea>
+          <label>
+            name of grant proposal
+          </label>
+        </span>
+        <span class="p-float-label">
+          <textarea
+            pInputTextarea
+            formControlName="grantingAgency"
+            cols="40"
+            rows="2"
+            [autoResize]="true"
+          ></textarea>
+          <label>
+            granting agency
+          </label>
+        </span>
+        <span class="p-float-label">
+          <p-inputNumber
+            inputId="integeronly"
+            formControlName="year"
+          ></p-inputNumber>
+          <label>year</label>
+        </span>
+        <div>
+          <label class="black-font-and-margin">status (pick one):</label>
+          <p-listbox [options]="statuses"
+          formControlName="status"
+          >
+          </p-listbox>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button
+    pButton
+    type="button"
+    class="p-button-secondary add-member-btn"
+    (click)="addField()"
+  >
+    Add {{ displayAction }}
+  </button>
+
+  <div *ngIf="formArrayName === 'budgetParts'" class="total-budget">
+    Total Budget: {{ totalBudget | number }}
+  </div>
+</div>

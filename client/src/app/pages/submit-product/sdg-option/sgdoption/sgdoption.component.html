@@ -1,0 +1,10 @@
+<div class="gap-1 margin-between-options">
+    <p-checkbox [ngModel] ="checkboxValue"
+    (ngModelChange)="checkboxValue = $event"
+     name="SDGOptions"
+     value="{{value}}"
+     (onChange)="onChangeSDGOption($event, value)"
+     inputId="{{id}}">
+    </p-checkbox>
+    <label for="{{id}}"> {{value}}</label>
+</div>

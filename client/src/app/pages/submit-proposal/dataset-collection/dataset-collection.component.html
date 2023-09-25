@@ -1,0 +1,120 @@
+<div class="page-wrapper">
+  <h1>Funding for Dataset collection</h1>
+
+  <form class="form" [formGroup]="dsCollectionForm" (ngSubmit)="onSubmit()">
+    <app-parent-form [form]="dsCollectionForm"></app-parent-form>
+
+    <div class="field">
+      <p-fileUpload #fileUpload
+       name="file"
+       [maxFileSize]="1000000"
+        chooseLabel="Upload Research Introduction"
+        [showCancelButton]="false"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event, 'uploadResearchIntro')"
+        accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,image/*"
+        class="file-upload-element-width"
+        >
+      </p-fileUpload>
+      <i
+        class="pi pi-question-circle"
+        pTooltip="introduction including the importance of the proposed topic"
+      ></i>
+    </div>
+
+    <div class="field">
+      <p-fileUpload #fileUpload
+       name="file"
+       [maxFileSize]="1000000"
+        chooseLabel="Upload Innovation Project"
+        [showCancelButton]="false"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event, 'uploadInnovationProject')"
+        accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,image/*"
+        class="file-upload-element-width"
+        >
+      </p-fileUpload>
+      <i
+        class="pi pi-question-circle"
+        pTooltip="The innovation of the proposed project"
+      ></i>
+    </div>
+
+    <div class="field">
+      <p-fileUpload #fileUpload
+       name="file"
+       [maxFileSize]="1000000"
+        chooseLabel="Upload Dataset Information"
+        [showCancelButton]="false"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event, 'uploadDatasetInfo')"
+        accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,image/*"
+        class="file-upload-element-width"
+        >
+      </p-fileUpload>
+      <i
+        class="pi pi-question-circle"
+        pTooltip="The dataset collection process and timeline"
+      ></i>
+    </div>
+
+    <div class="field">
+      <p-fileUpload #fileUpload
+       name="file"
+       [maxFileSize]="1000000"
+        chooseLabel="Upload Ethics"
+        [showCancelButton]="false"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event, 'uploadEthics')"
+        accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,image/*"
+        class="file-upload-element-width"
+        >
+      </p-fileUpload>
+      <i
+        class="pi pi-question-circle"
+        pTooltip="The proposal should address and commit to ethics and privacy policies, when relevant."
+      ></i>
+    </div>
+
+    <div class="field">
+      <p-fileUpload #fileUpload
+       name="file"
+       [maxFileSize]="1000000"
+        chooseLabel="Upload Copyrights"
+        [showCancelButton]="false"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event, 'uploadCopyrights')"
+        accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,image/*"
+        class="file-upload-element-width"
+        >
+      </p-fileUpload>
+      <i
+        class="pi pi-question-circle"
+        pTooltip="If relevant, the proposal must address copyright, privacy, intellectual property or other
+        concerns that might prevent the publication of the data in an open access format."
+      ></i>
+    </div>
+
+    <app-multi-field
+      [form]="dsCollectionForm"
+      [formArrayName]="'teamMembers'"
+      [displayAction]="'Team Member'"
+    ></app-multi-field>
+
+    <app-multi-field
+      [form]="dsCollectionForm"
+      [formArrayName]="'budgetParts'"
+      [displayAction]="'Budget Part'"
+    ></app-multi-field>
+
+    <button
+      pButton
+      type="submit"
+      class="p-button-primary"
+      [disabled]="!dsCollectionForm.valid"
+      [loading]="loading"
+    >
+      Submit
+    </button>
+  </form>
+</div>

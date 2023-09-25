@@ -1,0 +1,52 @@
+<form class="form-wrapper" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <h1>Login</h1>
+
+  <div class="input-wrapper">
+    <span class="input-title">Email</span>
+    <div class="p-inputgroup input-user">
+      <span class="p-inputgroup-addon">
+        <i class="pi pi-at"></i>
+      </span>
+      <input pInputText placeholder="Enter a email" formControlName="email" />
+    </div>
+  </div>
+
+  <div class="input-wrapper">
+    <span class="input-title">Password</span>
+    <div class="input-password">
+      <span class="p-inputgroup-addon">
+        <i class="pi pi-lock lock-logo"></i>
+      </span>
+      <p-password
+        formControlName="value"
+        [feedback]="false"
+        placeholder="Enter a password"
+        styleClass="password"
+        [toggleMask]="true"
+        formControlName="password"
+      ></p-password>
+    </div>
+  </div>
+
+  <div class="input-wrapper">
+    <p-checkbox
+      formControlName="rememberMe"
+      [binary]="true"
+      label="Remember Me"
+    ></p-checkbox>
+  </div>
+
+  <div class="input-wrapper">
+    <a routerLink="../forgotPassword">forgot password?</a>
+  </div>
+
+  <button
+    pButton
+    type="submit"
+    class="p-button-primary"
+    [disabled]="!loginForm.valid"
+    [loading]="loading"
+  >
+    Login
+  </button>
+</form>

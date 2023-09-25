@@ -1,0 +1,31 @@
+<div class="parent-form" [formGroup]="form">
+  <span class="p-float-label">
+    <p-dropdown
+      formControlName="department"
+      [options]="departments"
+      optionLabel="name"
+      optionValue="name"
+      [filter]="true"
+      filterBy="name"
+      [showClear]="true"
+      placeholder="Department"
+      styleClass="department"
+      inputId="float-label"
+    ></p-dropdown>
+    <label for="float-label">Department</label>
+  </span>
+
+  <span class="p-float-label">
+    <input pInputText formControlName="studyTitle" />
+    <label>Study Title</label>
+  </span>
+
+  <span class="p-float-label">
+    <p-inputNumber
+      inputId="integeronly"
+      formControlName="amountRequested"
+      class="amount"
+    ></p-inputNumber>
+    <label>Amount Requested</label>
+  </span>
+</div>

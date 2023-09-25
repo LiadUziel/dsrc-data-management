@@ -1,0 +1,28 @@
+.dialog-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    h3 {
+        margin-bottom: -1.25rem;
+    }
+
+    .radios-wrapper {
+        display: flex;
+        justify-content: space-between;
+
+        .choice {
+            label {
+                margin-left: 0.5rem;
+            }
+        }
+    }
+
+    .amount-given-wrapper {
+        min-height: 4rem;
+    }
+
+    .submit-btn {
+        align-self: center;
+    }
+}

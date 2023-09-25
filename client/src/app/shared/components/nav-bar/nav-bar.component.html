@@ -1,0 +1,22 @@
+<div class="card">
+  <p-menubar class="width-position" [model]="items">
+    <ng-template pTemplate="end">
+      <div class="right-side">
+        <div class="switch-theme">
+          <span>Light Mode</span>
+          <p-inputSwitch
+            [(ngModel)]="isDarkTheme"
+            (onChange)="switchTheme()"
+          ></p-inputSwitch>
+          <span>Dark Mode</span>
+        </div>
+        <div class="user-details">
+          <div class="name">{{ user?.firstName }} {{ user?.lastName }}</div>
+          <div class="email">
+            {{ user?.email }}
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </p-menubar>
+</div>

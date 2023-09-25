@@ -1,0 +1,46 @@
+<main>
+  <h1>DSRC Grant Proposals Management System</h1>
+  <div class="lottie-wrapper">
+    <ng-lottie [options]="lotties['home']" width="375px"></ng-lottie>
+  </div>
+
+  <p>
+    This is our final project for the degree in information systems. The purpose
+    of this system is to allow DSRC (Data Science Research Center) to manage
+    their grant proposals in the best way. The user can submit research
+    proposals and follow them, and the administrators can manage them including
+    providing reviews and adding desired information in a customized way
+  </p>
+
+  <div class="actions" *ngIf="!isLogged">
+    <div class="login action">
+      <div class="lottie-wrapper" (click)="navigateToLogin()">
+        <ng-lottie [options]="lotties['login']" height="200px"></ng-lottie>
+      </div>
+      <button
+        pButton
+        pRipple
+        class="p-button-link"
+        label="Login"
+        (click)="navigateToLogin()"
+      ></button>
+    </div>
+    <div class="register action">
+      <div class="lottie-wrapper" (click)="navigateToRegister()">
+        <ng-lottie [options]="lotties['register']" width="200px"></ng-lottie>
+      </div>
+      <button
+        pButton
+        pRipple
+        class="p-button-link"
+        label="Register"
+        (click)="navigateToRegister()"
+      ></button>
+    </div>
+  </div>
+
+  <b *ngIf="isLogged">
+    You are logged in, you can apply for a grant proposal and track your
+    applications
+  </b>
+</main>

@@ -1,0 +1,88 @@
+<div class="page-wrapper">
+  <h1>Seed research funding</h1>
+
+  <form class="form" [formGroup]="seedForm" (ngSubmit)="onSubmit()">
+    <app-parent-form [form]="seedForm"></app-parent-form>
+
+    <div class="field">
+      <p-fileUpload
+        #fileUpload
+        name="file"
+        [maxFileSize]="1000000"
+        chooseLabel="Upload Research Introduction"
+        [showCancelButton]="false"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event, 'uploadResearchIntro')"
+        accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,image/*"
+        class="file-upload-element-width"
+      >
+      </p-fileUpload>
+      <i
+        class="pi pi-question-circle"
+        pTooltip="introduction including the importance of the proposed topic"
+      ></i>
+    </div>
+
+    <div class="field">
+      <p-fileUpload
+        #fileUpload
+        name="file"
+        [maxFileSize]="1000000"
+        chooseLabel="Upload Innovation Project"
+        [showCancelButton]="false"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event, 'uploadInnovationProject')"
+        accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,image/*"
+        class="file-upload-element-width"
+      >
+      </p-fileUpload>
+      <i
+        class="pi pi-question-circle"
+        pTooltip="The innovation of the proposed project"
+      ></i>
+    </div>
+
+    <div class="field">
+      <p-fileUpload
+        #fileUpload
+        name="file"
+        [maxFileSize]="1000000"
+        chooseLabel="Upload External Funding"
+        [showCancelButton]="false"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event, 'uploadExternalFunding')"
+        accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,image/*"
+        class="file-upload-element-width"
+      >
+      </p-fileUpload>
+      <i
+        class="pi pi-question-circle"
+        pTooltip="Seed money should not fund existing research but new research. Following the seed
+        research, the researchers are expected to submit a proposal for external funding.
+        Please specify your plans for external funding."
+      ></i>
+    </div>
+
+    <app-multi-field
+      [form]="seedForm"
+      [formArrayName]="'teamMembers'"
+      [displayAction]="'Team Member'"
+    ></app-multi-field>
+
+    <app-multi-field
+      [form]="seedForm"
+      [formArrayName]="'budgetParts'"
+      [displayAction]="'Budget Part'"
+    ></app-multi-field>
+
+    <button
+      pButton
+      type="submit"
+      class="p-button-primary"
+      [disabled]="!seedForm.valid"
+      [loading]="loading"
+    >
+      Submit
+    </button>
+  </form>
+</div>

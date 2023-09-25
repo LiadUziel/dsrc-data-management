@@ -1,0 +1,127 @@
+<div class="dialog-wrapper">
+  <p class="intro">
+    <b *ngIf="config.data.proposal"> Here you can update the status of the proposal </b>
+    <b *ngIf="config.data.product"> Here you can update the status of the product </b>
+  </p>
+
+  <h3>Choose Status:</h3>
+  <div class="radios-wrapper">
+    <div class="choice" *ngIf="config.data.proposal">
+      <p-radioButton
+        value="PENDING"
+        [(ngModel)]="status"
+        inputId="PENDING"
+      ></p-radioButton>
+      <label for="PENDING">{{ ProposalStatus["PENDING"] }}</label>
+    </div>
+
+    <div class="choice" *ngIf="config.data.proposal">
+      <p-radioButton
+        value="PARTIALLY_APPROVED"
+        [(ngModel)]="status"
+        inputId="PARTIALLY_APPROVED"
+      ></p-radioButton>
+      <label for="PARTIALLY_APPROVED">{{
+        ProposalStatus["PARTIALLY_APPROVED"]
+      }}</label>
+    </div>
+
+    <div class="choice" *ngIf="config.data.proposal">
+      <p-radioButton
+        value="APPROVED"
+        [(ngModel)]="status"
+        inputId="APPROVED"
+      ></p-radioButton>
+      <label for="APPROVED">{{ ProposalStatus["APPROVED"] }}</label>
+    </div>
+
+    <div class="choice" *ngIf="config.data.proposal">
+      <p-radioButton
+        value="REJECTED"
+        [(ngModel)]="status"
+        inputId="REJECTED"
+      ></p-radioButton>
+      <label for="REJECTED">{{ ProposalStatus["REJECTED"] }}</label>
+    </div>
+
+    <div class="choice" *ngIf="config.data.product">
+      <p-radioButton
+        value="APPEARED_IN_RESEARCH_BLOG"
+        [(ngModel)]="blogStatus"
+        inputId="APPEARED_IN_RESEARCH_BLOG"
+      ></p-radioButton>
+      <label for="APPEARED_IN_RESEARCH_BLOG">{{ ProductBlogStatus["APPEARED_IN_RESEARCH_BLOG"] }}</label>
+    </div>
+
+    <div class="choice" *ngIf="config.data.product">
+      <p-radioButton
+        value="TO_APPEAR_IN_BLOG"
+        [(ngModel)]="blogStatus"
+        inputId="TO_APPEAR_IN_BLOG"
+      ></p-radioButton>
+      <label for="TO_APPEAR_IN_BLOG">{{ ProductBlogStatus["TO_APPEAR_IN_BLOG"] }}</label>
+    </div>
+
+    <div class="choice" *ngIf="config.data.product">
+      <p-radioButton
+        value="SENT_A_DRAFT"
+        [(ngModel)]="blogStatus"
+        inputId="SENT_A_DRAFT"
+      ></p-radioButton>
+      <label for="SENT_A_DRAFT">{{ ProductBlogStatus["SENT_A_DRAFT"] }}</label>
+    </div>
+
+    <div class="choice" *ngIf="config.data.product">
+      <p-radioButton
+        value="DID_NOT_SUBMIT"
+        [(ngModel)]="blogStatus"
+        inputId="DID_NOT_SUBMIT"
+      ></p-radioButton>
+      <label for="DID_NOT_SUBMIT">{{ ProductBlogStatus["DID_NOT_SUBMIT"] }}</label>
+    </div>
+
+    <div class="choice" *ngIf="config.data.product">
+      <p-radioButton
+        value="SENT_REMINDERS"
+        [(ngModel)]="blogStatus"
+        inputId="SENT_REMINDERS"
+      ></p-radioButton>
+      <label for="SENT_REMINDERS">{{ ProductBlogStatus["SENT_REMINDERS"] }}</label>
+    </div>
+  </div>
+
+  <p *ngIf="config.data.proposal">{{ optionMessages[status] }}</p>
+
+  <div class="amount-given-wrapper" *ngIf="config.data.proposal">
+    <span class="p-float-label" *ngIf="status === 'PARTIALLY_APPROVED'">
+      <p-inputNumber
+        inputId="minmax"
+        [(ngModel)]="amountGiven"
+        [min]="0"
+        [max]="proposal.amountRequested"
+      ></p-inputNumber>
+      <label>Amount Approved</label>
+    </span>
+  </div>
+
+  <button *ngIf="config.data.proposal"
+    pButton
+    pRipple
+    class="p-button-primary submit-btn"
+    [disabled]="status === 'PARTIALLY_APPROVED' && !amountGiven"
+    [loading]="loading"
+    (click)="updateProposalStatus()"
+  >
+    Update Proposal Status
+  </button>
+
+  <button *ngIf="config.data.product"
+  pButton
+  pRipple
+  class="p-button-primary submit-btn"
+  [loading]="loading"
+  (click)="updateProductStatus()"
+>
+  Update Proposal Status
+</button>
+</div>

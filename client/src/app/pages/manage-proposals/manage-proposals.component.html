@@ -1,0 +1,608 @@
+<h1>Manage Proposals</h1>
+
+<div class="table-wrapper">
+  <p-table
+    [value]="proposals$ | async"
+    #proposalTable
+    [globalFilterFields]="[
+      'type',
+      'user.firstName',
+      'user.lastName',
+      'user.email',
+      'department',
+      'studyTitle'
+    ]"
+    dataKey="_id"
+    [paginator]="true"
+    [rows]="10"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    styleClass="p-datatable-striped"
+    [columns]="cols"
+    [loading]="loading"
+    [showLoader]="false"
+  >
+    <ng-template pTemplate="caption">
+      <div class="caption">
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            type="text"
+            (input)="
+              proposalTable.filterGlobal($any($event.target).value, 'contains')
+            "
+            placeholder="Search keyword"
+          />
+        </span>
+        <button
+          pButton
+          label="Clear"
+          class="p-button-outlined"
+          icon="pi pi-filter-slash"
+          (click)="clear(proposalTable)"
+        ></button>
+        <button
+          type="button"
+          pButton
+          pRipple
+          icon="pi pi-file-excel"
+          (click)="proposalTable.exportCSV()"
+          class="p-button-success"
+          pTooltip="Export CSV"
+          tooltipPosition="bottom"
+        ></button>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th></th>
+        <th>
+          <div>Grant Type</div>
+
+          <p-columnFilter field="type" matchMode="equals" [showMenu]="false">
+            <ng-template
+              pTemplate="filter"
+              let-value
+              let-filter="filterCallback"
+            >
+              <p-dropdown
+                [ngModel]="value"
+                [options]="grantTypesKeys"
+                placeholder="Choose Type"
+                (onChange)="filter($event.value)"
+                [showClear]="true"
+              >
+                <ng-template let-option pTemplate="item">
+                  {{ GrantTypeEnum[option] }}
+                </ng-template>
+                <ng-template let-option pTemplate="selectedItem">
+                  {{ GrantTypeEnum[option] }}
+                </ng-template>
+              </p-dropdown>
+            </ng-template>
+          </p-columnFilter>
+        </th>
+        <th pSortableColumn="user.firstName">
+          <div>First Name</div>
+          <p-sortIcon field="user.firstName"></p-sortIcon>
+        </th>
+        <th pSortableColumn="user.lastName">
+          <div>Last Name</div>
+          <p-sortIcon field="user.lastName"></p-sortIcon>
+        </th>
+        <th pSortableColumn="user.email">
+          <div>Email</div>
+          <p-sortIcon field="user.email"></p-sortIcon>
+        </th>
+        <th>
+          <div>Department</div>
+          <p-columnFilter
+            field="department"
+            matchMode="equals"
+            [showMenu]="false"
+          >
+            <ng-template
+              pTemplate="filter"
+              let-value
+              let-filter="filterCallback"
+            >
+              <p-dropdown
+                [ngModel]="value"
+                [options]="departments"
+                placeholder="Choose Department"
+                (onChange)="filter($event.value)"
+                optionLabel="name"
+                optionValue="name"
+                [showClear]="true"
+                [filter]="true"
+                filterBy="name"
+              >
+                <ng-template let-option pTemplate="item">
+                  <div>{{ option.name }}</div>
+                </ng-template>
+              </p-dropdown>
+            </ng-template>
+          </p-columnFilter>
+        </th>
+        <th pSortableColumn="studyTitle">
+          <div>Study Title</div>
+          <p-sortIcon field="studyTitle"></p-sortIcon>
+        </th>
+        <th>
+          <div>Amount Requested</div>
+          <p-columnFilter
+            type="numeric"
+            field="amountRequested"
+            display="menu"
+          ></p-columnFilter>
+        </th>
+        <th>
+          <div>Status</div>
+          <p-columnFilter field="status" matchMode="equals" [showMenu]="false">
+            <ng-template
+              pTemplate="filter"
+              let-value
+              let-filter="filterCallback"
+            >
+              <p-dropdown
+                [ngModel]="value"
+                [options]="statusesKeys"
+                placeholder="Choose Status"
+                (onChange)="filter($event.value)"
+                [showClear]="true"
+              >
+                <ng-template let-option pTemplate="selectedItem">
+                  <p-tag
+                    [severity]="statusSeverity[option]"
+                    [value]="ProposalStatus[option]"
+                    [icon]="statusIcon[option]"
+                  ></p-tag>
+                </ng-template>
+                <ng-template let-option pTemplate="item">
+                  <p-tag
+                    [severity]="statusSeverity[option]"
+                    [value]="ProposalStatus[option]"
+                    [icon]="statusIcon[option]"
+                  ></p-tag>
+                </ng-template>
+              </p-dropdown>
+            </ng-template>
+          </p-columnFilter>
+        </th>
+        <th>
+          Amount Given
+          <p-columnFilter
+            type="numeric"
+            field="amountGiven"
+            display="menu"
+          ></p-columnFilter>
+        </th>
+        <th pSortableColumn="applicationDate">
+          <div>Application Date</div>
+          <p-sortIcon field="applicationDate"></p-sortIcon>
+        </th>
+        <th>Actions</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="loadingbody">
+      <tr *ngFor="let i of rowsSkeleton">
+        <td *ngFor="let i of colsSkeleton"><p-skeleton></p-skeleton></td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-proposal let-expanded="expanded">
+      <tr>
+        <td>
+          <button
+            type="button"
+            pButton
+            pRipple
+            [pRowToggler]="proposal"
+            class="p-button-text p-button-rounded p-button-plain"
+            [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+          ></button>
+        </td>
+
+        <td>{{ GrantTypeEnum[proposal.type] }}</td>
+        <td>{{ proposal.user.firstName }}</td>
+        <td>{{ proposal.user.lastName }}</td>
+        <td>{{ proposal.user.email }}</td>
+        <td>{{ proposal.department }}</td>
+        <td>{{ proposal.studyTitle }}</td>
+        <td>{{ proposal.amountRequested | number }}₪</td>
+        <td>
+          <div class="status">
+            <p-tag
+              [severity]="statusSeverity[proposal.status]"
+              [value]="ProposalStatus[proposal.status]"
+              [icon]="statusIcon[proposal.status]"
+            ></p-tag>
+          </div>
+        </td>
+        <td>{{ proposal.amountGiven | number }}₪</td>
+        <td>{{ proposal.applicationDate | date : "dd/MM/yyyy HH:mm" }}</td>
+        <td class="actions">
+          <button
+            pButton
+            pRipple
+            type="button"
+            class="p-button-rounded p-button-text manage-fields-btn"
+            (click)="openCustomFieldsDialog(proposal)"
+            label="Manage Custom Fields"
+          ></button>
+
+          <button
+            pButton
+            pRipple
+            type="button"
+            class="p-button-rounded p-button-text"
+            label="Update Status"
+            (click)="openUpdateStatusDialog(proposal)"
+          ></button>
+
+          <button
+            *ngIf="proposal.status === 'PENDING'"
+            pButton
+            pRipple
+            type="button"
+            class="p-button-rounded p-button-text"
+            label="Send Review"
+            (click)="openReviewDialog(proposal)"
+          ></button>
+
+          <button
+            pButton
+            pRipple
+            type="button"
+            class="p-button-rounded p-button-text"
+            label="Watch proposal products"
+            (click)="navigateToProposalProducts(proposal)"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+
+    <!--* line extension -->
+    <ng-template pTemplate="rowexpansion" let-proposal>
+      <tr class="expanded-row">
+        <td colspan="12" class="expanded-cell">
+          <div *ngIf="proposal.teamMembers && proposal.teamMembers.length > 0">
+            <h3>Team Members:</h3>
+            <table class="team-members-table">
+              <tr>
+                <th>Member Email</th>
+                <th>Full Name</th>
+                <th>Member Role</th>
+              </tr>
+              <tr *ngFor="let member of proposal.teamMembers">
+                <td>{{ member.memberEmail }}</td>
+                <td>{{ member.fullName }}</td>
+                <td>{{ RoleEnum[member.memberRole] }}</td>
+              </tr>
+            </table>
+          </div>
+
+          <div *ngIf="proposal.budgetParts && proposal.budgetParts.length > 0">
+            <h3>Budget Parts:</h3>
+            <div
+              *ngFor="let budgetPart of proposal.budgetParts"
+              class="budget-part"
+            >
+              <div class="field-wrapper">
+                <b>Reason: </b>
+                <span>{{ budgetPart.reason }}</span>
+              </div>
+              <div class="field-wrapper">
+                <b>Amount: </b>
+                <span>{{ budgetPart.amount | number }}</span>
+              </div>
+            </div>
+            <b
+              >Total Budget:
+              {{ getTotalBudget(proposal.budgetParts) | number }}</b
+            >
+          </div>
+
+          <div *ngIf="proposal.customFields" class="custom-fields">
+            <h3>Custom Fields:</h3>
+
+            <div
+              *ngFor="let keyValuePair of proposal.customFields | keyvalue"
+              class="custom-field"
+            >
+              <b>{{ keyValuePair.key }}:</b>
+              <p>{{ keyValuePair.value }}</p>
+            </div>
+          </div>
+
+          <div *ngIf="proposal.reviews?.length > 0" class="reviews">
+            <h3>Reviews:</h3>
+
+            <div *ngFor="let review of proposal.reviews" class="review">
+              <div class="field-wrapper">
+                <b>Writer Email: </b>
+                <span>{{ review.writerEmail }}</span>
+              </div>
+
+              <div class="field-wrapper">
+                <b>Full Name: </b>
+                <span>{{ review.fullName }}</span>
+              </div>
+
+              <div class="field-wrapper">
+                <b>Review: </b>
+                <span>{{ review.reviewText }}</span>
+              </div>
+            </div>
+          </div>
+          <h3 *ngIf="isDsDoctorlOrPostDocProposal(proposal.type)">Degrees:</h3>
+          <div
+            *ngIf="isDsDoctorlOrPostDocProposal(proposal.type)"
+            class="expanded-content-files"
+          >
+            <div class="flex-container">
+              <div class="flex-item">
+                <b>BA:</b>
+                <div><u>department:</u> {{ proposal.BADepartment }}</div>
+                <div><u>university:</u> {{ proposal.BAUniversity }}</div>
+                <div><u>average grade:</u> {{ proposal.BAAvg }}</div>
+              </div>
+              <div class="flex-item">
+                <b>MA:</b>
+                <div><u>department:</u> {{ proposal.MADepartment }}</div>
+                <div><u>university:</u> {{ proposal.MAUniversity }}</div>
+                <div><u>average grade:</u> {{ proposal.MAAvg }}</div>
+              </div>
+              <div
+                *ngIf="this.GrantTypeEnum[proposal.type] === 'Post Doctoral'"
+                class="flex-item"
+              >
+                <b>PhD:</b>
+                <div><u>department:</u> {{ proposal.PhDDepartment }}</div>
+                <div><u>university:</u> {{ proposal.PhDUniversity }}</div>
+                <div><u>average grade:</u> {{ proposal.PhDAvg }}</div>
+              </div>
+            </div>
+          </div>
+          <h3>Uploaded Files:</h3>
+          <div class="expanded-content-files">
+            <div class="flex-container">
+              <div
+                class="flex-item"
+                *ngIf="isDsDoctorlOrPostDocProposal(proposal.type)"
+              >
+                CV:
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  class="p-button-primary button-structure"
+                  tooltipPosition="bottom"
+                  (click)="getFile(proposal.uploadCV)"
+                >
+                  download file
+                </button>
+              </div>
+              <div
+                class="flex-item"
+                *ngIf="isDsDoctorlOrPostDocProposal(proposal.type)"
+              >
+                Description:
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  class="p-button-primary button-structure"
+                  tooltipPosition="bottom"
+                  (click)="getFile(proposal.uploadDescription)"
+                >
+                  download file
+                </button>
+              </div>
+              <div
+                class="flex-item"
+                *ngIf="isDsDoctorlOrPostDocProposal(proposal.type)"
+              >
+                Grade transcripts & certificates:
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  class="p-button-primary button-structure"
+                  tooltipPosition="bottom"
+                  (click)="getFile(proposal.uploadGradeTAndC)"
+                >
+                  download file
+                </button>
+              </div>
+              <div
+                class="flex-item"
+                *ngIf="isDsDoctorlOrPostDocProposal(proposal.type)"
+              >
+                Work Commitment:
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  class="p-button-primary button-structure"
+                  tooltipPosition="bottom"
+                  (click)="getFile(proposal.uploadWorkCommitment)"
+                >
+                  download file
+                </button>
+              </div>
+              <div
+                class="flex-item"
+                *ngIf="isDsDoctorlOrPostDocProposal(proposal.type)"
+              >
+                Recommendation Letter:
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  class="p-button-primary button-structure"
+                  tooltipPosition="bottom"
+                  (click)="getFile(proposal.uploadRecommendationLetter)"
+                >
+                  download file
+                </button>
+              </div>
+              <div
+                class="flex-item"
+                *ngIf="isDsDoctorlOrPostDocProposal(proposal.type)"
+              >
+                Contact Recommenders:
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  class="p-button-primary button-structure"
+                  tooltipPosition="bottom"
+                  (click)="getFile(proposal.uploadContactRecommenders)"
+                >
+                  download file
+                </button>
+              </div>
+              <div
+                class="flex-item"
+                *ngIf="isSeedOrDatasetCollectionProposal(proposal.type)"
+              >
+                Research Introduction:
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  class="p-button-primary button-structure"
+                  tooltipPosition="bottom"
+                  (click)="getFile(proposal.uploadResearchIntro)"
+                >
+                  download file
+                </button>
+              </div>
+              <div
+                class="flex-item"
+                *ngIf="isSeedOrDatasetCollectionProposal(proposal.type)"
+              >
+                Innovation Project:
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  class="p-button-primary button-structure"
+                  tooltipPosition="bottom"
+                  (click)="getFile(proposal.uploadInnovationProject)"
+                >
+                  download file
+                </button>
+              </div>
+              <div
+                class="flex-item"
+                *ngIf="isSeedOrDatasetCollectionProposal(proposal.type)"
+              >
+                Team:
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  class="p-button-primary button-structure"
+                  tooltipPosition="bottom"
+                  (click)="getFile(proposal.uploadTeam)"
+                >
+                  download file
+                </button>
+              </div>
+              <div
+                class="flex-item"
+                *ngIf="isSeedOrDatasetCollectionProposal(proposal.type)"
+              >
+                Budget:
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  class="p-button-primary button-structure"
+                  tooltipPosition="bottom"
+                  (click)="getFile(proposal.uploadBudget)"
+                >
+                  download file
+                </button>
+              </div>
+              <div
+                class="flex-item"
+                *ngIf="this.GrantTypeEnum[proposal.type] === 'Seed Research'"
+              >
+                External Funding:
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  class="p-button-primary button-structure"
+                  tooltipPosition="bottom"
+                  (click)="getFile(proposal.uploadExternalFunding)"
+                >
+                  download file
+                </button>
+              </div>
+              <div
+                class="flex-item"
+                *ngIf="
+                  this.GrantTypeEnum[proposal.type] === 'Dataset Collection'
+                "
+              >
+                Dataset information:
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  class="p-button-primary button-structure"
+                  tooltipPosition="bottom"
+                  (click)="getFile(proposal.uploadDatasetInfo)"
+                >
+                  download file
+                </button>
+              </div>
+              <div
+                class="flex-item"
+                *ngIf="
+                  this.GrantTypeEnum[proposal.type] === 'Dataset Collection'
+                "
+              >
+                Ethics:
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  class="p-button-primary button-structure"
+                  tooltipPosition="bottom"
+                  (click)="getFile(proposal.uploadEthics)"
+                >
+                  download file
+                </button>
+              </div>
+              <div
+                class="flex-item"
+                *ngIf="
+                  this.GrantTypeEnum[proposal.type] === 'Dataset Collection'
+                "
+              >
+                Copyrights:
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  class="p-button-primary button-structure"
+                  tooltipPosition="bottom"
+                  (click)="getFile(proposal.uploadCopyrights)"
+                >
+                  download file
+                </button>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<!-- <pre>{{ proposals$ | async | json }}</pre> -->
