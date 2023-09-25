@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { NavBarService } from '../../services/nav-bar.service';
 import { User } from 'src/app/auth/interfaces/user-interface';
 import { of, switchMap } from 'rxjs';
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -15,9 +16,12 @@ export class NavBarComponent {
 
   user: User;
 
+  isDarkTheme = false;
+
   constructor(
     private authService: AuthService,
-    private navBarService: NavBarService
+    private navBarService: NavBarService,
+    private themeService: ThemeService
   ) {}
 
   ngOnInit() {
@@ -76,5 +80,18 @@ export class NavBarComponent {
           }
         },
       });
+
+    const theme = localStorage.getItem('theme') as
+      | 'light-purple'
+      | 'dark-purple';
+    this.isDarkTheme = theme === 'dark-purple' ? true : false;
+    this.switchTheme();
+  }
+
+  switchTheme() {
+    const theme: 'light-purple' | 'dark-purple' = this.isDarkTheme
+      ? 'dark-purple'
+      : 'light-purple';
+    this.themeService.switchTheme(theme);
   }
 }

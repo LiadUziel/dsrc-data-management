@@ -19,6 +19,8 @@
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
     styleClass="p-datatable-striped"
     [columns]="cols"
+    [loading]="loading"
+    [showLoader]="false"
   >
     <ng-template pTemplate="caption">
       <div class="caption">
@@ -69,8 +71,8 @@
           <p-sortIcon field="projectTitleThatWasGranted"></p-sortIcon>
         </th>
         <th pSortableColumn="catchyTitle">
-            <div>Catchy Title</div>
-            <p-sortIcon field="catchyTitle"></p-sortIcon>
+          <div>Catchy Title</div>
+          <p-sortIcon field="catchyTitle"></p-sortIcon>
         </th>
         <th pSortableColumn="blogStatus">
           <div>Blog Status</div>
@@ -81,6 +83,11 @@
           <p-sortIcon field="applicationDate"></p-sortIcon>
         </th>
         <th>Actions</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="loadingbody">
+      <tr *ngFor="let i of rowsSkeleton">
+        <td *ngFor="let i of colsSkeleton"><p-skeleton></p-skeleton></td>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-product let-expanded="expanded">
@@ -104,10 +111,10 @@
         <td>{{ product.catchyTitle }}</td>
         <td>
           <p-tag
-          [severity]="blogStatusSeverity[product.blogStatus]"
-          [value]="ProductBlogStatus[product.blogStatus]"
-          [icon]="blogStatusIcon[product.blogStatus]"
-        ></p-tag>
+            [severity]="blogStatusSeverity[product.blogStatus]"
+            [value]="ProductBlogStatus[product.blogStatus]"
+            [icon]="blogStatusIcon[product.blogStatus]"
+          ></p-tag>
         </td>
         <td>{{ product.applicationDate | date }}</td>
         <td class="actions">
@@ -122,13 +129,13 @@
             <label>Manage Custom Fields</label>
           </button>
           <button
-          pButton
-          pRipple
-          type="button"
-          class="p-button-rounded p-button-text"
-          label="Update Blog Status"
-          (click)="openUpdateBlogStatusDialog(product)"
-        ></button>
+            pButton
+            pRipple
+            type="button"
+            class="p-button-rounded p-button-text"
+            label="Update Blog Status"
+            (click)="openUpdateBlogStatusDialog(product)"
+          ></button>
         </td>
       </tr>
     </ng-template>
@@ -136,7 +143,7 @@
     <!--* line extension -->
     <ng-template pTemplate="rowexpansion" let-product>
       <tr class="expanded-row">
-        <td colspan="11" class="expanded-cell">
+        <td colspan="10" class="expanded-cell">
           <div *ngIf="product.customFields" class="custom-fields">
             <h3>Custom Fields:</h3>
 
@@ -154,20 +161,36 @@
         <td colspan="10">
           <div class="expanded-content">
             <div class="flex-container">
-              <div *ngIf="product.openingMotivatingSentence &&
-                          product.openingMotivatingSentence !== ''" class="margin-field">
-                    <u>An opening motivating sentence for your research:</u>
-                {{product.openingMotivatingSentence}}
+              <div
+                *ngIf="
+                  product.openingMotivatingSentence &&
+                  product.openingMotivatingSentence !== ''
+                "
+                class="margin-field"
+              >
+                <u>An opening motivating sentence for your research:</u>
+                {{ product.openingMotivatingSentence }}
               </div>
-              <div *ngIf="product.presentLink && product.presentLink !== ''" class="margin-field">
-                <u>presenting a link to a fact from the media that is related and invokes interest:</u>
-                {{product.presentLink}}
+              <div
+                *ngIf="product.presentLink && product.presentLink !== ''"
+                class="margin-field"
+              >
+                <u
+                  >presenting a link to a fact from the media that is related
+                  and invokes interest:</u
+                >
+                {{ product.presentLink }}
               </div>
-              <div *ngIf="product.urlToAdd && product.urlToAdd !== ''" class="margin-field">
+              <div
+                *ngIf="product.urlToAdd && product.urlToAdd !== ''"
+                class="margin-field"
+              >
                 <u>URL to add to the previous sentence:</u>
-                {{product.urlToAdd}}
+                {{ product.urlToAdd }}
               </div>
-              <div *ngIf="product.researchTeam && product.researchTeam.length > 0">
+              <div
+                *ngIf="product.researchTeam && product.researchTeam.length > 0"
+              >
                 <h3><u>Research Team:</u></h3>
                 <table class="multi-field-table">
                   <tr>
@@ -176,125 +199,167 @@
                     <th class="th-padding">Member URL website</th>
                   </tr>
                   <tr *ngFor="let member of product.researchTeam">
-                    <td>{{ member.firstName }} {{member.lastName}}</td>
+                    <td>{{ member.firstName }} {{ member.lastName }}</td>
                     <td>{{ member.degree }}</td>
                     <td>{{ member.urlOfPersonalWebsite }}</td>
                   </tr>
                 </table>
               </div>
-              <div *ngIf="product.oneSentenceSummarizing && 
-                    product.oneSentenceSummarizing !== ''" class="margin-field">
-                <u>One sentence summarizing what your research did to address that motivating need:</u> 
-                {{product.oneSentenceSummarizing}}
+              <div
+                *ngIf="
+                  product.oneSentenceSummarizing &&
+                  product.oneSentenceSummarizing !== ''
+                "
+                class="margin-field"
+              >
+                <u
+                  >One sentence summarizing what your research did to address
+                  that motivating need:</u
+                >
+                {{ product.oneSentenceSummarizing }}
               </div>
-              <div *ngIf="product.summarizingSentences && 
-                          product.summarizingSentences !== ''" class="margin-field">
-                <u>2-3 sentences that summarize the contribution and links to papers or abstracts that resulted:</u> 
-                {{product.summarizingSentences}}
+              <div
+                *ngIf="
+                  product.summarizingSentences &&
+                  product.summarizingSentences !== ''
+                "
+                class="margin-field"
+              >
+                <u
+                  >2-3 sentences that summarize the contribution and links to
+                  papers or abstracts that resulted:</u
+                >
+                {{ product.summarizingSentences }}
               </div>
-              <div *ngIf="product.conclusion && 
-                          product.conclusion !== ''" class="margin-field">
-                <u>conclusion:</u> 
-                {{product.conclusion}}
+              <div
+                *ngIf="product.conclusion && product.conclusion !== ''"
+                class="margin-field"
+              >
+                <u>conclusion:</u>
+                {{ product.conclusion }}
               </div>
               <div class="flex-item">
-                <u class="margin-u">Blog:</u> 
+                <u class="margin-u">Blog:</u>
                 <button
-                type="button"
-                pButton
-                pRipple
-                class="p-button-primary button-structure"
-                tooltipPosition="bottom"
-                (click)="getFile(product.uploadBlog)">
-                download file
+                  type="button"
+                  pButton
+                  pRipple
+                  class="p-button-primary button-structure"
+                  tooltipPosition="bottom"
+                  (click)="getFile(product.uploadBlog)"
+                >
+                  download file
                 </button>
               </div>
               <div class="flex-item">
-                <u class="margin-u">Figure or video:</u> 
+                <u class="margin-u">Figure or video:</u>
                 <button
-                type="button"
-                pButton
-                pRipple
-                class="p-button-primary button-structure"
-                tooltipPosition="bottom"
-                (click)="getFile(product.uploadFigureOrVideo)">
-                download file
+                  type="button"
+                  pButton
+                  pRipple
+                  class="p-button-primary button-structure"
+                  tooltipPosition="bottom"
+                  (click)="getFile(product.uploadFigureOrVideo)"
+                >
+                  download file
                 </button>
               </div>
-              <div *ngIf="product.publications && product.publications.length > 0">
+              <div
+                *ngIf="product.publications && product.publications.length > 0"
+              >
                 <h3><u>Publications:</u></h3>
                 <ul class="multi-field-content-margin">
-                    <li *ngFor="let publication of product.publications">
-                        <div class="margin-field">
-                            <u>name:</u>  
-                            {{publication.publicationName}}
-                        </div>
-                        <div class="margin-field">
-                            <u>type:</u> 
-                            {{publication.publicationTypes}}
-                            <span>  {{publication.otherPublicationType}}</span>
-                        </div>
-                        <div class="margin-field">
-                            <u>status:</u> 
-                            {{publication.publicationStatus}}
-                        </div>
-                    </li>
+                  <li *ngFor="let publication of product.publications">
+                    <div class="margin-field">
+                      <u>name:</u>
+                      {{ publication.publicationName }}
+                    </div>
+                    <div class="margin-field">
+                      <u>type:</u>
+                      {{ publication.publicationTypes }}
+                      <span> {{ publication.otherPublicationType }}</span>
+                    </div>
+                    <div class="margin-field">
+                      <u>status:</u>
+                      {{ publication.publicationStatus }}
+                    </div>
+                  </li>
                 </ul>
               </div>
-              <div *ngIf="product.researchGrants && product.researchGrants.length > 0">
+              <div
+                *ngIf="
+                  product.researchGrants && product.researchGrants.length > 0
+                "
+              >
                 <h3><u>Research Grants:</u></h3>
                 <ul class="multi-field-content-margin">
-                    <li *ngFor="let researchGrant of product.researchGrants">
-                        <div class="margin-field">
-                            <u>coauthors:</u>  
-                            {{researchGrant.coauthors}}
-                        </div>
-                        <div class="margin-field">
-                            <u>name of grant proposal:</u> 
-                            {{researchGrant.nameOfGrantProposal}}
-                        </div>
-                        <div class="margin-field">
-                            <u>grantingAgency:</u> 
-                            {{researchGrant.grantingAgency}}
-                        </div>
-                        <div class="margin-field">
-                            <u>year:</u> 
-                            {{researchGrant.year}}
-                        </div>
-                        <div class="margin-field">
-                            <u>status:</u> 
-                            {{researchGrant.status}}
-                        </div>
-                    </li>
+                  <li *ngFor="let researchGrant of product.researchGrants">
+                    <div class="margin-field">
+                      <u>coauthors:</u>
+                      {{ researchGrant.coauthors }}
+                    </div>
+                    <div class="margin-field">
+                      <u>name of grant proposal:</u>
+                      {{ researchGrant.nameOfGrantProposal }}
+                    </div>
+                    <div class="margin-field">
+                      <u>grantingAgency:</u>
+                      {{ researchGrant.grantingAgency }}
+                    </div>
+                    <div class="margin-field">
+                      <u>year:</u>
+                      {{ researchGrant.year }}
+                    </div>
+                    <div class="margin-field">
+                      <u>status:</u>
+                      {{ researchGrant.status }}
+                    </div>
+                  </li>
                 </ul>
               </div>
               <div *ngIf="product.SDG.length > 0" class="margin-field">
                 <u>Sustainable Development Goals (SDG) research falls into:</u>
-                <div *ngFor="let sdgOption of product.SDG">{{sdgOption}} </div> 
+                <div *ngFor="let sdgOption of product.SDG">{{ sdgOption }}</div>
               </div>
-              <div *ngIf="product.government && product.government !== ''" class="margin-field">
-                <u>Is your project related to cooperation with government (local  or national) or with non-profit organizations in order to develop policies?:</u> 
-                {{product.government}}
+              <div
+                *ngIf="product.government && product.government !== ''"
+                class="margin-field"
+              >
+                <u
+                  >Is your project related to cooperation with government (local
+                  or national) or with non-profit organizations in order to
+                  develop policies?:</u
+                >
+                {{ product.government }}
               </div>
-              <div *ngIf="product.internationalCoopreration &&
-                          product.internationalCoopreration !== ''" class="margin-field">
-                <u>Did the project lead to international cooperation?:</u> 
-                {{product.internationalCoopreration}}
+              <div
+                *ngIf="
+                  product.internationalCoopreration &&
+                  product.internationalCoopreration !== ''
+                "
+                class="margin-field"
+              >
+                <u>Did the project lead to international cooperation?:</u>
+                {{ product.internationalCoopreration }}
               </div>
-              <div *ngIf="product.volunteerWork &&
-                          product.volunteerWork !== ''" class="margin-field">
-                <u>Does the project include students volunteer work?:</u> 
-                {{product.volunteerWork}}
+              <div
+                *ngIf="product.volunteerWork && product.volunteerWork !== ''"
+                class="margin-field"
+              >
+                <u>Does the project include students volunteer work?:</u>
+                {{ product.volunteerWork }}
               </div>
-              <div *ngIf="product.developCourses &&
-                          product.developCourses !== ''" class="margin-field">
-                <u>Are you developing courses related to the research?:</u> 
-                {{product.developCourses}}
+              <div
+                *ngIf="product.developCourses && product.developCourses !== ''"
+                class="margin-field"
+              >
+                <u>Are you developing courses related to the research?:</u>
+                {{ product.developCourses }}
               </div>
             </div>
           </div>
-        </td>    
-      </tr>      
+        </td>
+      </tr>
     </ng-template>
   </p-table>
 </div>

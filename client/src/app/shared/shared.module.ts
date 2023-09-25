@@ -19,6 +19,8 @@ import { TagModule } from 'primeng/tag';
 import { DropdownModule } from 'primeng/dropdown';
 import { TabViewModule } from 'primeng/tabview';
 import { ListboxModule } from 'primeng/listbox';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { SkeletonModule } from 'primeng/skeleton';
 
 // ngx-toastr
 import { ToastrModule } from 'ngx-toastr';
@@ -41,7 +43,8 @@ import { MultiFieldComponent } from './components/multi-field/multi-field.compon
     FooterComponent,
     PagesComponent,
     ReviewDialogComponent,
-    MultiFieldComponent],
+    MultiFieldComponent,
+  ],
   imports: [
     // ngx-toastr
     ToastrModule.forRoot({
@@ -69,11 +72,14 @@ import { MultiFieldComponent } from './components/multi-field/multi-field.compon
     DropdownModule,
     TabViewModule,
     ListboxModule,
+    InputSwitchModule,
+    SkeletonModule,
+
     //materials
     MatPasswordStrengthModule,
     MatSlideToggleModule,
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
   ],
   exports: [
     // primeng
@@ -93,14 +99,16 @@ import { MultiFieldComponent } from './components/multi-field/multi-field.compon
     DropdownModule,
     TabViewModule,
     ListboxModule,
+    InputSwitchModule,
+    SkeletonModule,
+
     // materials
     MatPasswordStrengthModule,
     MatSlideToggleModule,
 
     // components
     PagesComponent,
-    MultiFieldComponent
+    MultiFieldComponent,
   ],
-
 })
 export class SharedModule {}

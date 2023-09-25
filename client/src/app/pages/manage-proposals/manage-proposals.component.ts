@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable, delay, finalize } from 'rxjs';
 import { GrantProposal } from 'src/app/shared/models/grant-proposal.interface';
 import { GrantProposalService } from 'src/app/shared/services/grant-proposal.service';
 import { GrantType } from './models/grant-type.enum';
@@ -13,6 +13,7 @@ import { ProposalStatus } from './models/proposal-status.enum';
 import { RoleEnum } from 'src/app/shared/enums/role.enum';
 import { Router } from '@angular/router';
 import { Table } from 'primeng/table';
+import { ReviewDialogComponent } from 'src/app/shared/components/review-dialog/review-dialog.component';
 
 @Component({
   selector: 'app-manage-proposals',
@@ -74,6 +75,10 @@ export class ManageProposalsComponent implements OnInit {
 
   departments: { name: string }[];
 
+  loading = true;
+  rowsSkeleton = new Array(5);
+  colsSkeleton = new Array(12);
+
   constructor(
     private grantProposalsService: GrantProposalService,
     private filesService: FilesService
@@ -89,7 +94,13 @@ export class ManageProposalsComponent implements OnInit {
   }
 
   initProposals() {
-    this.proposals$ = this.grantProposalsService.getAllProposals();
+    this.loading = true;
+    this.proposals$ = this.grantProposalsService.getAllProposals().pipe(
+      delay(1500),
+      finalize(() => {
+        this.loading = false;
+      })
+    );
   }
 
   // get the total amount of the budget parts1
@@ -124,6 +135,19 @@ export class ManageProposalsComponent implements OnInit {
   openCustomFieldsDialog(proposal: GrantProposal) {
     const ref = this.dialogService.open(CustomFieldsDialogComponent, {
       header: `Manage Custom Fields For ${proposal.studyTitle}`,
+      width: '60%',
+      data: { proposal },
+    });
+
+    // render table after dialog is closed
+    ref.onClose.subscribe(() => {
+      this.initProposals();
+    });
+  }
+
+  openReviewDialog(proposal: GrantProposal) {
+    const ref = this.dialogService.open(ReviewDialogComponent, {
+      header: `Review For "${proposal.studyTitle}"`,
       width: '60%',
       data: { proposal },
     });

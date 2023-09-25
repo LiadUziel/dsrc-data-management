@@ -15,6 +15,8 @@
     [showCurrentPageReport]="true"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
     styleClass="p-datatable-striped"
+    [loading]="loading"
+    [showLoader]="false"
   >
     <ng-template pTemplate="caption">
       <div class="caption">
@@ -158,6 +160,11 @@
         </th>
       </tr>
     </ng-template>
+    <ng-template pTemplate="loadingbody">
+      <tr *ngFor="let i of rowsSkeleton">
+        <td *ngFor="let i of colsSkeleton"><p-skeleton></p-skeleton></td>
+      </tr>
+    </ng-template>
     <ng-template pTemplate="body" let-proposal let-expanded="expanded">
       <tr>
         <td>
@@ -192,7 +199,7 @@
     <!--* line extension -->
     <ng-template pTemplate="rowexpansion" let-proposal>
       <tr class="expanded-row">
-        <td colspan="11" class="expanded-cell">
+        <td colspan="8" class="expanded-cell">
           <div *ngIf="proposal.teamMembers && proposal.teamMembers.length > 0">
             <h3>Team Members:</h3>
             <table class="team-members-table">
