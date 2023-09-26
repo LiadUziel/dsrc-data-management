@@ -41,11 +41,12 @@ h1 {
             width: 80%;
             margin: 0 auto;
             margin-bottom: 0.625rem;
+
             .th-padding {
                 padding-right: 1.875rem;
             }
         }
-        
+
     }
 }
 
@@ -62,13 +63,13 @@ h1 {
 .button-structure:hover {
     text-decoration: none;
 }
-  
+
 .expanded-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
-  
+}
+
 .flex-container {
     display: flex;
     flex-wrap: wrap;
@@ -88,12 +89,8 @@ h1 {
         margin-right: 0.3125rem;
     }
 }
-  
+
 .flex-item {
     margin: 0.3125rem;
     flex: 1 1 calc(35%);
 }
-  
-
-  
-

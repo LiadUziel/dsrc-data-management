@@ -4,29 +4,29 @@ import { User, UserModel } from "../models/user.interface";
 import { NewFieldRaw } from "../models/new-field-raw.interface";
 
 export const createProduct: RequestHandler = async (req, res, next) => {
-    try {
-      const product: Product = req.body;
-  
-      // get user from db
-      const user: User = (await UserModel.findOne({
-        email: req.authUser?.email,
-      }))!;
-  
-      // add user to product
-      product.user = user;
-  
-      // add application date
-      product.applicationDate = new Date();
+  try {
+    const product: Product = req.body;
 
-      // init blogStatus
-      product.blogStatus = "DID_NOT_SUBMIT";
-  
-      const productDb = await ProductModel.create(product);
+    // get user from db
+    const user: User = (await UserModel.findOne({
+      email: req.authUser?.email,
+    }))!;
 
-      return res.status(201).send(productDb);
-    } catch (e) {
-      next(e);
-    }
+    // add user to product
+    product.user = user;
+
+    // add application date
+    product.applicationDate = new Date();
+
+    // init blogStatus
+    product.blogStatus = "DID_NOT_SUBMIT";
+
+    const productDb = await ProductModel.create(product);
+
+    return res.status(201).send(productDb);
+  } catch (e) {
+    next(e);
+  }
 };
 
 /* get proposals from db (all of them or by logged user or by user 
@@ -35,18 +35,19 @@ export const getProducts: RequestHandler = async (req, res, next) => {
   try {
     let email;
     if (Object.keys(req.query).length === 0) {
-      if (!req.authUser?.roles.includes('admin')) {
+      if (!req.authUser?.roles.includes("admin")) {
         email = req.authUser?.email;
       }
-    }
-    else {
-      email = req.query['email'];
+    } else {
+      email = req.query["email"];
     }
     const user: User = (await UserModel.findOne({
       email: email,
     }))!;
     // get products from db
-    const products = await ProductModel.find(user ? {user: user._id}: {}).populate("user", "firstName lastName email -_id");
+    const products = await ProductModel.find(user ? { user: user._id } : {})
+      .populate("user", "firstName lastName email -_id")
+      .sort({ applicationDate: -1 });
     return res.send(products);
   } catch (e) {
     next(e);
@@ -84,7 +85,11 @@ export const addFieldsToProduct: RequestHandler = async (req, res, next) => {
 };
 
 // update product blog status
-export const updateProductBlogStatus: RequestHandler = async (req, res, next) => {
+export const updateProductBlogStatus: RequestHandler = async (
+  req,
+  res,
+  next
+) => {
   try {
     const { id } = req.params;
 
@@ -103,4 +108,3 @@ export const updateProductBlogStatus: RequestHandler = async (req, res, next) =>
     next(e);
   }
 };
-

@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import * as saveAs from 'file-saver';
 import { DialogService } from 'primeng/dynamicdialog';
-import { Observable } from 'rxjs';
+import { Observable, delay, finalize } from 'rxjs';
 import { FilesService } from 'src/app/files/services/files.service';
 import { RoleEnum } from 'src/app/shared/enums/role.enum';
 import { BudgetPart } from 'src/app/shared/models/budget-part.interface';
@@ -46,6 +46,10 @@ export class TeamMembersPageComponent {
 
   departments: { name: string }[];
 
+  loading = true;
+  rowsSkeleton = new Array(5);
+  colsSkeleton = new Array(11);
+
   constructor(
     private grantProposalsService: GrantProposalService,
     private filesService: FilesService
@@ -61,7 +65,13 @@ export class TeamMembersPageComponent {
   }
 
   initProposals() {
-    this.proposals$ = this.grantProposalsService.getTeamMemberProposals();
+    this.loading = true;
+    this.proposals$ = this.grantProposalsService.getTeamMemberProposals().pipe(
+      delay(1500),
+      finalize(() => {
+        this.loading = false;
+      })
+    );
   }
 
   // get the total amount of the budget parts1

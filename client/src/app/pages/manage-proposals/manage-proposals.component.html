@@ -19,6 +19,8 @@
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
     styleClass="p-datatable-striped"
     [columns]="cols"
+    [loading]="loading"
+    [showLoader]="false"
   >
     <ng-template pTemplate="caption">
       <div class="caption">
@@ -183,6 +185,11 @@
         <th>Actions</th>
       </tr>
     </ng-template>
+    <ng-template pTemplate="loadingbody">
+      <tr *ngFor="let i of rowsSkeleton">
+        <td *ngFor="let i of colsSkeleton"><p-skeleton></p-skeleton></td>
+      </tr>
+    </ng-template>
     <ng-template pTemplate="body" let-proposal let-expanded="expanded">
       <tr>
         <td>
@@ -232,6 +239,17 @@
             label="Update Status"
             (click)="openUpdateStatusDialog(proposal)"
           ></button>
+
+          <button
+            *ngIf="proposal.status === 'PENDING'"
+            pButton
+            pRipple
+            type="button"
+            class="p-button-rounded p-button-text"
+            label="Send Review"
+            (click)="openReviewDialog(proposal)"
+          ></button>
+
           <button
             pButton
             pRipple

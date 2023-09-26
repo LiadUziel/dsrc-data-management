@@ -60,9 +60,9 @@ export const getGrantProposals: RequestHandler = async (req, res, next) => {
     ].includes(type);
 
     // get proposals from db
-    const proposals = await GrantProposalModel.find(
-      isLegalType ? { type } : {}
-    ).populate("user", "firstName lastName email -_id");
+    const proposals = await GrantProposalModel.find(isLegalType ? { type } : {})
+      .populate("user", "firstName lastName email -_id")
+      .sort({ applicationDate: -1 });
 
     return res.send(proposals);
   } catch (e) {
@@ -81,7 +81,9 @@ export const getUserProposals: RequestHandler = async (req, res, next) => {
     // get proposals from db
     const proposals = await GrantProposalModel.find({
       user: user._id,
-    }).populate("user", "firstName lastName email -_id");
+    })
+      .populate("user", "firstName lastName email -_id")
+      .sort({ applicationDate: -1 });
 
     return res.send(proposals);
   } catch (e) {
@@ -256,6 +258,8 @@ async function findProposalsByRole(email: string, role: Role) {
   const proposals: GrantProposal[] = await GrantProposalModel.find({
     "teamMembers.memberEmail": email,
     "teamMembers.memberRole": role,
-  }).populate("user", "firstName lastName email -_id");
+  })
+    .populate("user", "firstName lastName email -_id")
+    .sort({ applicationDate: -1 });
   return proposals;
 }
