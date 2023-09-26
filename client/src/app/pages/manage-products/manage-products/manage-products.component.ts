@@ -55,6 +55,7 @@ export class ManageProductsComponent implements OnInit {
 
   GrantTypeEnum = GrantType;
   ProductBlogStatus = ProductBlogStatus;
+  statusesKeys = Object.keys(ProductBlogStatus);
   blogStatusSeverity = {
     APPEARED_IN_RESEARCH_BLOG: 'success',
     TO_APPEAR_IN_BLOG: 'info',
@@ -69,6 +70,8 @@ export class ManageProductsComponent implements OnInit {
     DID_NOT_SUBMIT: 'pi pi-times',
     SENT_REMINDERS: 'pi pi-bookmark'
   };
+
+  grantTypesKeys = this.getGrantTypeKeys();
   
   private studyTitleQueryParam: string = '';
   private emailQueryParam: string = '';
@@ -156,6 +159,17 @@ export class ManageProductsComponent implements OnInit {
     ref.onClose.subscribe(() => {
       this.initProducts();
     });
+  }
+
+  getGrantTypeKeys(): string[] {
+    let grantTypesKeys: string[] = Object.values(GrantType);
+    grantTypesKeys.push("project supervision by data scientist");
+    grantTypesKeys.push("VATAT");
+    return grantTypesKeys;
+  }
+
+  clear(table: Table) {
+    table.clear();
   }
 }
 

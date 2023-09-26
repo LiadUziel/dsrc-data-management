@@ -94,7 +94,7 @@ export class UpdateStatusDialogComponent implements OnInit {
       });
   }
 
-  updateProductStatus() {
+  updateBlogStatus() {
     this.loading = true;
 
     this.productService
