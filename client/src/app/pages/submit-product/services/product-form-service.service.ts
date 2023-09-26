@@ -43,7 +43,7 @@ export class ProductFormService {
   }
   
   getDegrees() {
-    return ['MSc', 'PhD', 'Prof.'];
+    return ['MSc', 'PhD', 'Prof.', 'Other'];
   }
 
   addResearchTeamMember(form: FormGroup) {
@@ -116,7 +116,7 @@ export class ProductFormService {
   }
 
   getPublicationTypes(): string[] {
-    return ['Thesis', 'Presentation', 'Organization of events', 'Article', 'Media', 'Other'];
+    return ['Thesis', 'Presentation', 'Organization of events', 'Article', 'Media', 'Journal paper', 'Conference paper', 'Web page', 'Report', 'Other'];
   }
 
   createProduct(product: Product) {
