@@ -107,7 +107,7 @@
           <label>last name</label>
         </span>
         <div>
-          <label class="black-font-and-margin">Degree:</label>
+          <label class="white-font-and-margin">Degree:</label>
           <p-listbox [options]="degrees"
           formControlName="degree"
           >
@@ -120,7 +120,7 @@
       </div>
       <div *ngIf="formArrayName === 'publications'" class="inputs-wrapper">
         <div>
-          <label class="black-font-and-margin">type (pick one):</label>
+          <label class="white-font-and-margin">type (pick one):</label>
           <p-listbox [options]="publicationTypes"
           formControlName="publicationTypes" (onClick)="setIsOther($event)"
           >
@@ -139,11 +139,11 @@
             [autoResize]="true"
           ></textarea>
           <label>
-            Name
+            Reference
           </label>
         </span>
         <div>
-          <label class="black-font-and-margin">status (pick one):</label>
+          <label class="white-font-and-margin">status (pick one):</label>
           <p-listbox [options]="publicationStatuses"
           formControlName="publicationStatus"
           >
@@ -195,7 +195,7 @@
           <label>year</label>
         </span>
         <div>
-          <label class="black-font-and-margin">status (pick one):</label>
+          <label class="white-font-and-margin">status (pick one):</label>
           <p-listbox [options]="statuses"
           formControlName="status"
           >

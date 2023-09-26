@@ -4,6 +4,8 @@ import { FilesService } from 'src/app/files/services/files.service';
 import { saveAs } from 'file-saver';
 import { Product } from '../../submit-product/interfaces/product.interface';
 import { ProductsService } from 'src/app/shared/services/products.service';
+import { GrantType } from '../../manage-proposals/models/grant-type.enum';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-my-products',
@@ -12,6 +14,8 @@ import { ProductsService } from 'src/app/shared/services/products.service';
 })
 export class MyProductsComponent implements OnInit {
   products$: Observable<Product[]>;
+  grantTypesKeys = this.getGrantTypeKeys();
+  GrantTypeEnum = GrantType;
 
   loading = true;
   rowsSkeleton = new Array(5);
@@ -45,5 +49,16 @@ export class MyProductsComponent implements OnInit {
         console.log(err);
       }
     );
+  }
+
+  getGrantTypeKeys(): string[] {
+    let grantTypesKeys: string[] = Object.values(GrantType);
+    grantTypesKeys.push("project supervision by data scientist");
+    grantTypesKeys.push("VATAT");
+    return grantTypesKeys;
+  }
+
+  clear(table: Table) {
+    table.clear();
   }
 }
