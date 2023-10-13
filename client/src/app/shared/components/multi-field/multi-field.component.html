@@ -1,4 +1,4 @@
-<div [formGroup]="form">
+<div [formGroup]="form" class="form">
   <div [formArrayName]="formArrayName">
     <div
       *ngFor="let field of fields.controls; let i = index"
@@ -33,30 +33,29 @@
                 styleClass="exist-users"
                 inputId="float-label"
               >
-              <ng-template let-user pTemplate="selectedItem">
-                <div>
-                  {{ user.firstName }} {{ user.lastName }} - {{ user.email }}
-                </div>
-              </ng-template>
-              <ng-template let-user pTemplate="item">
-                <div>
-                  {{ user.firstName }} {{ user.lastName }} - {{ user.email }}
-                </div>
-              </ng-template>
-            </p-dropdown>
-            <label for="float-label">Choose User</label>
-          </span>
-        </p-tabPanel>
-        <p-tabPanel header="Non Exist User">
-          <span class="p-float-label">
-            <input pInputText formControlName="memberEmail" />
-            <label>Member Email</label>
-          </span>
-        </p-tabPanel>
-      </p-tabView>
+                <ng-template let-user pTemplate="selectedItem">
+                  <div>
+                    {{ user.firstName }} {{ user.lastName }} - {{ user.email }}
+                  </div>
+                </ng-template>
+                <ng-template let-user pTemplate="item">
+                  <div>
+                    {{ user.firstName }} {{ user.lastName }} - {{ user.email }}
+                  </div>
+                </ng-template>
+              </p-dropdown>
+              <label for="float-label">Choose User</label>
+            </span>
+          </p-tabPanel>
+          <p-tabPanel header="Non Exist User">
+            <span class="p-float-label">
+              <input pInputText formControlName="memberEmail" />
+              <label>Member Email</label>
+            </span>
+          </p-tabPanel>
+        </p-tabView>
 
         <span class="p-float-label">
-
           <p-dropdown
             formControlName="memberRole"
             [options]="roles"
@@ -108,10 +107,7 @@
         </span>
         <div>
           <label class="white-font-and-margin">Degree:</label>
-          <p-listbox [options]="degrees"
-          formControlName="degree"
-          >
-          </p-listbox>
+          <p-listbox [options]="degrees" formControlName="degree"> </p-listbox>
         </div>
         <span class="p-float-label">
           <input pInputText formControlName="urlOfPersonalWebsite" />
@@ -121,13 +117,15 @@
       <div *ngIf="formArrayName === 'publications'" class="inputs-wrapper">
         <div>
           <label class="white-font-and-margin">type (pick one):</label>
-          <p-listbox [options]="publicationTypes"
-          formControlName="publicationTypes" (onClick)="setIsOther($event)"
+          <p-listbox
+            [options]="publicationTypes"
+            formControlName="publicationTypes"
+            (onClick)="setIsOther($event)"
           >
           </p-listbox>
         </div>
         <span *ngIf="isOtherChosen()" class="p-float-label">
-          <input pInputText formControlName="otherPublicationType"/>
+          <input pInputText formControlName="otherPublicationType" />
           <label>please type the other type here</label>
         </span>
         <span class="p-float-label margin-input-x2">
@@ -138,14 +136,13 @@
             rows="2"
             [autoResize]="true"
           ></textarea>
-          <label>
-            Reference
-          </label>
+          <label> Reference </label>
         </span>
         <div>
           <label class="white-font-and-margin">status (pick one):</label>
-          <p-listbox [options]="publicationStatuses"
-          formControlName="publicationStatus"
+          <p-listbox
+            [options]="publicationStatuses"
+            formControlName="publicationStatus"
           >
           </p-listbox>
         </div>
@@ -159,9 +156,7 @@
             rows="2"
             [autoResize]="true"
           ></textarea>
-          <label>
-            coauthors
-          </label>
+          <label> coauthors </label>
         </span>
         <span class="p-float-label">
           <textarea
@@ -171,9 +166,7 @@
             rows="2"
             [autoResize]="true"
           ></textarea>
-          <label>
-            name of grant proposal
-          </label>
+          <label> name of grant proposal </label>
         </span>
         <span class="p-float-label">
           <textarea
@@ -183,9 +176,7 @@
             rows="2"
             [autoResize]="true"
           ></textarea>
-          <label>
-            granting agency
-          </label>
+          <label> granting agency </label>
         </span>
         <span class="p-float-label">
           <p-inputNumber
@@ -196,10 +187,7 @@
         </span>
         <div>
           <label class="white-font-and-margin">status (pick one):</label>
-          <p-listbox [options]="statuses"
-          formControlName="status"
-          >
-          </p-listbox>
+          <p-listbox [options]="statuses" formControlName="status"> </p-listbox>
         </div>
       </div>
     </div>
