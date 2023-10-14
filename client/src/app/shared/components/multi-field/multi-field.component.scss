@@ -1,56 +1,59 @@
-.fields {
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
+  .fields {
     .inputs-wrapper {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
 
-        margin-top: 0.5rem;
+      margin-top: 0.5rem;
     }
 
     h3 {
-        display: flex;
-        align-items: center;
-        gap: 0.35rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
 
-        margin-top: 1rem;
+      margin-top: 1rem;
     }
 
     input {
-        width: 100%;
+      width: 100%;
     }
+  }
 
-}
-
-.add-member-btn {
+  .add-member-btn {
     margin-top: 1rem;
-}
+  }
 
-.total-budget {
+  .total-budget {
     margin-top: 1rem;
-}
+  }
 
-.white-font-and-margin {
+  .white-font-and-margin {
     color: white;
     margin-bottom: 0.625rem;
     display: flex;
-}
+  }
 
-.margin-input {
+  .margin-input {
     margin-top: 0.625rem;
-}
+  }
 
-.margin-input-x2 {
+  .margin-input-x2 {
     margin-top: 1.25rem;
-}
+  }
 
-
-::ng-deep.exist-users {
+  ::ng-deep.exist-users {
     width: 100%;
-}
+  }
 
-::ng-deep .tab-view .p-tabview-nav-content {
+  ::ng-deep .tab-view .p-tabview-nav-content {
     width: fit-content;
     margin: 0 auto 0.5rem auto;
+  }
 }
