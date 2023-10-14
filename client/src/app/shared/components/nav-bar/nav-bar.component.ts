@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { NavBarService } from '../../services/nav-bar.service';
 import { User } from 'src/app/auth/interfaces/user-interface';
-import { of, switchMap } from 'rxjs';
+import { EMPTY, catchError, of, switchMap } from 'rxjs';
 import { ThemeService } from '../../services/theme.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-nav-bar',
@@ -18,11 +19,10 @@ export class NavBarComponent {
 
   isDarkTheme = false;
 
-  constructor(
-    private authService: AuthService,
-    private navBarService: NavBarService,
-    private themeService: ThemeService
-  ) {}
+  private readonly authService = inject(AuthService);
+  private readonly navBarService = inject(NavBarService);
+  private readonly themeService = inject(ThemeService);
+  private readonly toastr = inject(ToastrService);
 
   ngOnInit() {
     this.authService.isLogin().subscribe({
@@ -41,11 +41,17 @@ export class NavBarComponent {
     this.authService
       .isLogin()
       .pipe(
+        catchError((err) => {
+          this.toastr.warning('Login timed out, please login again');
+          this.items = this.navBarService.getItems(false, ['submitter']);
+          this.user = null;
+          return EMPTY;
+        }),
         switchMap((decryptToken) => {
           if (decryptToken) {
             return this.authService.getLoggedUser();
           }
-          return of(null);
+          return EMPTY;
         })
       )
       .subscribe({
