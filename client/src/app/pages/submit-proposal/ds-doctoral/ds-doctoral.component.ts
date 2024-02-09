@@ -5,7 +5,7 @@ import { GrantProposalService } from 'src/app/shared/services/grant-proposal.ser
 import { GrantProposal } from 'src/app/shared/models/grant-proposal.interface';
 import { ToastrService } from 'ngx-toastr';
 import { finalize } from 'rxjs';
-import { environment } from 'src/environments/environments';
+import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -20,8 +20,8 @@ export class DsDoctoralComponent implements OnInit {
 
   private apiUrl = environment.apiUrl;
 
-  departments: {name : string} [];
-  universities: {name : string} [];
+  departments: { name: string }[];
+  universities: { name: string }[];
 
   @ViewChildren('fileUpload') pFormUpload: QueryList<any>;
 
@@ -34,9 +34,12 @@ export class DsDoctoralComponent implements OnInit {
 
   ngOnInit(): void {
     this.doctoralForm = this.formProposalService.getDsDoctoralForm();
-    this.grantProposalService.getDepartments().subscribe(departments => this.departments = departments);
-    this.grantProposalService.getUniversities().subscribe(universities => this.universities = universities);  
-  
+    this.grantProposalService
+      .getDepartments()
+      .subscribe((departments) => (this.departments = departments));
+    this.grantProposalService
+      .getUniversities()
+      .subscribe((universities) => (this.universities = universities));
   }
 
   onSubmit() {
@@ -53,7 +56,7 @@ export class DsDoctoralComponent implements OnInit {
       .subscribe({
         next: (result) => {
           this.doctoralForm.reset();
-          for(let i = 0; i < this.pFormUpload['_results'].length; i++) {
+          for (let i = 0; i < this.pFormUpload['_results'].length; i++) {
             this.pFormUpload['_results'][i].clear();
           }
           this.toastr.success('Proposal submitted successfully');
@@ -71,31 +74,25 @@ export class DsDoctoralComponent implements OnInit {
   }
 
   onUpload(event, formControlName: string) {
-      if (event.files.length > 0) {
-        const file = event.files[0];
-        const formData = new FormData();
-        formData.append('file', file);
-        this.http.post<any>(this.apiUrl + '/api/file/upload', formData).subscribe(
-          (response) => {
-            this.doctoralForm.get(formControlName).patchValue(`${response.filepath}`);
-            this.toastr.info(response.message);
-          },
-          (error) => {
-            console.error('Error uploading file:', error);
-          }
-        );
-      }
+    if (event.files.length > 0) {
+      const file = event.files[0];
+      const formData = new FormData();
+      formData.append('file', file);
+      this.http.post<any>(this.apiUrl + '/api/file/upload', formData).subscribe(
+        (response) => {
+          this.doctoralForm
+            .get(formControlName)
+            .patchValue(`${response.filepath}`);
+          this.toastr.info(response.message);
+        },
+        (error) => {
+          console.error('Error uploading file:', error);
+        }
+      );
+    }
   }
 
   getDepartments(departments) {
     this.departments = departments;
   }
 }
-
-
-
-
-  
-   
- 
-
