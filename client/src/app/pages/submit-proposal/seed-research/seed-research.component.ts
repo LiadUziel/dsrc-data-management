@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { GrantProposal } from 'src/app/shared/models/grant-proposal.interface';
 import { GrantProposalService } from 'src/app/shared/services/grant-proposal.service';
 import { finalize } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environments';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -27,6 +27,7 @@ export class SeedResearchComponent implements OnInit {
     private grantProposalService: GrantProposalService,
     private toastr: ToastrService,
     private http: HttpClient
+
   ) {}
 
   ngOnInit(): void {
@@ -47,7 +48,7 @@ export class SeedResearchComponent implements OnInit {
       .subscribe({
         next: (result) => {
           this.seedForm.reset();
-          for (let i = 0; i < this.pFormUpload['_results'].length; i++) {
+          for(let i = 0; i < this.pFormUpload['_results'].length; i++) {
             this.pFormUpload['_results'][i].clear();
           }
           this.toastr.success('Proposal submitted successfully');
@@ -79,5 +80,5 @@ export class SeedResearchComponent implements OnInit {
         }
       );
     }
-  }
+}
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environments';
 import { GrantProposal } from '../models/grant-proposal.interface';
 import { HttpClient } from '@angular/common/http';
 import { TokenStorageService } from 'src/app/auth/services/token-storage.service';
@@ -140,7 +140,7 @@ export class GrantProposalService {
       })
       .pipe(
         map((universities) =>
-          universities.map((university) => ({
+        universities.map((university) => ({
             name: university,
           }))
         )

@@ -5,8 +5,9 @@ import { GrantProposalService } from 'src/app/shared/services/grant-proposal.ser
 import { ToastrService } from 'ngx-toastr';
 import { GrantProposal } from 'src/app/shared/models/grant-proposal.interface';
 import { finalize } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environments';
 import { HttpClient } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-dataset-collection',
@@ -47,7 +48,7 @@ export class DatasetCollectionComponent implements OnInit {
       .subscribe({
         next: (result) => {
           this.dsCollectionForm.reset();
-          for (let i = 0; i < this.pFormUpload['_results'].length; i++) {
+          for(let i = 0; i < this.pFormUpload['_results'].length; i++) {
             this.pFormUpload['_results'][i].clear();
           }
           this.toastr.success('Proposal submitted successfully');
@@ -71,9 +72,7 @@ export class DatasetCollectionComponent implements OnInit {
       formData.append('file', file);
       this.http.post<any>(this.apiUrl + '/api/file/upload', formData).subscribe(
         (response) => {
-          this.dsCollectionForm
-            .get(formControlName)
-            .patchValue(`${response.filepath}`);
+          this.dsCollectionForm.get(formControlName).patchValue(`${response.filepath}`);
           this.toastr.info(response.message);
         },
         (error) => {
@@ -81,5 +80,7 @@ export class DatasetCollectionComponent implements OnInit {
         }
       );
     }
-  }
+}
+
+  
 }

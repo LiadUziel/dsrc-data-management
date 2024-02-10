@@ -2,17 +2,17 @@ import { HttpClient } from '@angular/common/http';
 import { Component, QueryList, ViewChildren } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environments';
 import { ProductFormService } from '../services/product-form-service.service';
 import { FileUpload } from 'primeng/fileupload';
 import { Product } from '../interfaces/product.interface';
-import { finalize } from 'rxjs';
+import {finalize} from 'rxjs';
 import { GrantProposal } from 'src/app/shared/models/grant-proposal.interface';
 
 @Component({
   selector: 'app-product-form',
   templateUrl: './product-form.component.html',
-  styleUrls: ['./product-form.component.scss'],
+  styleUrls: ['./product-form.component.scss']
 })
 export class ProductFormComponent {
   productForm: FormGroup;
@@ -21,7 +21,7 @@ export class ProductFormComponent {
 
   private apiUrl = environment.apiUrl;
 
-  public typeOfFundings: string[] = [];
+  public typeOfFundings : string[] = [];
 
   public SDGArray: string[] = [];
   studyTitles: string[] = [];
@@ -37,12 +37,8 @@ export class ProductFormComponent {
 
   ngOnInit(): void {
     this.productForm = new FormGroup({
-      projectTitleThatWasGranted: new FormControl<string>('', [
-        Validators.required,
-      ]),
-      typeOfFundingsReceivedFromDsrc: new FormControl<string>(null, [
-        Validators.required,
-      ]),
+      projectTitleThatWasGranted: new FormControl<string>('', [Validators.required]),
+      typeOfFundingsReceivedFromDsrc: new FormControl<string>(null, [Validators.required]),
       catchyTitle: new FormControl<string>('', Validators.required),
       openingMotivatingSentence: new FormControl<string>(''),
       presentLink: new FormControl<string>(''),
@@ -52,9 +48,7 @@ export class ProductFormComponent {
       summarizingSentences: new FormControl<string>(''),
       conclusion: new FormControl<string>(''),
       uploadBlog: new FormControl<FileUpload>(null, [Validators.required]),
-      uploadFigureOrVideo: new FormControl<FileUpload>(null, [
-        Validators.required,
-      ]),
+      uploadFigureOrVideo: new FormControl<FileUpload>(null, [Validators.required]),
       publications: new FormArray([], Validators.required),
       researchGrants: new FormArray([], Validators.required),
       SDG: new FormControl<string[]>([], Validators.required),
@@ -62,7 +56,8 @@ export class ProductFormComponent {
       internationalCoopreration: new FormControl<string>(''),
       volunteerWork: new FormControl<string>(''),
       developCourses: new FormControl<string>(''),
-    });
+    },
+    );
     this.getUserProposalsTitles();
   }
 
@@ -79,10 +74,10 @@ export class ProductFormComponent {
       .subscribe({
         next: (result) => {
           this.productForm.reset();
-          for (let i = 0; i < this.pFormUpload['_results'].length; i++) {
+          for(let i = 0; i < this.pFormUpload['_results'].length; i++) {
             this.pFormUpload['_results'][i].clear();
           }
-          for (let i = 0; i < this.pFormSDGOptions['_results'].length; i++) {
+          for(let i = 0; i < this.pFormSDGOptions['_results'].length; i++) {
             this.pFormSDGOptions['_results'][i].checkboxValue = false;
           }
           this.toastr.success('Product submitted successfully');
@@ -106,9 +101,7 @@ export class ProductFormComponent {
       formData.append('file', file);
       this.http.post<any>(this.apiUrl + '/api/file/upload', formData).subscribe(
         (response) => {
-          this.productForm
-            .get(formControlName)
-            .patchValue(`${response.filepath}`);
+          this.productForm.get(formControlName).patchValue(`${response.filepath}`);
           this.toastr.info(response.message);
         },
         (error) => {
@@ -132,24 +125,14 @@ export class ProductFormComponent {
 
   getUserProposalsTitles() {
     let typesSet: Set<string> = new Set<string>();
-    this.productFormService
-      .getUserProposals()
-      .pipe(
-        finalize(() => {
-          this.productFormService.parseTypesSet(typesSet, this.typeOfFundings);
-        })
-      )
-      .subscribe((grantProposals: GrantProposal[]) => {
-        grantProposals
-          .filter(
-            (grantProposal) =>
-              grantProposal.status !== 'REJECTED' &&
-              grantProposal.status !== 'PENDING'
-          )
-          .forEach((gp) => {
-            this.studyTitles.push(gp.studyTitle);
-            typesSet.add(gp.type);
-          });
-      });
+    this.productFormService.getUserProposals().pipe(finalize(()=> {
+      this.productFormService.parseTypesSet(typesSet, this.typeOfFundings);
+    })).subscribe((grantProposals: GrantProposal[]) => {
+        grantProposals.filter(grantProposal => grantProposal.status!== 'REJECTED' &&
+        grantProposal.status!=='PENDING').forEach(gp => {
+          this.studyTitles.push(gp.studyTitle);
+          typesSet.add(gp.type);
+        });
+    });
   }
 }

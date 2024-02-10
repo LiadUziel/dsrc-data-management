@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { GrantProposal } from 'src/app/shared/models/grant-proposal.interface';
 import { GrantProposalService } from 'src/app/shared/services/grant-proposal.service';
 import { finalize } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environments';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -20,8 +20,8 @@ export class PostDoctoralComponent implements OnInit {
 
   private apiUrl = environment.apiUrl;
 
-  departments: { name: string }[];
-  universities: { name: string }[];
+  departments: {name : string} [];
+  universities: {name : string} [];
 
   @ViewChildren('fileUpload') pFormUpload: QueryList<any>;
 
@@ -34,12 +34,9 @@ export class PostDoctoralComponent implements OnInit {
 
   ngOnInit(): void {
     this.postDoctoralForm = this.formProposalService.getPostDoctoralForm();
-    this.grantProposalService
-      .getDepartments()
-      .subscribe((departments) => (this.departments = departments));
-    this.grantProposalService
-      .getUniversities()
-      .subscribe((universities) => (this.universities = universities));
+    this.grantProposalService.getDepartments().subscribe(departments => this.departments = departments);
+    this.grantProposalService.getUniversities().subscribe(universities => this.universities = universities);  
+  
   }
 
   onSubmit() {
@@ -56,7 +53,7 @@ export class PostDoctoralComponent implements OnInit {
       .subscribe({
         next: (result) => {
           this.postDoctoralForm.reset();
-          for (let i = 0; i < this.pFormUpload['_results'].length; i++) {
+          for(let i = 0; i < this.pFormUpload['_results'].length; i++) {
             this.pFormUpload['_results'][i].clear();
           }
           this.toastr.success('Proposal submitted successfully');
@@ -80,9 +77,7 @@ export class PostDoctoralComponent implements OnInit {
       formData.append('file', file);
       this.http.post<any>(this.apiUrl + '/api/file/upload', formData).subscribe(
         (response) => {
-          this.postDoctoralForm
-            .get(formControlName)
-            .patchValue(`${response.filepath}`);
+          this.postDoctoralForm.get(formControlName).patchValue(`${response.filepath}`);
           this.toastr.info(response.message);
         },
         (error) => {
@@ -90,5 +85,5 @@ export class PostDoctoralComponent implements OnInit {
         }
       );
     }
-  }
+}
 }
