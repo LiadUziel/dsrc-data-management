@@ -3,22 +3,21 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Product } from '../interfaces/product.interface';
 import { TokenStorageService } from 'src/app/auth/services/token-storage.service';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environments';
+import { environment } from 'src/environments/environment';
 import { GrantProposalService } from 'src/app/shared/services/grant-proposal.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductFormService {
-
   apiUrl = environment.apiUrl;
 
   isOtherChosen: boolean = false;
 
   constructor(
     private tokenService: TokenStorageService,
-     private http: HttpClient,
-     private grantProposalService: GrantProposalService
+    private http: HttpClient,
+    private grantProposalService: GrantProposalService
   ) {}
 
   parseTypesSet(typesSet: Set<string>, typesOfFunding: string[]) {
@@ -35,13 +34,13 @@ export class ProductFormService {
           break;
         case 'DATASET_COLLECTION':
           typesOfFunding.push('Dataset research');
-          break;       
+          break;
       }
     }
     typesOfFunding.push('Project supervision by data scientist');
     typesOfFunding.push('VATAT');
   }
-  
+
   getDegrees() {
     return ['MSc', 'PhD', 'Prof.', 'Other'];
   }
@@ -51,7 +50,7 @@ export class ProductFormService {
       firstName: new FormControl<string>('', Validators.required),
       lastName: new FormControl<string>('', Validators.required),
       degree: new FormControl<string>(null, [Validators.required]),
-      urlOfPersonalWebsite: new FormControl<string>('')
+      urlOfPersonalWebsite: new FormControl<string>(''),
     });
 
     this.getResearchTeam(form).push(researchTeamControl);
@@ -70,7 +69,7 @@ export class ProductFormService {
       publicationName: new FormControl<string>(''),
       publicationStatus: new FormControl<string>(null),
       publicationTypes: new FormControl<string>(null),
-      otherPublicationType: new FormControl<string>('')
+      otherPublicationType: new FormControl<string>(''),
     });
 
     this.getPublications(form).push(publicationControl);
@@ -93,9 +92,9 @@ export class ProductFormService {
         Validators.required,
         Validators.pattern('^[0-9]*$'),
       ]),
-      status: new FormControl<string>(null, Validators.required)
+      status: new FormControl<string>(null, Validators.required),
     });
-    
+
     this.getResearchGrants(form).push(researchGrantControl);
   }
 
@@ -116,7 +115,18 @@ export class ProductFormService {
   }
 
   getPublicationTypes(): string[] {
-    return ['Thesis', 'Presentation', 'Organization of events', 'Article', 'Media', 'Journal paper', 'Conference paper', 'Web page', 'Report', 'Other'];
+    return [
+      'Thesis',
+      'Presentation',
+      'Organization of events',
+      'Article',
+      'Media',
+      'Journal paper',
+      'Conference paper',
+      'Web page',
+      'Report',
+      'Other',
+    ];
   }
 
   createProduct(product: Product) {
@@ -140,17 +150,17 @@ export class ProductFormService {
     return form;
   }
 
-    // Dynamic form - add fields form
-    addNewField(form: FormGroup) {
-      const fieldControl = new FormGroup({
-        fieldName: new FormControl<string>('', Validators.required),
-        value: new FormControl<string>('', Validators.required),
-      });
-  
-      this.getNewFields(form).push(fieldControl);
-    }
+  // Dynamic form - add fields form
+  addNewField(form: FormGroup) {
+    const fieldControl = new FormGroup({
+      fieldName: new FormControl<string>('', Validators.required),
+      value: new FormControl<string>('', Validators.required),
+    });
 
-    getNewFields(form: FormGroup) {
-      return form.get('fields') as FormArray;
-    }
+    this.getNewFields(form).push(fieldControl);
+  }
+
+  getNewFields(form: FormGroup) {
+    return form.get('fields') as FormArray;
+  }
 }
