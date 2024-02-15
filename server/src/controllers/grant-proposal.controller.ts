@@ -30,6 +30,15 @@ export const createGrantProposal: RequestHandler = async (req, res, next) => {
     proposal.amountGiven = 0;
 
     if (proposal.teamMembers?.length) {
+      // Validate this is possible role assignment
+      const possibleRoles: string[] = ["reviewer", "submitter", "teamMember"];
+      for (const teamMember of proposal.teamMembers) {
+        const role = teamMember.memberRole.toLowerCase();
+        if (!possibleRoles.includes(role)) {
+          return res.status(400).send("Invalid role");
+        }
+      }
+
       proposal.teamMembers = await addFullName(proposal.teamMembers);
     }
 
@@ -153,7 +162,7 @@ export const getUniversities: RequestHandler = (req, res, next) => {
 // get proposals that the logged user is reviewer in them
 export const getReviewersProposals: RequestHandler = async (req, res, next) => {
   try {
-    const email = req.authUser?.email!;
+    const email = req.authUser?.email;
 
     const proposals: GrantProposal[] = await findProposalsByRole(
       email,
@@ -173,7 +182,7 @@ export const getTeamMembersProposals: RequestHandler = async (
   next
 ) => {
   try {
-    const email = req.authUser?.email!;
+    const email = req.authUser?.email;
 
     const proposals: GrantProposal[] = await findProposalsByRole(
       email,
