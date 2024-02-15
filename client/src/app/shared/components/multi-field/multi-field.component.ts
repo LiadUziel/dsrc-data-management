@@ -12,12 +12,20 @@ import { RoleEnum } from '../../enums/role.enum';
   templateUrl: './multi-field.component.html',
   styleUrls: ['./multi-field.component.scss'],
 })
-
-export class MultiFieldComponent implements OnInit{
+export class MultiFieldComponent implements OnInit {
   @Input() form: FormGroup;
-  @Input() formArrayName: 'teamMembers' | 'budgetParts' | 'researchTeam' | 'publications' | 'researchGrants';
-  @Input() displayAction: 'Team Member' | 'Budget Part' | 'Research Team Member' |
-   'publication resulting from the funding' | 'research grant that submitted to external granting agencies';
+  @Input() formArrayName:
+    | 'teamMembers'
+    | 'budgetParts'
+    | 'researchTeam'
+    | 'publications'
+    | 'researchGrants';
+  @Input() displayAction:
+    | 'Team Member'
+    | 'Budget Part'
+    | 'Research Team Member'
+    | 'publication resulting from the funding'
+    | 'research grant that submitted to external granting agencies';
 
   formProposalService = inject(FormProposalService);
   productFormService = inject(ProductFormService);
@@ -40,9 +48,6 @@ export class MultiFieldComponent implements OnInit{
     this.authService.getLoggedUser().subscribe({
       next: (loggedUser) => {
         this.roles = ['reviewer', 'submitter', 'teamMember'];
-        if (loggedUser.roles.includes('admin')) {
-          this.roles.push('admin');
-        }
       },
     });
   }
@@ -52,14 +57,11 @@ export class MultiFieldComponent implements OnInit{
       this.addTeamMember();
     } else if (this.formArrayName === 'budgetParts') {
       this.addBudgetPart();
-    }
-    else if (this.formArrayName === 'researchTeam') {
+    } else if (this.formArrayName === 'researchTeam') {
       this.addResearchTeamMember();
-    }
-    else if (this.formArrayName === 'publications') {
+    } else if (this.formArrayName === 'publications') {
       this.addPublication();
-    }
-    else if (this.formArrayName === 'researchGrants') {
+    } else if (this.formArrayName === 'researchGrants') {
       this.addResearchGrant();
     }
   }
@@ -73,8 +75,7 @@ export class MultiFieldComponent implements OnInit{
       this.removeResearchTeamMember(index);
     } else if (this.formArrayName === 'publications') {
       this.removePublication(index);
-    }
-    else if (this.formArrayName === 'researchGrants') {
+    } else if (this.formArrayName === 'researchGrants') {
       this.removeResearchGrant(index);
     }
   }
