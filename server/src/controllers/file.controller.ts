@@ -29,6 +29,33 @@ export const uploadFileToFirebase = async (req: Request, res: Response) => {
   }
 };
 
-export let upload = multer({ storage });
+export const downloadFileFromFirebase = async (req: Request, res: Response) => {
+  const fileName = req.params.fileName;
 
+  const file = bucket.file(fileName);
 
+  try {
+    // Check if the file exists by attempting to get its metadata
+    await file.getMetadata();
+
+    // Create a read stream from the file
+    const readStream = file.createReadStream();
+
+    // Set the appropriate content type and filename
+    res.setHeader("Content-Type", "application/octet-stream");
+    res.setHeader("Content-Disposition", `attachment; filename="${fileName}"`);
+
+    // Pipe the read stream to the response
+    readStream.pipe(res);
+
+    return res.send({ fileName });
+  } catch (err: any) {
+    console.error(err);
+    // If the file does not exist or any other error occurs, send a 404 or 500 error.
+    if (err.code === 404) {
+      res.status(404).send("File not found.");
+    } else {
+      res.status(500).send("Error downloading the file.");
+    }
+  }
+};
