@@ -35,4 +35,15 @@ export class Config {
   public static NODEMAILER_USER = process.env.NODEMAILER_USER;
 
   public static NODEMAILER_PASS = process.env.NODEMAILER_PASS;
+
+  public static FIREBASE_PROJECT_ID = process.env.FIREBASE_PROJECT_ID;
+  public static FIREBASE_PRIVATE_KEY_ID = process.env.FIREBASE_PRIVATE_KEY_ID;
+  public static FIREBASE_PRIVATE_KEY = process.env.FIREBASE_PRIVATE_KEY;
+  public static FIREBASE_CLIENT_EMAIL = process.env.FIREBASE_CLIENT_EMAIL;
+  public static FIREBASE_CLIENT_ID = process.env.FIREBASE_CLIENT_ID;
+  public static FIREBASE_AUTH_URI = process.env.FIREBASE_AUTH_URI;
+  public static FIREBASE_TOKEN_URI = process.env.TOKEN_URI;
+  public static FIREBASE_AUTH_PROVIDER_CERT =
+    process.env.FIREBASE_AUTH_PROVIDER_CERT;
+  public static FIREBASE_CLIENT_CERT_URL = process.env.FIREBASE_CLIENT_CERT_URL;
 }

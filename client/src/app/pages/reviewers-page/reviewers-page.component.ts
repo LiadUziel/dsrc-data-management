@@ -1,8 +1,6 @@
 import { Component, inject } from '@angular/core';
-import * as saveAs from 'file-saver';
 import { DialogService } from 'primeng/dynamicdialog';
 import { Observable, delay, finalize } from 'rxjs';
-import { FilesService } from 'src/app/files/services/files.service';
 import { RoleEnum } from 'src/app/shared/enums/role.enum';
 import { BudgetPart } from 'src/app/shared/models/budget-part.interface';
 import { GrantProposal } from 'src/app/shared/models/grant-proposal.interface';
@@ -11,6 +9,7 @@ import { GrantType } from '../manage-proposals/models/grant-type.enum';
 import { ProposalStatus } from '../manage-proposals/models/proposal-status.enum';
 import { ReviewDialogComponent } from 'src/app/shared/components/review-dialog/review-dialog.component';
 import { Table } from 'primeng/table';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-reviewers-page',
@@ -19,6 +18,8 @@ import { Table } from 'primeng/table';
   providers: [DialogService],
 })
 export class ReviewersPageComponent {
+  downloadUrl = environment.apiUrl + '/api/file/download/';
+
   proposals$: Observable<GrantProposal[]>;
 
   RoleEnum = RoleEnum;
@@ -51,10 +52,7 @@ export class ReviewersPageComponent {
   rowsSkeleton = new Array(5);
   colsSkeleton = new Array(12);
 
-  constructor(
-    private grantProposalsService: GrantProposalService,
-    private filesService: FilesService
-  ) {}
+  constructor(private grantProposalsService: GrantProposalService) {}
   ngOnInit(): void {
     this.initProposals();
 
@@ -78,17 +76,6 @@ export class ReviewersPageComponent {
   // get the total amount of the budget parts1
   getTotalBudget(budgetParts: BudgetPart[]): number {
     return budgetParts.reduce((acc, curr) => acc + curr.amount, 0);
-  }
-
-  getFile(filePath: string): void {
-    this.filesService.downloadFile(filePath).subscribe(
-      (data) => {
-        saveAs(data, filePath);
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
   }
 
   isDsDoctorlOrPostDocProposal(proposalType: string) {

@@ -307,176 +307,80 @@
                 *ngIf="isDsDoctorlOrPostDocProposal(proposal.type)"
               >
                 CV:
-                <button
-                  type="button"
-                  pButton
-                  pRipple
-                  class="p-button-primary button-structure"
-                  tooltipPosition="bottom"
-                  (click)="getFile(proposal.uploadCV)"
-                >
-                  download file
-                </button>
+                <a [href]="downloadUrl + proposal.uploadCV">Download File</a>
               </div>
               <div
                 class="flex-item"
                 *ngIf="isDsDoctorlOrPostDocProposal(proposal.type)"
               >
                 Description:
-                <button
-                  type="button"
-                  pButton
-                  pRipple
-                  class="p-button-primary button-structure"
-                  tooltipPosition="bottom"
-                  (click)="getFile(proposal.uploadDescription)"
+                <a [href]="downloadUrl + proposal.uploadDescription"
+                  >Download File</a
                 >
-                  download file
-                </button>
               </div>
               <div
                 class="flex-item"
                 *ngIf="isDsDoctorlOrPostDocProposal(proposal.type)"
               >
                 Grade transcripts & certificates:
-                <button
-                  type="button"
-                  pButton
-                  pRipple
-                  class="p-button-primary button-structure"
-                  tooltipPosition="bottom"
-                  (click)="getFile(proposal.uploadGradeTAndC)"
+                <a [href]="downloadUrl + proposal.uploadGradeTAndC"
+                  >Download File</a
                 >
-                  download file
-                </button>
               </div>
               <div
                 class="flex-item"
                 *ngIf="isDsDoctorlOrPostDocProposal(proposal.type)"
               >
                 Work Commitment:
-                <button
-                  type="button"
-                  pButton
-                  pRipple
-                  class="p-button-primary button-structure"
-                  tooltipPosition="bottom"
-                  (click)="getFile(proposal.uploadWorkCommitment)"
+                <a [href]="downloadUrl + proposal.uploadWorkCommitment"
+                  >Download File</a
                 >
-                  download file
-                </button>
               </div>
               <div
                 class="flex-item"
                 *ngIf="isDsDoctorlOrPostDocProposal(proposal.type)"
               >
                 Recommendation Letter:
-                <button
-                  type="button"
-                  pButton
-                  pRipple
-                  class="p-button-primary button-structure"
-                  tooltipPosition="bottom"
-                  (click)="getFile(proposal.uploadRecommendationLetter)"
+                <a [href]="downloadUrl + proposal.uploadRecommendationLetter"
+                  >Download File</a
                 >
-                  download file
-                </button>
               </div>
               <div
                 class="flex-item"
                 *ngIf="isDsDoctorlOrPostDocProposal(proposal.type)"
               >
                 Contact Recommenders:
-                <button
-                  type="button"
-                  pButton
-                  pRipple
-                  class="p-button-primary button-structure"
-                  tooltipPosition="bottom"
-                  (click)="getFile(proposal.uploadContactRecommenders)"
+                <a [href]="downloadUrl + proposal.uploadContactRecommenders"
+                  >Download File</a
                 >
-                  download file
-                </button>
               </div>
               <div
                 class="flex-item"
                 *ngIf="isSeedOrDatasetCollectionProposal(proposal.type)"
               >
                 Research Introduction:
-                <button
-                  type="button"
-                  pButton
-                  pRipple
-                  class="p-button-primary button-structure"
-                  tooltipPosition="bottom"
-                  (click)="getFile(proposal.uploadResearchIntro)"
+                <a [href]="downloadUrl + proposal.uploadResearchIntro"
+                  >Download File</a
                 >
-                  download file
-                </button>
               </div>
               <div
                 class="flex-item"
                 *ngIf="isSeedOrDatasetCollectionProposal(proposal.type)"
               >
                 Innovation Project:
-                <button
-                  type="button"
-                  pButton
-                  pRipple
-                  class="p-button-primary button-structure"
-                  tooltipPosition="bottom"
-                  (click)="getFile(proposal.uploadInnovationProject)"
+                <a [href]="downloadUrl + proposal.uploadInnovationProject"
+                  >Download File</a
                 >
-                  download file
-                </button>
               </div>
-              <div
-                class="flex-item"
-                *ngIf="isSeedOrDatasetCollectionProposal(proposal.type)"
-              >
-                Team:
-                <button
-                  type="button"
-                  pButton
-                  pRipple
-                  class="p-button-primary button-structure"
-                  tooltipPosition="bottom"
-                  (click)="getFile(proposal.uploadTeam)"
-                >
-                  download file
-                </button>
-              </div>
-              <div
-                class="flex-item"
-                *ngIf="isSeedOrDatasetCollectionProposal(proposal.type)"
-              >
-                Budget:
-                <button
-                  type="button"
-                  pButton
-                  pRipple
-                  class="p-button-primary button-structure"
-                  tooltipPosition="bottom"
-                  (click)="getFile(proposal.uploadBudget)"
-                >
-                  download file
-                </button>
-              </div>
+
               <div
                 class="flex-item"
                 *ngIf="this.GrantTypeEnum[proposal.type] === 'Seed Research'"
               >
                 External Funding:
-                <button
-                  type="button"
-                  pButton
-                  pRipple
-                  class="p-button-primary button-structure"
-                  tooltipPosition="bottom"
-                  (click)="getFile(proposal.uploadExternalFunding)"
+                <a [href]="downloadUrl + proposal.uploadExternalFunding"
+                  >Download File</a
                 >
-                  download file
-                </button>
               </div>
               <div
                 class="flex-item"
@@ -485,16 +389,9 @@
                 "
               >
                 Dataset information:
-                <button
-                  type="button"
-                  pButton
-                  pRipple
-                  class="p-button-primary button-structure"
-                  tooltipPosition="bottom"
-                  (click)="getFile(proposal.uploadDatasetInfo)"
+                <a [href]="downloadUrl + proposal.uploadDatasetInfo"
+                  >Download File</a
                 >
-                  download file
-                </button>
               </div>
               <div
                 class="flex-item"
@@ -503,16 +400,9 @@
                 "
               >
                 Ethics:
-                <button
-                  type="button"
-                  pButton
-                  pRipple
-                  class="p-button-primary button-structure"
-                  tooltipPosition="bottom"
-                  (click)="getFile(proposal.uploadEthics)"
+                <a [href]="downloadUrl + proposal.uploadEthics"
+                  >Download File</a
                 >
-                  download file
-                </button>
               </div>
               <div
                 class="flex-item"
@@ -521,16 +411,9 @@
                 "
               >
                 Copyrights:
-                <button
-                  type="button"
-                  pButton
-                  pRipple
-                  class="p-button-primary button-structure"
-                  tooltipPosition="bottom"
-                  (click)="getFile(proposal.uploadCopyrights)"
+                <a [href]="downloadUrl + proposal.uploadCopyrights"
+                  >Download File</a
                 >
-                  download file
-                </button>
               </div>
             </div>
           </div>

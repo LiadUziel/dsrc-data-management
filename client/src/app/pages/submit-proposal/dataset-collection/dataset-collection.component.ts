@@ -5,8 +5,7 @@ import { GrantProposalService } from 'src/app/shared/services/grant-proposal.ser
 import { ToastrService } from 'ngx-toastr';
 import { GrantProposal } from 'src/app/shared/models/grant-proposal.interface';
 import { finalize } from 'rxjs';
-import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { FilesService } from '../../../files/services/files.service';
 
 @Component({
   selector: 'app-dataset-collection',
@@ -18,15 +17,13 @@ export class DatasetCollectionComponent implements OnInit {
 
   loading = false;
 
-  private apiUrl = environment.apiUrl;
-
   @ViewChildren('fileUpload') pFormUpload: QueryList<any>;
 
   constructor(
     private formProposalService: FormProposalService,
     private grantProposalService: GrantProposalService,
     private toastr: ToastrService,
-    private http: HttpClient
+    private filesService: FilesService
   ) {}
 
   ngOnInit(): void {
@@ -64,22 +61,18 @@ export class DatasetCollectionComponent implements OnInit {
       });
   }
 
-  onUpload(event, formControlName: string) {
-    if (event.files.length > 0) {
+  onUpload(event: { files: File[] }, formControlName: string) {
+    if (event.files.length) {
       const file = event.files[0];
-      const formData = new FormData();
-      formData.append('file', file);
-      this.http.post<any>(this.apiUrl + '/api/file/upload', formData).subscribe(
-        (response) => {
-          this.dsCollectionForm
-            .get(formControlName)
-            .patchValue(`${response.filepath}`);
-          this.toastr.info(response.message);
+      this.filesService.uploadFile(file).subscribe({
+        next: ({ fileName }) => {
+          this.dsCollectionForm.get(formControlName).patchValue(fileName);
+          this.toastr.info('File uploaded successfully');
         },
-        (error) => {
-          console.error('Error uploading file:', error);
-        }
-      );
+        error: () => {
+          this.toastr.error('Error in upload file');
+        },
+      });
     }
   }
 }
