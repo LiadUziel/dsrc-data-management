@@ -1,8 +1,6 @@
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { Observable, delay, finalize, map } from 'rxjs';
 import { GrantType } from '../../manage-proposals/models/grant-type.enum';
-import { FilesService } from 'src/app/files/services/files.service';
-import { saveAs } from 'file-saver';
 import { DialogService } from 'primeng/dynamicdialog';
 import { CustomFieldsDialogComponent } from '../../manage-proposals/custom-fields-dialog/custom-fields-dialog.component';
 import { Product } from '../../submit-product/interfaces/product.interface';
@@ -12,6 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 import cloneDeep from 'lodash/cloneDeep';
 import { ProductBlogStatus } from '../Models/product-blog-status.enum';
 import { UpdateStatusDialogComponent } from '../../manage-proposals/update-status-dialog/update-status-dialog.component';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-manage-products',
@@ -20,6 +19,8 @@ import { UpdateStatusDialogComponent } from '../../manage-proposals/update-statu
   providers: [DialogService],
 })
 export class ManageProductsComponent implements OnInit {
+  downloadUrl = environment.apiUrl + '/api/file/download/';
+
   @ViewChild('productsTable') productsTable!: Table;
 
   products$: Observable<Product[]>;
@@ -98,7 +99,7 @@ export class ManageProductsComponent implements OnInit {
   };
 
   grantTypesKeys = this.getGrantTypeKeys();
-  
+
   private studyTitleQueryParam: string = '';
   private emailQueryParam: string = '';
 
@@ -110,7 +111,6 @@ export class ManageProductsComponent implements OnInit {
 
   constructor(
     private ProductsService: ProductsService,
-    private filesService: FilesService,
     private route: ActivatedRoute
   ) {}
 
@@ -147,17 +147,6 @@ export class ManageProductsComponent implements OnInit {
         })
       );
     }
-  }
-
-  getFile(filePath: string): void {
-    this.filesService.downloadFile(filePath).subscribe(
-      (data) => {
-        saveAs(data, filePath);
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
   }
 
   openCustomFieldsDialog(product: Product) {
@@ -212,8 +201,8 @@ export class ManageProductsComponent implements OnInit {
   }
   getGrantTypeKeys(): string[] {
     let grantTypesKeys: string[] = Object.values(GrantType);
-    grantTypesKeys.push("project supervision by data scientist");
-    grantTypesKeys.push("VATAT");
+    grantTypesKeys.push('project supervision by data scientist');
+    grantTypesKeys.push('VATAT');
     return grantTypesKeys;
   }
 
@@ -221,9 +210,3 @@ export class ManageProductsComponent implements OnInit {
     table.clear();
   }
 }
-
-
-
-
-  
-

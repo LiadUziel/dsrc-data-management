@@ -5,14 +5,14 @@
     [value]="products$ | async"
     #productTable
     [globalFilterFields]="[
-    'typeOfFundingsReceivedFromDsrc',
-    'user.firstName',
-    'user.lastName',
-    'user.email',
-    'projectTitleThatWasGranted',
-    'catchyTitle',
-    'applicationDate'
-  ]"
+      'typeOfFundingsReceivedFromDsrc',
+      'user.firstName',
+      'user.lastName',
+      'user.email',
+      'projectTitleThatWasGranted',
+      'catchyTitle',
+      'applicationDate'
+    ]"
     dataKey="_id"
     [paginator]="true"
     [rows]="10"
@@ -36,12 +36,12 @@
           />
         </span>
         <button
-        pButton
-        label="Clear"
-        class="p-button-outlined"
-        icon="pi pi-filter-slash"
-        (click)="clear(productTable)"
-      ></button>
+          pButton
+          label="Clear"
+          class="p-button-outlined"
+          icon="pi pi-filter-slash"
+          (click)="clear(productTable)"
+        ></button>
       </div>
     </ng-template>
     <ng-template pTemplate="header">
@@ -50,7 +50,11 @@
         <th>
           <div>Grant Type</div>
 
-          <p-columnFilter field="typeOfFundingsReceivedFromDsrc" matchMode="equals" [showMenu]="false">
+          <p-columnFilter
+            field="typeOfFundingsReceivedFromDsrc"
+            matchMode="equals"
+            [showMenu]="false"
+          >
             <ng-template
               pTemplate="filter"
               let-value
@@ -228,29 +232,13 @@
               </div>
               <div class="flex-item">
                 <u class="margin-u">Blog:</u>
-                <button
-                  type="button"
-                  pButton
-                  pRipple
-                  class="p-button-primary button-structure"
-                  tooltipPosition="bottom"
-                  (click)="getFile(product.uploadBlog)"
-                >
-                  download file
-                </button>
+                <a [href]="downloadUrl + product.uploadBlog">Download File</a>
               </div>
               <div class="flex-item">
                 <u class="margin-u">Figure or video:</u>
-                <button
-                  type="button"
-                  pButton
-                  pRipple
-                  class="p-button-primary button-structure"
-                  tooltipPosition="bottom"
-                  (click)="getFile(product.uploadFigureOrVideo)"
+                <a [href]="downloadUrl + product.uploadFigureOrVideo"
+                  >Download File</a
                 >
-                  download file
-                </button>
               </div>
               <div
                 *ngIf="product.publications && product.publications.length > 0"
