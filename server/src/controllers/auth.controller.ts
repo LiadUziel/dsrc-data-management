@@ -106,7 +106,11 @@ export const authorizeMiddleware: RequestHandler = async (req, res, next) => {
 
     // extract the token from authHeader
     const token = authHeader.split(" ")[1];
-    const jwtData = jwt.verify(token, Config.JWT_SECRET_KEY);
+    const jwtData = jwt.verify(token, Config.JWT_SECRET_KEY) as {
+      email: string;
+      isLogged: boolean;
+      roles: string[];
+    };
     const { email, isLogged, roles } = jwtData;
     req.authUser = { email, isLogged, roles };
     next();

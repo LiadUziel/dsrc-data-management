@@ -1,13 +1,12 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, QueryList, ViewChildren } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { environment } from 'src/environments/environment';
 import { ProductFormService } from '../services/product-form-service.service';
 import { FileUpload } from 'primeng/fileupload';
 import { Product } from '../interfaces/product.interface';
 import { finalize } from 'rxjs';
 import { GrantProposal } from 'src/app/shared/models/grant-proposal.interface';
+import { FilesService } from '../../../files/services/files.service';
 
 @Component({
   selector: 'app-product-form',
@@ -19,8 +18,6 @@ export class ProductFormComponent {
 
   loading = false;
 
-  private apiUrl = environment.apiUrl;
-
   public typeOfFundings: string[] = [];
 
   public SDGArray: string[] = [];
@@ -31,8 +28,8 @@ export class ProductFormComponent {
 
   constructor(
     private toastr: ToastrService,
-    private http: HttpClient,
-    private productFormService: ProductFormService
+    private productFormService: ProductFormService,
+    private filesService: FilesService
   ) {}
 
   ngOnInit(): void {
@@ -99,22 +96,18 @@ export class ProductFormComponent {
       });
   }
 
-  onUpload(event, formControlName: string) {
-    if (event.files.length > 0) {
+  onUpload(event: { files: File[] }, formControlName: string) {
+    if (event.files.length) {
       const file = event.files[0];
-      const formData = new FormData();
-      formData.append('file', file);
-      this.http.post<any>(this.apiUrl + '/api/file/upload', formData).subscribe(
-        (response) => {
-          this.productForm
-            .get(formControlName)
-            .patchValue(`${response.filepath}`);
-          this.toastr.info(response.message);
+      this.filesService.uploadFile(file).subscribe({
+        next: ({ fileName }) => {
+          this.productForm.get(formControlName).patchValue(fileName);
+          this.toastr.info('File uploaded successfully');
         },
-        (error) => {
-          console.error('Error uploading file:', error);
-        }
-      );
+        error: () => {
+          this.toastr.error('Error in upload file');
+        },
+      });
     }
   }
 
