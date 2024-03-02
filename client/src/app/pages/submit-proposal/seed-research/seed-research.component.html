@@ -9,12 +9,11 @@
         #fileUpload
         name="file"
         [maxFileSize]="1000000"
-        chooseLabel="Upload Research Introduction"
+        chooseLabel="Upload Research Intro"
         [showCancelButton]="false"
         [customUpload]="true"
         (uploadHandler)="onUpload($event, 'uploadResearchIntro')"
         accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,image/*"
-        class="file-upload-element-width"
       >
       </p-fileUpload>
       <i
@@ -33,7 +32,6 @@
         [customUpload]="true"
         (uploadHandler)="onUpload($event, 'uploadInnovationProject')"
         accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,image/*"
-        class="file-upload-element-width"
       >
       </p-fileUpload>
       <i
@@ -52,7 +50,6 @@
         [customUpload]="true"
         (uploadHandler)="onUpload($event, 'uploadExternalFunding')"
         accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,image/*"
-        class="file-upload-element-width"
       >
       </p-fileUpload>
       <i
