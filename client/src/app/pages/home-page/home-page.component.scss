@@ -1,45 +1,52 @@
 main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 50vw;
+
+  .lottie-wrapper {
+    min-height: 264px;
+  }
+
+  p {
+    text-align: center;
+  }
+
+  .actions {
     display: flex;
+    justify-content: space-between;
+    width: 575px;
+
     flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    width: 50vw;
+
+    // Media query for tablet/desktop
+    @media (min-width: 768px) {
+      flex-direction: row;
+    }
 
     .lottie-wrapper {
-        min-height: 264px;
+      min-height: 200px;
+      cursor: pointer;
+      transition: transform 0.4s ease-in-out;
+
+      &:hover {
+        transform: scale(1.18);
+      }
     }
 
-    p {
-        text-align: center;
+    .action {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      button {
+        margin: 1rem 0;
+      }
     }
+  }
 
-    .actions {
-        display: flex;
-        justify-content: space-between;
-        width: 575px;
-
-        .lottie-wrapper {
-            min-height: 200px;
-            cursor: pointer;
-            transition: transform 0.4s ease-in-out;
-
-            &:hover {
-                transform: scale(1.18);
-            }
-        }
-
-        .action {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-
-            button {
-                margin: 1rem 0;
-            }
-        }
-    }
-
-    b {
-        margin-top: 1rem;
-    }
+  b {
+    margin-top: 1rem;
+  }
 }
