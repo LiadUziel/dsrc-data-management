@@ -3,12 +3,12 @@
     <ng-template pTemplate="end">
       <div class="right-side">
         <div class="switch-theme">
-          <span>Light Mode</span>
+          <span><i class="pi pi-sun"></i></span>
           <p-inputSwitch
             [(ngModel)]="isDarkTheme"
             (onChange)="switchTheme()"
           ></p-inputSwitch>
-          <span>Dark Mode</span>
+          <span><i class="pi pi-moon"></i></span>
         </div>
         <div class="user-details">
           <div class="name">{{ user?.firstName }} {{ user?.lastName }}</div>
