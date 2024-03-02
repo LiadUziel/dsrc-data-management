@@ -5,16 +5,16 @@
     <app-parent-form [form]="dsCollectionForm"></app-parent-form>
 
     <div class="field">
-      <p-fileUpload #fileUpload
-       name="file"
-       [maxFileSize]="1000000"
-        chooseLabel="Upload Research Introduction"
+      <p-fileUpload
+        #fileUpload
+        name="file"
+        [maxFileSize]="1000000"
+        chooseLabel="Upload Research Intro"
         [showCancelButton]="false"
         [customUpload]="true"
         (uploadHandler)="onUpload($event, 'uploadResearchIntro')"
         accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,image/*"
-        class="file-upload-element-width"
-        >
+      >
       </p-fileUpload>
       <i
         class="pi pi-question-circle"
@@ -23,16 +23,16 @@
     </div>
 
     <div class="field">
-      <p-fileUpload #fileUpload
-       name="file"
-       [maxFileSize]="1000000"
+      <p-fileUpload
+        #fileUpload
+        name="file"
+        [maxFileSize]="1000000"
         chooseLabel="Upload Innovation Project"
         [showCancelButton]="false"
         [customUpload]="true"
         (uploadHandler)="onUpload($event, 'uploadInnovationProject')"
         accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,image/*"
-        class="file-upload-element-width"
-        >
+      >
       </p-fileUpload>
       <i
         class="pi pi-question-circle"
@@ -41,16 +41,16 @@
     </div>
 
     <div class="field">
-      <p-fileUpload #fileUpload
-       name="file"
-       [maxFileSize]="1000000"
+      <p-fileUpload
+        #fileUpload
+        name="file"
+        [maxFileSize]="1000000"
         chooseLabel="Upload Dataset Information"
         [showCancelButton]="false"
         [customUpload]="true"
         (uploadHandler)="onUpload($event, 'uploadDatasetInfo')"
         accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,image/*"
-        class="file-upload-element-width"
-        >
+      >
       </p-fileUpload>
       <i
         class="pi pi-question-circle"
@@ -59,16 +59,16 @@
     </div>
 
     <div class="field">
-      <p-fileUpload #fileUpload
-       name="file"
-       [maxFileSize]="1000000"
+      <p-fileUpload
+        #fileUpload
+        name="file"
+        [maxFileSize]="1000000"
         chooseLabel="Upload Ethics"
         [showCancelButton]="false"
         [customUpload]="true"
         (uploadHandler)="onUpload($event, 'uploadEthics')"
         accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,image/*"
-        class="file-upload-element-width"
-        >
+      >
       </p-fileUpload>
       <i
         class="pi pi-question-circle"
@@ -77,16 +77,16 @@
     </div>
 
     <div class="field">
-      <p-fileUpload #fileUpload
-       name="file"
-       [maxFileSize]="1000000"
+      <p-fileUpload
+        #fileUpload
+        name="file"
+        [maxFileSize]="1000000"
         chooseLabel="Upload Copyrights"
         [showCancelButton]="false"
         [customUpload]="true"
         (uploadHandler)="onUpload($event, 'uploadCopyrights')"
         accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,image/*"
-        class="file-upload-element-width"
-        >
+      >
       </p-fileUpload>
       <i
         class="pi pi-question-circle"

@@ -1,8 +1,18 @@
 <div class="page-wrapper">
   <h1>Data Science Doctoral candidates</h1>
 
-  <form class="form" action="/upload" mehod="POST" enctype="multipart/form-data" [formGroup]="doctoralForm" (ngSubmit)="onSubmit()">
-    <app-parent-form [form]="doctoralForm" (departmentsEventEmitter)="getDepartments($event)"></app-parent-form>
+  <form
+    class="form"
+    action="/upload"
+    mehod="POST"
+    enctype="multipart/form-data"
+    [formGroup]="doctoralForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <app-parent-form
+      [form]="doctoralForm"
+      (departmentsEventEmitter)="getDepartments($event)"
+    ></app-parent-form>
     <b>please tell us about your BA: </b>
     <p-dropdown
       formControlName="BADepartment"
@@ -17,16 +27,16 @@
       inputId="float-label"
     ></p-dropdown>
     <p-dropdown
-    formControlName="BAUniversity"
-    [options]="universities"
-    optionLabel="name"
-    optionValue="name"
-    [filter]="true"
-    filterBy="name"
-    [showClear]="true"
-    placeholder="University"
-    styleClass="University"
-    inputId="float-label"
+      formControlName="BAUniversity"
+      [options]="universities"
+      optionLabel="name"
+      optionValue="name"
+      [filter]="true"
+      filterBy="name"
+      [showClear]="true"
+      placeholder="University"
+      styleClass="University"
+      inputId="float-label"
     ></p-dropdown>
     <span class="p-float-label">
       <p-inputNumber
@@ -52,16 +62,16 @@
       inputId="float-label"
     ></p-dropdown>
     <p-dropdown
-    formControlName="MAUniversity"
-    [options]="universities"
-    optionLabel="name"
-    optionValue="name"
-    [filter]="true"
-    filterBy="name"
-    [showClear]="true"
-    placeholder="University"
-    styleClass="University"
-    inputId="float-label"
+      formControlName="MAUniversity"
+      [options]="universities"
+      optionLabel="name"
+      optionValue="name"
+      [filter]="true"
+      filterBy="name"
+      [showClear]="true"
+      placeholder="University"
+      styleClass="University"
+      inputId="float-label"
     ></p-dropdown>
     <span class="p-float-label">
       <p-inputNumber
@@ -74,16 +84,16 @@
       <label>Average grade</label>
     </span>
     <div class="field">
-      <p-fileUpload #fileUpload
-       name="file"
-       [maxFileSize]="1000000"  
+      <p-fileUpload
+        #fileUpload
+        name="file"
+        [maxFileSize]="1000000"
         chooseLabel="Upload CV"
         [showCancelButton]="false"
         [customUpload]="true"
         (uploadHandler)="onUpload($event, 'uploadCV')"
         accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,image/*"
-        class="file-upload-element-width"
-        >
+      >
       </p-fileUpload>
       <i
         class="pi pi-question-circle"
@@ -93,16 +103,16 @@
     </div>
 
     <div class="field">
-      <p-fileUpload #fileUpload
-       name="file"
-       [maxFileSize]="1000000"
+      <p-fileUpload
+        #fileUpload
+        name="file"
+        [maxFileSize]="1000000"
         chooseLabel="Upload Description"
         [showCancelButton]="false"
         [customUpload]="true"
         (uploadHandler)="onUpload($event, 'uploadDescription')"
         accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,image/*"
-        class="file-upload-element-width"
-        >
+      >
       </p-fileUpload>
       <i
         class="pi pi-question-circle"
@@ -116,16 +126,16 @@
     </div>
 
     <div class="field">
-      <p-fileUpload #fileUpload
-       name="file"
-       [maxFileSize]="1000000"
+      <p-fileUpload
+        #fileUpload
+        name="file"
+        [maxFileSize]="1000000"
         chooseLabel="Upload grade transcripts & certificates"
         [showCancelButton]="false"
         [customUpload]="true"
         (uploadHandler)="onUpload($event, 'uploadGradeTAndC')"
         accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,image/*"
-        class="file-upload-element-width"
-        >
+      >
       </p-fileUpload>
       <i
         class="pi pi-question-circle"
@@ -134,16 +144,16 @@
     </div>
 
     <div class="field">
-      <p-fileUpload #fileUpload
-       name="file"
-       [maxFileSize]="1000000"
+      <p-fileUpload
+        #fileUpload
+        name="file"
+        [maxFileSize]="1000000"
         chooseLabel="Upload work commitment"
         [showCancelButton]="false"
         [customUpload]="true"
         (uploadHandler)="onUpload($event, 'uploadWorkCommitment')"
         accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,image/*"
-        class="file-upload-element-width"
-        >
+      >
       </p-fileUpload>
       <i
         class="pi pi-question-circle"
@@ -153,16 +163,16 @@
     </div>
 
     <div class="field">
-      <p-fileUpload #fileUpload
-       name="file"
-       [maxFileSize]="1000000"
-        chooseLabel="Upload recommendation letter"
+      <p-fileUpload
+        #fileUpload
+        name="file"
+        [maxFileSize]="1000000"
+        chooseLabel="Upload recommend letter"
         [showCancelButton]="false"
         [customUpload]="true"
         (uploadHandler)="onUpload($event, 'uploadRecommendationLetter')"
         accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,image/*"
-        class="file-upload-element-width"
-        >
+      >
       </p-fileUpload>
       <i
         class="pi pi-question-circle"
@@ -171,21 +181,21 @@
     </div>
 
     <div class="field">
-      <p-fileUpload #fileUpload
-       name="file"
-       [maxFileSize]="1000000"
-       chooseLabel="Upload contact recommenders"
-       [showCancelButton]="false"
-       [customUpload]="true"
-       (uploadHandler)="onUpload($event, 'uploadContactRecommenders')"
-       accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,image/*"
-       class="file-upload-element-width"
-       >
-       </p-fileUpload>
-       <i
-         class="pi pi-question-circle"
-         pTooltip="Names of three other recommenders and contact details."
-       ></i>
+      <p-fileUpload
+        #fileUpload
+        name="file"
+        [maxFileSize]="1000000"
+        chooseLabel="Upload contact recommenders"
+        [showCancelButton]="false"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event, 'uploadContactRecommenders')"
+        accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,image/*"
+      >
+      </p-fileUpload>
+      <i
+        class="pi pi-question-circle"
+        pTooltip="Names of three other recommenders and contact details."
+      ></i>
     </div>
 
     <app-multi-field
@@ -204,4 +214,4 @@
       Submit
     </button>
   </form>
-</div> 
+</div>

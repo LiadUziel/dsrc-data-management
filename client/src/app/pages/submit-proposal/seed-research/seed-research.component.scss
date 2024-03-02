@@ -1,60 +1,66 @@
 .page-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h1 {
+    text-align: center;
+    margin: auto 2rem;
+  }
+
+  .form {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 2.5rem;
 
-    .form {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 2.5rem;
+    margin: 1rem;
+    padding: 1.5rem;
 
-        margin: 1rem;
-        padding: 1.5rem;
+    border: 1px solid #707070;
+    border-radius: 1rem;
 
-        width: 40vw;
-        border: 1px solid #707070;
-        border-radius: 1rem;
+    // Base for mobile
+    width: 90vw;
 
-        .p-float-label,
-        input {
-            width: 100%
-        }
-
-
-        .field {
-            align-self: flex-start;
-
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-
-            i.pi.pi-question-circle {
-                color: #707070;
-                font-size: 1.5rem;
-
-                &:hover {
-                    color: #000;
-                }
-            }
-            .file-upload-element-width {
-                width: 22.1875rem;
-            }
-        }
-
-
+    // Media query for tablet/desktop
+    @media (min-width: 768px) {
+      width: 50vw;
     }
+
+    .p-float-label,
+    input {
+      width: 100%;
+    }
+
+    .field {
+      align-self: flex-start;
+
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      i.pi.pi-question-circle {
+        color: #707070;
+        font-size: 1.5rem;
+
+        &:hover {
+          color: #000;
+        }
+      }
+    }
+  }
 }
 
 :host ::ng-deep .p-fileupload .p-fileupload-buttonbar {
-    align-self: flex-start;
-    gap: 0.5rem;
-    display: flex;
-    align-items: center;
-    .p-fileupload-choose {
-        justify-content: center;
-        .p-button-label {
-            margin-left: 0.312rem;
-        }
+  align-self: flex-start;
+  gap: 0.5rem;
+  display: flex;
+  align-items: center;
+  .p-fileupload-choose {
+    justify-content: center;
+    .p-button-label {
+      margin-left: 0.312rem;
     }
+  }
 }
