@@ -1,106 +1,113 @@
 .page-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h1 {
+    text-align: center;
+    margin: auto 2rem;
+  }
+
+  .form {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 2.5rem;
 
-    .form {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 2.5rem;
+    margin: 1rem;
+    padding: 1.5rem;
 
-        margin: 1rem;
-        padding: 1.5rem;
+    border: 1px solid #707070;
+    border-radius: 1rem;
 
-        width: 40vw;
-        border: 1px solid #707070;
-        border-radius: 1rem;
+    // Base for mobile
+    width: 90vw;
 
-        .intended-list {
-            padding-left: 2.5rem;
-            padding-top: 0.3125rem;
-        }
-
-        .p-float-label,
-        input,
-        textarea {
-            width: 100%
-        }
-
-        .field {
-            align-self: flex-start;
-
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-
-            i.pi.pi-question-circle {
-                color: #707070;
-                font-size: 1.5rem;
-
-                &:hover {
-                    color: #000;
-                }
-            }
-
-            .file-upload-element-width {
-                width: 22.1875rem;
-            }
-        }
-
-        .margin-top {
-            margin-top: 0.625rem;
-
-        }
-
-        .margin-div {
-            margin-bottom: 3.75rem;
-        }
-
-        .display-SDG-options {
-            display: flex;
-            flex-direction: column;
-            align-self: flex-start;
-            margin-top: 1.875rem;
-            padding-left: 1.875rem;
-        }
-
-        .margin-between-options {
-            margin-bottom: 0.3125rem;
-        }
-
-        .asterisk-special-field-display {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-        }
-
-        .margin-special-field {
-            margin-left: 0.3125rem;
-        }
-
-        .separate-border {
-            border-top: 1px dashed;
-            min-width: 40vw;
-          }          
+    // Media query for tablet/desktop
+    @media (min-width: 768px) {
+      width: 50vw;
     }
+
+    .intended-list {
+      padding-left: 2.5rem;
+      padding-top: 0.3125rem;
+    }
+
+    .p-float-label,
+    input,
+    textarea {
+      width: 100%;
+    }
+
+    .field {
+      align-self: flex-start;
+
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      i.pi.pi-question-circle {
+        color: #707070;
+        font-size: 1.5rem;
+
+        &:hover {
+          color: #000;
+        }
+      }
+    }
+
+    .margin-top {
+      margin-top: 0.625rem;
+    }
+
+    .margin-div {
+      margin-bottom: 3.75rem;
+    }
+
+    .display-SDG-options {
+      display: flex;
+      flex-direction: column;
+      align-self: flex-start;
+      margin-top: 1.875rem;
+      padding-left: 1.875rem;
+    }
+
+    .margin-between-options {
+      margin-bottom: 0.3125rem;
+    }
+
+    .asterisk-special-field-display {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .margin-special-field {
+      margin-left: 0.3125rem;
+    }
+
+    .separate-border {
+      border-top: 1px dashed;
+      min-width: 40vw;
+    }
+  }
 }
 
 :host ::ng-deep .p-fileupload .p-fileupload-buttonbar {
-    align-self: flex-start;
-    gap: 0.5rem;
-    display: flex;
-    align-items: center;
+  align-self: flex-start;
+  gap: 0.5rem;
+  display: flex;
+  align-items: center;
 
-    .p-fileupload-choose {
-        justify-content: center;
+  .p-fileupload-choose {
+    justify-content: center;
 
-        .p-button-label {
-            margin-left: 0.312rem;
-        }
+    .p-button-label {
+      margin-left: 0.312rem;
     }
+  }
 }
 
 .ta-margin {
-    margin-top: 10px;
+  margin-top: 10px;
 }

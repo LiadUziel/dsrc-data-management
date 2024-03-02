@@ -1,44 +1,48 @@
 .intro {
-    margin: 1rem 0 3rem 0;
+  margin: 1rem 0 3rem 0;
 
-    b {
-        display: block;
-    }
+  b {
+    display: block;
+  }
 }
 
 form {
-    .field-wrapper {
-        display: flex;
-        justify-content: center;
-        gap: 1rem;
+  .field-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
 
+    width: 100%;
+
+    margin: 2rem 0rem;
+
+    @media (min-width: 768px) {
+      margin: 2rem 1rem;
+    }
+
+    span.field-name {
+      width: 30%;
+
+      input {
         width: 100%;
-
-        margin: 2rem 1rem;
-
-        span.field-name {
-            width: 30%;
-
-            input {
-                width: 100%;
-            }
-        }
-
-        span.value {
-            width: 60%;
-
-            input {
-                width: 100%;
-            }
-        }
+      }
     }
 
-    .add-btn {
-        margin: 0 0 2rem 1.65rem;
-    }
+    span.value {
+      width: 60%;
 
-    .submit-wrapper {
-        display: flex;
-        justify-content: center;
+      input {
+        width: 100%;
+      }
     }
+  }
+
+  .add-btn {
+    margin: 0 0 2rem 1.65rem;
+  }
+
+  .submit-wrapper {
+    display: flex;
+    justify-content: center;
+  }
 }

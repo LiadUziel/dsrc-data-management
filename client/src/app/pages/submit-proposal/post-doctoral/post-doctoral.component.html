@@ -17,16 +17,16 @@
       inputId="float-label"
     ></p-dropdown>
     <p-dropdown
-    formControlName="BAUniversity"
-    [options]="universities"
-    optionLabel="name"
-    optionValue="name"
-    [filter]="true"
-    filterBy="name"
-    [showClear]="true"
-    placeholder="University"
-    styleClass="University"
-    inputId="float-label"
+      formControlName="BAUniversity"
+      [options]="universities"
+      optionLabel="name"
+      optionValue="name"
+      [filter]="true"
+      filterBy="name"
+      [showClear]="true"
+      placeholder="University"
+      styleClass="University"
+      inputId="float-label"
     ></p-dropdown>
     <span class="p-float-label">
       <p-inputNumber
@@ -52,16 +52,16 @@
       inputId="float-label"
     ></p-dropdown>
     <p-dropdown
-    formControlName="MAUniversity"
-    [options]="universities"
-    optionLabel="name"
-    optionValue="name"
-    [filter]="true"
-    filterBy="name"
-    [showClear]="true"
-    placeholder="University"
-    styleClass="University"
-    inputId="float-label"
+      formControlName="MAUniversity"
+      [options]="universities"
+      optionLabel="name"
+      optionValue="name"
+      [filter]="true"
+      filterBy="name"
+      [showClear]="true"
+      placeholder="University"
+      styleClass="University"
+      inputId="float-label"
     ></p-dropdown>
     <span class="p-float-label">
       <p-inputNumber
@@ -87,16 +87,16 @@
       inputId="float-label"
     ></p-dropdown>
     <p-dropdown
-    formControlName="PhDUniversity"
-    [options]="universities"
-    optionLabel="name"
-    optionValue="name"
-    [filter]="true"
-    filterBy="name"
-    [showClear]="true"
-    placeholder="University"
-    styleClass="University"
-    inputId="float-label"
+      formControlName="PhDUniversity"
+      [options]="universities"
+      optionLabel="name"
+      optionValue="name"
+      [filter]="true"
+      filterBy="name"
+      [showClear]="true"
+      placeholder="University"
+      styleClass="University"
+      inputId="float-label"
     ></p-dropdown>
     <span class="p-float-label">
       <p-inputNumber
@@ -118,7 +118,6 @@
         [customUpload]="true"
         (uploadHandler)="onUpload($event, 'uploadCV')"
         accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,image/*"
-        class="file-upload-element-width"
       >
       </p-fileUpload>
       <i
@@ -138,7 +137,6 @@
         [customUpload]="true"
         (uploadHandler)="onUpload($event, 'uploadDescription')"
         accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,image/*"
-        class="file-upload-element-width"
       >
       </p-fileUpload>
       <i
@@ -162,7 +160,6 @@
         [customUpload]="true"
         (uploadHandler)="onUpload($event, 'uploadGradeTAndC')"
         accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,image/*"
-        class="file-upload-element-width"
       >
       </p-fileUpload>
       <i
@@ -181,7 +178,6 @@
         [customUpload]="true"
         (uploadHandler)="onUpload($event, 'uploadWorkCommitment')"
         accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,image/*"
-        class="file-upload-element-width"
       >
       </p-fileUpload>
       <i
@@ -196,12 +192,11 @@
         #fileUpload
         name="file"
         [maxFileSize]="1000000"
-        chooseLabel="Upload recommendation letter"
+        chooseLabel="Upload recommend letter"
         [showCancelButton]="false"
         [customUpload]="true"
         (uploadHandler)="onUpload($event, 'uploadRecommendationLetter')"
         accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,image/*"
-        class="file-upload-element-width"
       >
       </p-fileUpload>
       <i
@@ -220,7 +215,6 @@
         [customUpload]="true"
         (uploadHandler)="onUpload($event, 'uploadContactRecommenders')"
         accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.gif,image/*"
-        class="file-upload-element-width"
       >
       </p-fileUpload>
       <i

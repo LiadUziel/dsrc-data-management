@@ -1,26 +1,32 @@
 .parent-form {
-    display: flex;
-    flex-direction: column;
-    gap: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
 
-    padding: 0 1.5rem;
+  padding: 0 1.5rem;
 
-    width: 40vw;
+  // Base for mobile
+  width: 90vw;
 
-    .p-float-label,
-    input {
-        width: 100%;
+  // Media query for tablet/desktop
+  @media (min-width: 768px) {
+    width: 50vw;
+  }
+
+  .p-float-label,
+  input {
+    width: 100%;
+  }
+
+  ::ng-deep.amount {
+    width: 100%;
+
+    .p-inputnumber {
+      width: 100%;
     }
+  }
 
-    ::ng-deep.amount {
-        width: 100%;
-
-        .p-inputnumber {
-            width: 100%;
-        }
-    }
-
-    ::ng-deep.department {
-        width: 100%;
-    }
+  ::ng-deep.department {
+    width: 100%;
+  }
 }
