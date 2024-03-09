@@ -23,12 +23,12 @@ export class NavBarService {
         routerLink: 'home',
       },
       {
-        label: 'Sign Up',
+        label: 'Register',
         routerLink: 'register',
         visible: !isLogged,
       },
       {
-        label: 'Sign In',
+        label: 'Login',
         routerLink: 'login',
         visible: !isLogged,
       },
@@ -82,10 +82,10 @@ export class NavBarService {
 
           {
             label: 'Proposals I am a Team Member',
-            routerLink: 'team-members', 
+            routerLink: 'team-members',
             visible: isLogged && isTeamMember,
           },
-        ]
+        ],
       },
       {
         label: 'Management',
@@ -93,14 +93,14 @@ export class NavBarService {
         visible: isLogged && isAdmin,
         items: [
           {
-            label:'Manage Proposals',
-            routerLink: 'manage-proposals'
+            label: 'Manage Proposals',
+            routerLink: 'manage-proposals',
           },
           {
             label: 'Manage Products',
-            routerLink: 'manage-products'
-          }
-        ]
+            routerLink: 'manage-products',
+          },
+        ],
       },
       {
         label: 'Log Out',
